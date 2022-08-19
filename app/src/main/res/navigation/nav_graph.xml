@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.bchmsl.midterm_weather.ui.main.MainFragment"
+        android:label="MainFragment"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/action_mainFragment_to_forecastOpenedFragment"
+            app:destination="@id/forecastOpenedFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/forecastOpenedFragment"
+        android:name="com.bchmsl.midterm_weather.ui.forecast_opened.ForecastOpenedFragment"
+        android:label="fragment_forecast_opened"
+        tools:layout="@layout/fragment_forecast_opened" >
+        <argument
+            android:name="data"
+            app:argType="com.bchmsl.midterm_weather.model.ForecastResponse$Forecast$ForecastDay" />
+    </fragment>
+</navigation>

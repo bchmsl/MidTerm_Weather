@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    tools:background="@color/morning_background"
+    tools:context=".ui.forecast_opened.ForecastOpenedFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCityName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="15dp"
+        android:fontFamily="@font/actor"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toTopOf="@id/tvCondition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="San Francisco" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibtnProfile"
+        android:layout_width="40dp"
+        android:layout_height="0dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person_outline"
+        android:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/tvCityName"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvCityName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCondition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@id/ivIcon"
+        app:layout_constraintTop_toBottomOf="@id/tvCityName"
+        tools:text="Clear" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tvCurrentTemperature"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCondition"
+        tools:src="@drawable/ic_launcher_foreground" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCurrentTemperature"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="70sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tvDate"
+        app:layout_constraintTop_toBottomOf="@id/ivIcon"
+        tools:text="11" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@id/view"
+        app:layout_constraintTop_toBottomOf="@id/tvCurrentTemperature"
+        tools:text="May XX, 20XX" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:alpha="0.5"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/tvTitleMaxTemp"
+        app:layout_constraintTop_toBottomOf="@id/tvDate" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleMaxTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/max_temp"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMaxTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleMaxTemp"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleMaxTemp"
+        tools:text="20" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleMinTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/min_temp"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleMaxTemp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMinTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleMinTemp"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleMinTemp"
+        tools:text="17" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"        android:alpha="0.5"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/tvTitleHumidity"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleMinTemp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/humidity"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/view3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view2" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHumidity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleHumidity"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleHumidity"
+        tools:text="45%" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"        android:alpha="0.5"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/tvTitleSunrise"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleHumidity" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleSunrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/sunrise"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view3" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSunrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleSunrise"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleSunrise"
+        tools:text="6:18" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleSunset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/sunset"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleSunrise" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSunset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleSunset"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleSunset"
+        tools:text="17:45" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
+        android:alpha="0.5"
+        android:background="@color/grey"
+        app:layout_constraintBottom_toTopOf="@id/tvTitleMoonrise"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleSunset" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleMoonrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/moonrise"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/view4" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMoonrise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleMoonrise"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleMoonrise"
+        tools:text="23:56" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleMoonset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="60dp"
+        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/actor"
+        android:text="@string/moonset"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleMoonrise" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMoonset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/allerta_stencil"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitleMoonset"
+        app:layout_constraintStart_toStartOf="@id/guideline2"
+        app:layout_constraintTop_toTopOf="@id/tvTitleMoonset"
+        tools:text="4:27" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"        android:alpha="0.5"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleMoonset" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

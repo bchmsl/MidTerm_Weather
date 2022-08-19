@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">MidTerm_Weather</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="moonset">Moonset</string>
+    <string name="moonrise">Moonrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="humidity">Humidity</string>
+    <string name="min_temp">Min Temp</string>
+    <string name="max_temp">Max Temp</string>
+
 </resources>

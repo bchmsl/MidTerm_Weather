@@ -1,0 +1,23 @@
+package com.bchmsl.midterm_weather.network
+
+import com.bchmsl.midterm_weather.BuildConfig
+import com.bchmsl.midterm_weather.model.ForecastResponse
+import com.bchmsl.midterm_weather.model.SearchResponse
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
+
+interface WeatherApiClient {
+    @GET("search.json")
+    suspend fun searchCities(
+        @Query("key") apiKey: String = BuildConfig.API_KEY,
+        @Query("q") query: String
+    ): Response<SearchResponse>
+
+    @GET("forecast.json")
+    suspend fun getForecast(
+        @Query("key") apiKey: String = BuildConfig.API_KEY,
+        @Query("q") query: String,
+        @Query("days") daysCount: Int = 7
+    ):Response<ForecastResponse>
+}
