@@ -8,7 +8,6 @@ data class ForecastResponse(
     val location: Location?,
     val current: Current?,
     val forecast: Forecast?,
-
     ):Serializable {
 
     data class Location(
@@ -45,7 +44,8 @@ data class ForecastResponse(
                 val mintempC: Double?,
                 @field:Json(name = "avgtemp_c")
                 val avgtempC: Double?,
-                val condition: Condition?
+                val condition: Condition?,
+                val avgHumidity:Double?
             ) {
 
                 data class Condition(

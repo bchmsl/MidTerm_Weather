@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/startFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.bchmsl.midterm_weather.ui.main.MainFragment"
@@ -11,15 +11,64 @@
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/action_mainFragment_to_forecastOpenedFragment"
-            app:destination="@id/forecastOpenedFragment" />
+            app:destination="@id/forecastOpenedFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/forecastOpenedFragment"
         android:name="com.bchmsl.midterm_weather.ui.forecast_opened.ForecastOpenedFragment"
         android:label="fragment_forecast_opened"
-        tools:layout="@layout/fragment_forecast_opened" >
+        tools:layout="@layout/fragment_forecast_opened">
         <argument
             android:name="data"
             app:argType="com.bchmsl.midterm_weather.model.ForecastResponse$Forecast$ForecastDay" />
+        <argument
+            android:name="cityName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/startFragment"
+        android:name="com.bchmsl.midterm_weather.ui.start.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start" >
+        <action
+            android:id="@+id/action_startFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        tools:layout="@layout/fragment_sign_up"
+        android:name="com.bchmsl.midterm_weather.ui.signup.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_logInFragment"
+            app:destination="@id/logInFragment"
+            app:popUpTo="@id/startFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment android:id="@+id/logInFragment"
+        tools:layout="@layout/fragment_login"
+        android:name="com.bchmsl.midterm_weather.ui.login.LoginFragment"
+        android:label="LogInFragment">
+        <action
+            android:id="@+id/action_logInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment"
+            app:popUpTo="@id/startFragment" />
+        <action
+            android:id="@+id/action_logInFragment_to_mainFragment"
+            app:destination="@id/mainFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

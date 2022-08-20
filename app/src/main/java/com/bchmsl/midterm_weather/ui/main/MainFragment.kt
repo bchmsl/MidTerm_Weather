@@ -48,13 +48,18 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         }
         binding.rvForecast.adapter = forecastAdapter
         forecastAdapter.submitList(data.forecast?.forecastday)
-        listeners(data)
+        listeners()
 
     }
 
-    private fun listeners(data: ForecastResponse) {
-        binding.ivIcon.setOnClickListener {
-            findNavController().navigate(MainFragmentDirections.actionMainFragmentToForecastOpenedFragment(data))
+    private fun listeners() {
+        forecastAdapter.onItemClick = { data ->
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToForecastOpenedFragment(
+                    data,
+                    binding.tvCityName.text.toString()
+                )
+            )
         }
     }
 }

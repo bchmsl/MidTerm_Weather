@@ -14,7 +14,7 @@ class DailyForecastAdapter :
     ListAdapter<ForecastResponse.Forecast.ForecastDay, DailyForecastAdapter.ForecastViewHolder>(
         ForecastItemCallback()
     ) {
-    val onItemClick: ((data: ForecastResponse.Forecast.ForecastDay)-> Unit)? = null
+    var onItemClick: ((data: ForecastResponse.Forecast.ForecastDay)-> Unit)? = null
     inner class ForecastViewHolder(private val binding: LayoutForecastItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
@@ -24,7 +24,7 @@ class DailyForecastAdapter :
                 ivIcon.setImage(currentItem.day?.condition?.icon)
                 tvMinTemp.text = currentItem.day?.mintempC.toString()
                 tvMaxTemp.text = currentItem.day?.maxtempC.toString()
-                root.setOnClickListener { currentItem }
+                root.setOnClickListener { onItemClick?.invoke(currentItem) }
             }
         }
     }

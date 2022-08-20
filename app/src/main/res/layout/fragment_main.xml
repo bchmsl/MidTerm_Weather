@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
     android:background="@color/morning_background"
+    android:padding="10dp"
     tools:background="@color/morning_background"
     tools:context=".ui.main.MainFragment">
 
@@ -14,23 +14,22 @@
         style="@style/Widget.MaterialComponents.LinearProgressIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible"
         android:visibility="gone"
-        app:indicatorColor="@color/white"/>
+        android:indeterminate="false"
+        app:indicatorColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCityName"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="15dp"
         android:fontFamily="@font/actor"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="40sp"
+        android:textSize="50sp"
         app:layout_constraintBottom_toTopOf="@id/tvCondition"
-        app:layout_constraintEnd_toStartOf="@id/ibtnProfile"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="San Francisco" />
 
@@ -44,7 +43,7 @@
         android:tint="@color/white"
         app:layout_constraintBottom_toBottomOf="@id/tvCityName"
         app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tvCityName"
         app:layout_constraintTop_toTopOf="@id/tvCityName" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -64,12 +63,12 @@
         android:id="@+id/ivIcon"
         android:layout_width="100dp"
         android:layout_height="0dp"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintBottom_toTopOf="@id/tvCurrentTemperature"
-        app:layout_constraintEnd_toEndOf="parent"
         android:scaleType="centerCrop"
         android:scaleX="2"
         android:scaleY="2"
+        app:layout_constraintBottom_toTopOf="@id/tvCurrentTemperature"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvCondition"
         tools:src="@drawable/ic_launcher_foreground" />
