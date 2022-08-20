@@ -12,8 +12,8 @@ import com.bchmsl.midterm_weather.ui.base.BaseFragment
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     override fun start() {
-        binding.btnSignUp.setOnClickListener {
-            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToMainFragment())
+        binding.btnSignUpBefore.setOnClickListener {
+            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpContinueFragment())
         }
         binding.btnContinueToLogIn.setOnClickListener {
             findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())

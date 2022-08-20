@@ -75,4 +75,10 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
+    //image picker
+    implementation 'com.github.dhaval2404:imagepicker:2.1'
+    implementation "androidx.fragment:fragment-ktx:1.5.2"
+
+    //circle imageview
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 }

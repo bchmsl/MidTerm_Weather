@@ -9,14 +9,17 @@
     <string name="min_temp">Min Temp</string>
     <string name="max_temp">Max Temp</string>
     <string name="sign_up">Sign up</string>
+    <string name="finish">Finish</string>
     <string name="log_in">Log In</string>
     <string name="welcome">Welcome</string>
     <string name="to">to</string>
     <string name="welcome_back_let_s_start_now">Welcome back!\nLet\'s start now!</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="repeat_password">Repeat password</string>
     <string name="don_t_have_an_account">Don\'t have an account?</string>
     <string name="let_s_join">Let\'s Join!</string>
+    <string name="almost_there">Almost There</string>
     <string name="already_have_an_account">Already have an account?</string>
 
 </resources>

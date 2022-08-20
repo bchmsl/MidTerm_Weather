@@ -47,14 +47,11 @@
         android:name="com.bchmsl.midterm_weather.ui.signup.SignUpFragment"
         android:label="SignUpFragment" >
         <action
-            android:id="@+id/action_signUpFragment_to_logInFragment"
-            app:destination="@id/logInFragment"
-            app:popUpTo="@id/startFragment" />
+            android:id="@+id/action_signUpFragment_to_signUpContinueFragment"
+            app:destination="@id/signUpContinueFragment" />
         <action
-            android:id="@+id/action_signUpFragment_to_mainFragment"
-            app:destination="@id/mainFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_signUpFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
 
     <fragment android:id="@+id/logInFragment"
@@ -71,4 +68,9 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/signUpContinueFragment"
+        android:name="com.bchmsl.midterm_weather.signUpContinueFragment"
+        android:label="fragment_sign_up_continue"
+        tools:layout="@layout/fragment_sign_up_continue" />
 </navigation>
