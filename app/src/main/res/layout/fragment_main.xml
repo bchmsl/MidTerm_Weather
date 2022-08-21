@@ -4,111 +4,95 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/morning_background"
-    android:padding="10dp"
-    tools:background="@color/morning_background"
-    tools:context=".ui.main.MainFragment">
+    android:background="#000F43">
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/lpiLoading"
-        style="@style/Widget.MaterialComponents.LinearProgressIndicator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:indeterminate="false"
+        android:indeterminate="true"
         app:indicatorColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible" />
+        tools:indeterminate="false"
+        tools:progress="56" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="15dp"
-        android:fontFamily="@font/opensans_regular"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="50sp"
-        app:layout_constraintBottom_toTopOf="@id/tvCondition"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="San Francisco" />
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ibtnProfile"
-        android:layout_width="40dp"
-        android:layout_height="0dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_person_outline"
-        android:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@id/tvCityName"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="@id/tvCityName"
-        app:layout_constraintTop_toTopOf="@id/tvCityName" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCondition"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
         android:fontFamily="@font/opensans_light"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@id/ivIcon"
-        app:layout_constraintTop_toBottomOf="@id/tvCityName"
-        tools:text="Clear" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivIcon"
-        android:layout_width="100dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:scaleX="2"
-        android:scaleY="2"
-        app:layout_constraintBottom_toTopOf="@id/tvCurrentTemperature"
-        app:layout_constraintDimensionRatio="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvCondition"
-        tools:src="@drawable/ic_launcher_foreground" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvCurrentTemperature"
+        app:layout_constraintTop_toBottomOf="@+id/lpiLoading"
+        tools:text="Montereal" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCurrentTemperature"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_semibold"
+        android:fontFamily="@font/opensans_light"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="70sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tvDate"
-        app:layout_constraintTop_toBottomOf="@id/ivIcon"
-        tools:text="11" />
+        android:textSize="80sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvCondition"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCityName"
+        tools:text="19°" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvCondition"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
+        android:fontFamily="@font/opensans_medium"
+        android:gravity="center"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvFeelsLike"
+        app:layout_constraintTop_toBottomOf="@+id/tvCurrentTemperature"
+        tools:text="Mostly Clear" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvFeelsLike"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:fontFamily="@font/opensans_regular"
         android:gravity="center"
+        android:text="Feels like: 17°"
         android:textColor="@color/white"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@id/rvForecast"
-        app:layout_constraintTop_toBottomOf="@id/tvCurrentTemperature"
-        tools:text="May XX, 20XX" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/ivIcon"
+        app:layout_constraintTop_toBottomOf="@+id/tvCondition" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/rvForecast"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvFeelsLike"
+        tools:srcCompat="@drawable/ic_launcher_foreground" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvForecast"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:padding="15dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_height="wrap_content"
+        android:background="@drawable/modal"
+        android:orientation="horizontal"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="10dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvDate"
-        tools:itemCount="7"
+        app:spanCount="1"
         tools:listitem="@layout/layout_forecast_item" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
