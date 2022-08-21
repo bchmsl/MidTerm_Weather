@@ -4,7 +4,6 @@ import android.app.Activity
 import android.net.Uri
 import android.view.View
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -66,12 +65,18 @@ class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                                 .addOnFailureListener {
                                     // failed
                                     hideProgressBar()
-                                    Toast.makeText(requireContext(), "failed to add additional sign up data  ${it.message}", Toast.LENGTH_SHORT ).show()
+                                    Snackbar.make(binding.root, "failed to add additional sign up data  ${it.message}", Snackbar.LENGTH_SHORT)
+                                        .setTextMaxLines(1)
+                                        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                                        .show()
                                 }
 
                         } else {
                             hideProgressBar()
-                            Toast.makeText(requireContext(), "error: user ID is null", Toast.LENGTH_SHORT ).show()
+                            Snackbar.make(binding.root, "error: user ID is null", Snackbar.LENGTH_SHORT)
+                                .setTextMaxLines(1)
+                                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                                .show()
 
 
                         }
@@ -125,10 +130,16 @@ class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
 
                 }
                 ImagePicker.RESULT_ERROR -> {
-                    Toast.makeText(requireContext(), ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, ImagePicker.getError(data), Snackbar.LENGTH_SHORT)
+                        .setTextMaxLines(1)
+                        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                        .show()
                 }
                 else -> {
-                    Toast.makeText(requireContext(), "Task Cancelled", Toast.LENGTH_SHORT).show()
+                    Snackbar.make(binding.root, "Task Cancelled", Snackbar.LENGTH_SHORT)
+                        .setTextMaxLines(1)
+                        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                        .show()
                 }
             }
         }

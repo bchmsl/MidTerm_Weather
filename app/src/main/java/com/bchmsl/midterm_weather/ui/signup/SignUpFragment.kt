@@ -1,7 +1,6 @@
 package com.bchmsl.midterm_weather.ui.signup
 
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
@@ -132,8 +131,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 //hide progress bar
                 hideProgressBar()
 
-                Toast.makeText(requireContext(), "Sign up failed due to ${e.message}", Toast.LENGTH_SHORT ).show()
-
+                Snackbar.make(binding.root, "Sign up failed due to ${e.message}", Snackbar.LENGTH_SHORT)
+                    .setTextMaxLines(1)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                    .show()
             }
     }
     private fun hideProgressBar() {

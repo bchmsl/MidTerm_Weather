@@ -1,12 +1,14 @@
 package com.bchmsl.midterm_weather.ui.login
 
 import android.view.View
-import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.signup.SignUpFragmentDirections
 import com.bchmsl.midterm_weather.ui.signup.isValidEmail
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
@@ -59,8 +61,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
                 //hide progress bar
                 hideProgressBar()
-                Toast.makeText(requireContext(), "Login failed due to ${e.message}", Toast.LENGTH_SHORT).show()
-
+                Snackbar.make(binding.root, "Login failed due to ${e.message}", Snackbar.LENGTH_SHORT)
+                    .setTextMaxLines(1)
+                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                    .show()
 
             }
     }
