@@ -22,8 +22,6 @@ class DailyForecastAdapter :
             binding.apply {
                 tvDay.text = currentItem.date?.toWeekday()
                 ivIcon.setImage(currentItem.day?.condition?.icon)
-                tvMinTemp.text = currentItem.day?.mintempC.toString()
-                tvMaxTemp.text = currentItem.day?.maxtempC.toString()
                 root.setOnClickListener { onItemClick?.invoke(currentItem) }
             }
         }
