@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:fontFamily="@font/advent_pro_light"
+        android:fontFamily="@font/opensans_light"
         android:gravity="end"
         android:paddingTop="25dp"
         android:text="@string/let_s_join"
@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/actor"
+            android:fontFamily="@font/opensans_regular"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/actor"
+            android:fontFamily="@font/opensans_regular"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -104,6 +104,7 @@
         app:boxStrokeColor="@color/white"
         app:boxStrokeErrorColor="@android:color/holo_red_light"
         app:boxStrokeWidth="2dp"
+        app:passwordToggleEnabled="true"
         app:errorEnabled="true"
         app:errorTextColor="@android:color/holo_red_light"
         app:hintTextColor="@color/white"
@@ -117,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/actor"
+            android:fontFamily="@font/opensans_regular"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -128,7 +129,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/rectangle"
-        android:fontFamily="@font/advent_pro_light"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/sign_up"
         android:textAllCaps="true"
         android:textColor="@color/white"
@@ -142,31 +143,31 @@
         android:id="@+id/appCompatTextView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/advent_pro_light"
+        android:fontFamily="@font/opensans_light"
         android:gravity="center"
         android:text="@string/already_have_an_account"
         android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUpBefore" />
+        app:layout_constraintBottom_toTopOf="@+id/btnContinueToLogIn" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnContinueToLogIn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="60dp"
         android:layout_marginHorizontal="60dp"
-        android:layout_marginTop="10dp"
         android:background="@drawable/rectangle"
-        android:fontFamily="@font/advent_pro_light"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/log_in"
         android:textAllCaps="true"
         android:textColor="@color/white"
         android:textSize="25sp"
         app:cornerRadius="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appCompatTextView2"
         app:layout_constraintVertical_chainStyle="packed"
         app:strokeColor="@color/white" />
 

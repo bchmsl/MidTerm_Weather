@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:fontFamily="@font/advent_pro_light"
+        android:fontFamily="@font/opensans_light"
         android:gravity="end"
-        android:paddingTop="25dp"
         android:text="@string/almost_there"
+        android:paddingBottom="25dp"
         android:textColor="@color/white"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="@id/ivDecoration"
@@ -71,7 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/actor"
+            android:fontFamily="@font/opensans_regular"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/rectangle"
-            android:fontFamily="@font/actor"
+            android:fontFamily="@font/opensans_regular"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:background="@drawable/rectangle"
-        android:fontFamily="@font/advent_pro_light"
+        android:fontFamily="@font/opensans_regular"
         android:text="@string/finish"
         android:textAllCaps="true"
         android:textColor="@color/white"
@@ -120,13 +120,15 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:layout_editor_absoluteX="73dp" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:background="@android:color/transparent"
         android:id="@+id/IWPencil"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:src="@drawable/ic_camera2"
+        android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="@+id/imageUser"
         app:layout_constraintEnd_toEndOf="@+id/imageUser" />
 
