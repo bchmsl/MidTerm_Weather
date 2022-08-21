@@ -43,7 +43,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             tvCityName.text = data.location?.name
             tvCondition.text = data.current?.condition?.text
             tvCurrentTemperature.text = data.current?.tempC.toString()
-            tvDate.text = data.current?.lastUpdated
             ivIcon.setImage(data.current?.condition?.icon)
         }
         binding.rvForecast.adapter = forecastAdapter
