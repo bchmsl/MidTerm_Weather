@@ -1,12 +1,6 @@
 package com.bchmsl.midterm_weather.ui.signup
 
-import android.app.ActionBar
-import android.content.Intent
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
@@ -90,7 +84,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                     notGoodPass(tilPassword) -> {}
                     !isValidEmail(tilEmail) -> {}
                     tilPassword.editText?.text.toString()!=tilPasswordRepeat.editText?.text.toString() -> {
-                        Snackbar.make(rootLayout, "Passwords should match", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(signUpRootLayout, "Passwords should match", Snackbar.LENGTH_SHORT)
                             .setTextMaxLines(1)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
                             .show()
