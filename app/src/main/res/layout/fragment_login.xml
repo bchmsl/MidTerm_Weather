@@ -1,61 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/morning_background"
+    xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.login.LoginFragment">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvWelcome"
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/opensans_light"
-        android:rotation="-35"
-        android:text="@string/welcome_back_let_s_start_now"
-        android:textColor="@color/white"
-        android:textSize="40sp"
-        app:layout_constraintEnd_toEndOf="@id/ivDecoration"
-        app:layout_constraintStart_toStartOf="@id/ivDecoration"
-        app:layout_constraintTop_toTopOf="@id/ivDecoration" />
+        android:layout_height="match_parent"
+        android:alpha="0.2"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/img_background" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivDecoration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_decoration"
-        android:tint="@color/white"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:scaleType="centerCrop"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/background_login" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="40dp"
+        android:fontFamily="@font/opensans_bold"
+        android:text="Welcome\nBack"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivDecoration"
+        app:layout_constraintTop_toTopOf="@id/ivDecoration" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/email"
-        android:textColorHint="@color/white"
-        app:boxBackgroundMode="none"
-        app:boxStrokeColor="@color/white"
-        app:boxStrokeErrorColor="@android:color/holo_red_light"
-        app:boxStrokeWidth="2dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:hint="Your Email"
         app:errorEnabled="true"
-        app:errorTextColor="@android:color/holo_red_light"
-        app:hintTextColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/ivDecoration"
-        app:startIconDrawable="@drawable/ic_email"
-        app:startIconTint="@color/white"
-        tools:layout_editor_absoluteX="10dp">
+        app:boxBackgroundColor="#1A000000"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/ivDecoration">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rectangle"
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/opensans_semibold"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,89 +58,109 @@
         android:id="@+id/tilPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:hint="@string/password"
-        android:textColorHint="@color/white"
-        app:boxBackgroundMode="none"
-        app:boxStrokeColor="@color/white"
-        app:boxStrokeErrorColor="@android:color/holo_red_light"
-        app:boxStrokeWidth="2dp"
+        android:layout_height="60dp"
+        android:layout_margin="10dp"
+        android:hint="Password"
+        app:boxBackgroundColor="#1A000000"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
         app:errorEnabled="true"
-        app:errorTextColor="@android:color/holo_red_light"
-        app:hintTextColor="@color/white"
-        app:layout_constraintTop_toBottomOf="@id/tilEmail"
-        app:passwordToggleEnabled="true"
-        app:passwordToggleTint="@color/white"
-        app:startIconDrawable="@drawable/ic_key"
-        app:startIconTint="@color/white">
+        app:layout_constraintTop_toBottomOf="@id/tilEmail">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rectangle"
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/opensans_semibold"
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnLogIn"
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/opensans_bold"
+        android:text="Sign in"
+        android:textColor="@color/black"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/ibtnNext"
+        app:layout_constraintEnd_toStartOf="@id/ibtnNext"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ibtnNext" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibtnNext"
+        android:layout_width="80dp"
+        android:layout_height="0dp"
+        android:layout_margin="30dp"
+        android:background="@drawable/oval"
+        android:backgroundTint="@color/grey"
+        android:padding="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_arrow_forward_next"
+        android:tint="@color/white"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="@id/tilPassword"
+        app:layout_constraintTop_toBottomOf="@id/tilPassword" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="0dp"
+        android:layout_height="15dp"
         android:background="@drawable/rectangle"
-        android:fontFamily="@font/opensans_regular"
-        android:text="@string/log_in"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:cornerRadius="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/tilPassword"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:layout_editor_absoluteX="73dp" />
+        android:backgroundTint="@color/orange"
+        android:paddingHorizontal="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvSignUp"
+        app:layout_constraintEnd_toEndOf="@id/tvSignUp"
+        app:layout_constraintStart_toStartOf="@id/tvSignUp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/appCompatTextView"
-        android:layout_width="match_parent"
+        android:id="@+id/tvSignUp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_light"
-        android:paddingBottom="20dp"
-        android:gravity="center"
-        android:text="@string/don_t_have_an_account"
-        android:textColor="@color/white"
+        android:layout_margin="30dp"
+        android:drawableBottom="@color/black"
+        android:fontFamily="@font/opensans_bold"
+        android:text="Sign Up"
+        android:textColor="@color/black"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/btnContinueToSignUp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tvForgotPassword"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnContinueToSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="60dp"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="0dp"
+        android:layout_height="15dp"
         android:background="@drawable/rectangle"
-        android:fontFamily="@font/opensans_regular"
-        android:text="@string/sign_up"
-        android:layout_margin="60dp"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="25sp"
-        app:cornerRadius="0dp"
+        android:backgroundTint="@color/blue"
+        android:paddingHorizontal="5dp"
+        app:layout_constraintBottom_toBottomOf="@id/tvForgotPassword"
+        app:layout_constraintEnd_toEndOf="@id/tvForgotPassword"
+        app:layout_constraintStart_toStartOf="@id/tvForgotPassword" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:drawableBottom="@color/black"
+        android:fontFamily="@font/opensans_bold"
+        android:text="Forgot Password?"
+        android:textColor="@color/black"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        app:strokeColor="@color/white" />
+        app:layout_constraintStart_toEndOf="@id/tvSignUp" />
 
     <ProgressBar
-        android:id="@+id/loginProgressBar"
-        style="?android:attr/progressBarStyle"
+        android:id="@+id/pbLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,26 +18,14 @@ class ForecastOpenedFragment :
     }
 
     private fun listeners() {
-        binding.ibtnBack.setOnClickListener {
+        binding.tvCityName.setOnClickListener {
             findNavController().popBackStack()
         }
     }
 
     private fun setData(data: ForecastResponse.Forecast.ForecastDay, cityName: String) {
         binding.apply {
-            tvDayName.text = data.date?.toWeekday()
-            tvCityName.text = cityName
-            tvCondition.text = data.day?.condition?.text
-            ivIcon.setImage(data.day?.condition?.icon)
-            tvAverageTemperature.text = data.day?.avgtempC.toString()
-            tvDate.text = data.date.toString()
-            tvMaxTemp.text = data.day?.maxtempC.toString()
-            tvMinTemp.text = data.day?.mintempC.toString()
-            tvHumidity.text = data.day?.avgHumidity.toString()
-            tvSunrise.text = data.astro?.sunrise.toString()
-            tvSunset.text = data.astro?.sunset.toString()
-            tvMoonrise.text = data.astro?.moonrise.toString()
-            tvMoonset.text = data.astro?.moonset.toString()
+
         }
     }
 

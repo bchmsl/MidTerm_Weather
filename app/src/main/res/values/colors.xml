@@ -7,7 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#959595</color>
+    <color name="orange">#ffae48</color>
+    <color name="blue">#58bfe6</color>
+    <color name="dark_blue">#000F43</color>
+    <color name="grey">#4c525c</color>
 
     <color name="morning_background">#d97342</color>
     <color name="afternoon_background">#4078d7</color>
@@ -16,5 +19,4 @@
     <color name="violet_regular">#700BEF</color>
     <color name="regular_red">#fa1100 </color>
     <color name="lime">#05eb2f</color>
-    <color name="orange">#eb8305</color>
 </resources>

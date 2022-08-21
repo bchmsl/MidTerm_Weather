@@ -75,16 +75,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     override fun start() {
         firebaseAuth = FirebaseAuth.getInstance()
         binding.apply {
-            btnSignUpBefore.setOnClickListener {
+            ibtnNext.setOnClickListener {
                 //validate data
                 when {
                     checkEmpty(tilEmail) || checkEmpty(tilPassword) || checkEmpty(
-                        tilPasswordRepeat
+                        tilRepeatPassword
                     ) -> { }
                     notGoodPass(tilPassword) -> {}
                     !isValidEmail(tilEmail) -> {}
-                    tilPassword.editText?.text.toString()!=tilPasswordRepeat.editText?.text.toString() -> {
-                        Snackbar.make(signUpRootLayout, "Passwords should match", Snackbar.LENGTH_SHORT)
+                    tilPassword.editText?.text.toString()!=tilRepeatPassword.editText?.text.toString() -> {
+                        Snackbar.make(binding.root, "Passwords should match", Snackbar.LENGTH_SHORT)
                             .setTextMaxLines(1)
                             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
                             .show()
@@ -99,7 +99,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 }
 
             }
-            btnContinueToLogIn.setOnClickListener {
+            tvSignIn.setOnClickListener {
                 goToLogInFra()
             }
         }
@@ -109,7 +109,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
     private fun firebaseSignUp() {
         //show progress bar
-        binding.signUpProgressBar.visibility = View.VISIBLE
+        binding.pbSignup.visibility = View.VISIBLE
         //create account
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
@@ -137,7 +137,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             }
     }
     private fun hideProgressBar() {
-        binding.signUpProgressBar.visibility = View.GONE
+        binding.pbSignup.visibility = View.GONE
     }
 
     private fun goToSingUpContinueFra(){

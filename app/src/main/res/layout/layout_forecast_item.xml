@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="90dp"
-    android:layout_height="200dp"
+    android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@drawable/daily_basic"
+    android:background="@drawable/hourly_basic"
     android:layout_margin="8dp"
     android:orientation="vertical"
     android:padding="15dp">
@@ -15,10 +15,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/opensans_light"
+        android:fontFamily="@font/opensans_regular"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="27.08" />
 
@@ -32,11 +32,11 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/opensans_regular"
+        android:fontFamily="@font/opensans_medium"
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="25sp"
-        tools:text="18" />
+        tools:text="19°" />
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -40,7 +40,7 @@ class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         uid = firebaseUser?.uid
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         binding.apply {
-            IWCamera.setOnClickListener {
+            ibtnChoosePhoto.setOnClickListener {
                 ImagePicker.Companion.with(this@signUpContinueFragment)
                     .crop(150f,150f)
                     .createIntent { intent ->
@@ -48,11 +48,11 @@ class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                     }
 
             }
-            btnFinish.setOnClickListener {
+            ibtnNext.setOnClickListener {
                 when {
                     checkEmpty(tilFirstName) || checkEmpty(tilLastName) -> {}
                     else -> {
-                        signUpContinueProgressBar.visibility = View.VISIBLE
+                        pbSignup.visibility = View.VISIBLE
                         firstName = tilFirstName.editText?.text.toString()
                         lastName = tilLastName.editText?.text.toString()
                         val user = User(firstName, lastName)
@@ -85,14 +85,14 @@ class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
         storageReference.putFile(imageUri).addOnSuccessListener {
             hideProgressBar()
-            Snackbar.make(binding.singUpContinueRootLayout, "Registration was successful", Snackbar.LENGTH_SHORT)
+            Snackbar.make(binding.root, "Registration was successful", Snackbar.LENGTH_SHORT)
                 .setTextMaxLines(1)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.lime))
                 .show()
             goToMainFra()
         }.addOnFailureListener {
             hideProgressBar()
-            Snackbar.make(binding.singUpContinueRootLayout, "Failed to upload this image: ${it.message}", Snackbar.LENGTH_SHORT)
+            Snackbar.make(binding.root, "Failed to upload this image: ${it.message}", Snackbar.LENGTH_SHORT)
                 .setTextMaxLines(1)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
                 .show()
@@ -104,7 +104,7 @@ class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
     }
 
     private fun hideProgressBar() {
-        binding.signUpContinueProgressBar.visibility = View.GONE
+        binding.pbSignup.visibility = View.GONE
     }
 
     private val startForProfileImageResult =

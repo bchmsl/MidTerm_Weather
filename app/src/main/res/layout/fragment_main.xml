@@ -4,7 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000F43">
+    android:background="@color/dark_blue">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/img_background"
+        android:alpha="0.4"/>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:id="@+id/lpiLoading"
@@ -17,6 +24,18 @@
         tools:progress="56" />
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvGreeting"
+        tools:text="Welcome back, User!"
+        android:textColor="@color/white"
+        android:fontFamily="@font/opensans_light"
+        android:textSize="20sp"
+        android:layout_margin="15dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCityName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,8 +45,20 @@
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/tvCurrentTemperature"
-        app:layout_constraintTop_toBottomOf="@+id/lpiLoading"
+        app:layout_constraintTop_toBottomOf="@+id/tvGreeting"
         tools:text="Montereal" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:layout_width="60dp"
+        android:layout_height="0dp"
+        android:layout_margin="10dp"
+        android:background="@android:color/transparent"
+        android:tint="@color/white"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_settings" />
+
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvCurrentTemperature"
@@ -84,11 +115,11 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvForecast"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/modal"
+        android:layout_height="300dp"
+        android:background="@drawable/detail_item"
         android:orientation="horizontal"
-        android:paddingVertical="20dp"
         android:paddingHorizontal="10dp"
+        android:paddingVertical="20dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:spanCount="1"

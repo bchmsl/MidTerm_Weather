@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:background="@drawable/detail_item"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvMainKey"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="start"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivIcon"
+        tools:text="Sun" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        tools:src="@drawable/ic_sunrise"
+        app:layout_constraintDimensionRatio="1"
+        android:id="@+id/ivIcon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvKey1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_light"
+        android:layout_marginTop="30dp"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvMainKey"
+        app:layout_constraintStart_toStartOf="@+id/tvMainKey"
+        app:layout_constraintTop_toBottomOf="@+id/tvMainKey"
+        tools:text="Sunrise:" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvValue1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/opensans_light"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvKey1"
+
+        app:layout_constraintStart_toStartOf="@+id/tvKey1"
+        app:layout_constraintTop_toBottomOf="@+id/tvKey1"
+        tools:text="6:30 AM" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvKey2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/opensans_light"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvValue1"
+        app:layout_constraintStart_toStartOf="@+id/tvValue1"
+        app:layout_constraintTop_toBottomOf="@+id/tvValue1"
+        tools:text="Sunset:" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvValue2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/opensans_light"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        android:paddingBottom="20dp"
+        app:layout_constraintEnd_toEndOf="@+id/tvKey2"
+        app:layout_constraintStart_toStartOf="@+id/tvKey2"
+        app:layout_constraintTop_toBottomOf="@+id/tvKey2"
+        tools:text="21:30 PM" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     override fun start() {
         //init firebaseAuth
         firebaseAuth = FirebaseAuth.getInstance()
-        binding.btnLogIn.setOnClickListener {
+        binding.ibtnNext.setOnClickListener {
             //get data
             email = binding.tilEmail.editText?.text.toString()
             password = binding.tilPassword.editText?.text.toString()
@@ -29,14 +29,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
                 firebaseLogin()
             }
         }
-        binding.btnContinueToSignUp.setOnClickListener {
+        binding.tvSignUp.setOnClickListener {
             goToSingUpFra()
         }
     }
 
     private fun firebaseLogin() {
         //show progress bar
-        binding.loginProgressBar.visibility = View.VISIBLE
+        binding.pbLogin.visibility = View.VISIBLE
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 //login success
@@ -66,11 +66,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun hideProgressBar() {
-        binding.loginProgressBar.visibility = View.GONE
+        binding.pbLogin.visibility = View.GONE
     }
 
     private fun goToSingUpFra(){
-        findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpContinueFragment())
+        findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToSignUpFragment())
     }
 
     private fun goToMainFra(){
