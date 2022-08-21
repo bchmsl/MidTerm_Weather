@@ -12,4 +12,9 @@
     <color name="morning_background">#d97342</color>
     <color name="afternoon_background">#4078d7</color>
     <color name="night_background">#181E61</color>
+
+    <color name="violet_regular">#700BEF</color>
+    <color name="regular_red">#fa1100 </color>
+    <color name="lime">#05eb2f</color>
+    <color name="orange">#eb8305</color>
 </resources>

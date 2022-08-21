@@ -9,14 +9,27 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.ui.login.LoginFragmentDirections
 import com.bchmsl.midterm_weather.ui.signup.SignUpFragmentDirections
+import com.google.firebase.auth.FirebaseAuth
 
 class signUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(FragmentSignUpContinueBinding::inflate) {
+    // firebaseAuth
+    private lateinit var firebaseAuth : FirebaseAuth
     override fun start() {
-        binding.btnFinish.setOnClickListener {
-            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
+        //init firebase
+        firebaseAuth = FirebaseAuth.getInstance()
+        //get user info
+        val firebaseUser  = firebaseAuth.currentUser
+        val email = firebaseUser!!.email
+        binding.apply {
+            btnFinish.setOnClickListener {
+                findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
+            }
         }
     }
-
+    private fun goToMainFra(){
+        findNavController().navigate(signUpContinueFragmentDirections.actionSignUpContinueFragmentToMainFragment())
+    }
 
 }

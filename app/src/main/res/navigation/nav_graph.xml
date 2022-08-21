@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_startFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_startFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -72,5 +75,9 @@
         android:id="@+id/signUpContinueFragment"
         android:name="com.bchmsl.midterm_weather.signUpContinueFragment"
         android:label="fragment_sign_up_continue"
-        tools:layout="@layout/fragment_sign_up_continue" />
+        tools:layout="@layout/fragment_sign_up_continue" >
+        <action
+            android:id="@+id/action_signUpContinueFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>
