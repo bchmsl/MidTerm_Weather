@@ -27,14 +27,14 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
     private lateinit var firebaseAuth : FirebaseAuth
     private  lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
-    private lateinit var imageUri: Uri
-    var firstName = ""
-    var lastName = ""
-    var uid: String? = null
+    private var imageUri: Uri? = null
+    private var firstName = ""
+    private var lastName = ""
+    private var uid: String? = null
     override fun start() {
         //init firebase
         firebaseAuth = FirebaseAuth.getInstance()
-        //get user info
+        //get current user main info
         val firebaseUser  = firebaseAuth.currentUser
         //user id
         uid = firebaseUser?.uid
@@ -50,7 +50,13 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
             }
             ibtnNext.setOnClickListener {
                 when {
-                    checkEmpty(tilFirstName) || checkEmpty(tilLastName) -> {}
+                    checkEmpty(tilFirstName) || checkEmpty(tilLastName)  -> {}
+                    imageUri==null -> {
+                        Snackbar.make(binding.root, "Please upload an image", Snackbar.LENGTH_SHORT)
+                            .setTextMaxLines(1)
+                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+                            .show()
+                    }
                     else -> {
                         pbSignup.visibility = View.VISIBLE
                         firstName = tilFirstName.editText?.text.toString()
@@ -92,8 +98,8 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
     }
 
     private fun uploadProfilePic() {
-        storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
-        storageReference.putFile(imageUri).addOnSuccessListener {
+        storageReference = FirebaseStorage.getInstance().getReference("Use rs/$uid")
+        storageReference.putFile(imageUri!!).addOnSuccessListener {
             hideProgressBar()
             Snackbar.make(binding.root, "Registration was successful", Snackbar.LENGTH_SHORT)
                 .setTextMaxLines(1)

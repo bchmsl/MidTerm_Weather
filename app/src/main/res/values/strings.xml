@@ -21,5 +21,6 @@
     <string name="let_s_join">Let\'s Join!</string>
     <string name="almost_there">Almost There</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="welcome_message">Welcome back, %1$s</string>
 
 </resources>
