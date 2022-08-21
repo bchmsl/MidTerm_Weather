@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.signup
+package com.bchmsl.midterm_weather.ui.signup.signupfirst
 
 import android.view.View
 import androidx.core.content.ContextCompat

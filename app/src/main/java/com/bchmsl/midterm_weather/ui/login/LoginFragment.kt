@@ -6,8 +6,7 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.bchmsl.midterm_weather.ui.signup.SignUpFragmentDirections
-import com.bchmsl.midterm_weather.ui.signup.isValidEmail
+import com.bchmsl.midterm_weather.ui.signup.signupfirst.isValidEmail
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
