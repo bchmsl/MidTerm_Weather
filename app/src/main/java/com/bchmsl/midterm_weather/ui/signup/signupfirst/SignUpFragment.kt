@@ -1,10 +1,10 @@
 package com.bchmsl.midterm_weather.ui.signup.signupfirst
 
-import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpBinding
+import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputLayout
@@ -69,6 +69,7 @@ fun notGoodPass(Epassword: TextInputLayout): Boolean {
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     //FirebaseAuth
     private lateinit var firebaseAuth: FirebaseAuth
+    private val processing = ProcessingDialog(this)
     private var email = ""
     private var password = ""
     override fun start() {
@@ -79,17 +80,15 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 when {
                     checkEmpty(tilEmail) || checkEmpty(tilPassword) || checkEmpty(
                         tilRepeatPassword
-                    ) -> { }
+                    ) -> {
+                    }
                     notGoodPass(tilPassword) -> {}
                     !isValidEmail(tilEmail) -> {}
-                    tilPassword.editText?.text.toString()!=tilRepeatPassword.editText?.text.toString() -> {
-                        Snackbar.make(binding.root, "Passwords should match", Snackbar.LENGTH_SHORT)
-                            .setTextMaxLines(1)
-                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-                            .show()
+                    tilPassword.editText?.text.toString() != tilRepeatPassword.editText?.text.toString() -> {
+                        makeSnackBar("Passwords should match")
                     }
                     else -> {
-//data is validated, continue signup
+                    //data is validated, continue signup
                         //get data
                         email = binding.tilEmail.editText?.text.toString()
                         password = binding.tilPassword.editText?.text.toString()
@@ -108,14 +107,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
     private fun firebaseSignUp() {
         //show progress bar
-        binding.pbSignup.visibility = View.VISIBLE
+        showProcessBar()
         //create account
         firebaseAuth.createUserWithEmailAndPassword(email, password)
             .addOnSuccessListener {
                 //sing up success
 
                 //hide progress bar
-                hideProgressBar()
+                hideProcessBar()
 
                 //get current use
                 val firebaseUser = firebaseAuth.currentUser
@@ -125,27 +124,37 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 goToSingUpContinueFra()
 
             }
-            .addOnFailureListener{e->
+            .addOnFailureListener { e ->
                 //sing up failed
 
                 //hide progress bar
-                hideProgressBar()
+                hideProcessBar()
 
-                Snackbar.make(binding.root, "Sign up failed due to ${e.message}", Snackbar.LENGTH_SHORT)
-                    .setTextMaxLines(1)
-                    .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-                    .show()
+                makeSnackBar("Sign up failed due to ${e.message}")
             }
     }
-    private fun hideProgressBar() {
-        binding.pbSignup.visibility = View.GONE
+
+    private fun makeSnackBar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .setTextMaxLines(2)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
+            .show()
     }
 
-    private fun goToSingUpContinueFra(){
+    private fun showProcessBar() {
+        processing.startProcessing()
+    }
+
+    private fun hideProcessBar() {
+        processing.stopProcessing()
+    }
+
+
+    private fun goToSingUpContinueFra() {
         findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpContinueFragment())
     }
 
-    private fun goToLogInFra(){
+    private fun goToLogInFra() {
         findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
     }
 

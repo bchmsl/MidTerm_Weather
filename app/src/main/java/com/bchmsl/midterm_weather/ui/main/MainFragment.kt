@@ -47,9 +47,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                     val firstname = (it.value as HashMap<*, *>)["firstName"]
                     binding.tvGreeting.text = getString(R.string.welcome_message, firstname)
                 } else {
-                    Snackbar.make(binding.root, "No logged in User was found", Snackbar.LENGTH_SHORT)
-                        .setTextMaxLines(1)
-                        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.lime))
+                    Snackbar.make(binding.root, "No logged in User's name was found", Snackbar.LENGTH_SHORT)
+                        .setTextMaxLines(2)
+                        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
                         .show()
                 }
             }

@@ -2,7 +2,6 @@ package com.bchmsl.midterm_weather.ui.signup.signupsecond
 
 import android.app.Activity
 import android.net.Uri
-import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -11,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
 import com.bchmsl.midterm_weather.model.User
+import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.signup.signupfirst.checkEmpty
 import com.bumptech.glide.Glide
@@ -27,6 +27,7 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
     private lateinit var firebaseAuth : FirebaseAuth
     private  lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
+    private val processing = ProcessingDialog(this)
     private var imageUri: Uri? = null
     private var firstName = ""
     private var lastName = ""
@@ -52,13 +53,10 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                 when {
                     checkEmpty(tilFirstName) || checkEmpty(tilLastName)  -> {}
                     imageUri==null -> {
-                        Snackbar.make(binding.root, "Please upload an image", Snackbar.LENGTH_SHORT)
-                            .setTextMaxLines(1)
-                            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-                            .show()
+                    makeSnackBar(true, "Please upload an image")
                     }
                     else -> {
-                        pbSignup.visibility = View.VISIBLE
+                        showProcessBar()
                         firstName = tilFirstName.editText?.text.toString()
                         lastName = tilLastName.editText?.text.toString()
                         val user = User(firstName, lastName)
@@ -71,25 +69,13 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                             }
                                 .addOnFailureListener {
                                     // failed
-                                    hideProgressBar()
-                                    Snackbar.make(binding.root, "failed to add additional sign up data  ${it.message}", Snackbar.LENGTH_SHORT)
-                                        .setTextMaxLines(1)
-                                        .setBackgroundTint(ContextCompat.getColor(requireContext(),
-                                            R.color.regular_red
-                                        ))
-                                        .show()
+                                    hideProcessBar()
+                                    makeSnackBar(true,"failed to add additional sign up data  ${it.message}")
                                 }
 
                         } else {
-                            hideProgressBar()
-                            Snackbar.make(binding.root, "error: user ID is null", Snackbar.LENGTH_SHORT)
-                                .setTextMaxLines(1)
-                                .setBackgroundTint(ContextCompat.getColor(requireContext(),
-                                    R.color.regular_red
-                                ))
-                                .show()
-
-
+                            hideProcessBar()
+                            makeSnackBar(true,"error: user ID is null")
                         }
                     }
                 }
@@ -97,21 +83,30 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         }
     }
 
+    private fun makeSnackBar(isFailure: Boolean, message: String){
+        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .setTextMaxLines(2)
+        if(isFailure) {
+            snackBar.setBackgroundTint(ContextCompat.getColor(requireContext(),
+                R.color.regular_red
+            ))
+        } else {
+            snackBar.setBackgroundTint(ContextCompat.getColor(requireContext(),
+                R.color.lime
+            ))
+        }
+        snackBar.show()
+    }
+
     private fun uploadProfilePic() {
         storageReference = FirebaseStorage.getInstance().getReference("Use rs/$uid")
         storageReference.putFile(imageUri!!).addOnSuccessListener {
-            hideProgressBar()
-            Snackbar.make(binding.root, "Registration was successful", Snackbar.LENGTH_SHORT)
-                .setTextMaxLines(1)
-                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.lime))
-                .show()
+            hideProcessBar()
+            makeSnackBar(false,"Registration was successful")
             goToMainFra()
         }.addOnFailureListener {
-            hideProgressBar()
-            Snackbar.make(binding.root, "Failed to upload this image: ${it.message}", Snackbar.LENGTH_SHORT)
-                .setTextMaxLines(1)
-                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-                .show()
+            hideProcessBar()
+        makeSnackBar(true, "Failed to upload this image: ${it.message}")
         }
     }
 
@@ -119,9 +114,14 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         findNavController().navigate(SignUpContinueFragmentDirections.actionSignUpContinueFragmentToMainFragment())
     }
 
-    private fun hideProgressBar() {
-        binding.pbSignup.visibility = View.GONE
+    private fun showProcessBar() {
+        processing.startProcessing()
     }
+
+    private fun hideProcessBar() {
+        processing.stopProcessing()
+    }
+
 
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
