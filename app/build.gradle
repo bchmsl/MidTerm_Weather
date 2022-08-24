@@ -70,22 +70,25 @@ dependencies {
     // Coroutine Lifecycles
     def lifecyclesVersion = '2.5.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecyclesVersion"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecyclesVersion"
 
     // Fragment Navigation
     def navigationVersion = '2.5.1'
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
 
-    //firebase
+    //Firebase
     implementation 'com.google.firebase:firebase-auth:21.0.7'
     implementation 'com.google.firebase:firebase-database:20.0.5'
     implementation 'com.google.firebase:firebase-storage:20.0.1'
 
-    //image picker
+    //Image Picker
     implementation 'com.github.dhaval2404:imagepicker:2.1'
     implementation "androidx.fragment:fragment-ktx:1.5.2"
 
-    //circle imageview
+    //Circle ImageView
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Splash Screen
+    implementation 'androidx.core:core-splashscreen:1.0.0'
 }

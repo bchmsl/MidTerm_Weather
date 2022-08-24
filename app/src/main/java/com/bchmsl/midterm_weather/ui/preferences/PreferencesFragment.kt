@@ -16,6 +16,9 @@ class PreferencesFragment : BaseFragment<FragmentPreferencesBinding>(FragmentPre
         binding.tvPreferencesTitle.setOnClickListener {
             findNavController().popBackStack()
         }
+        binding.llChangeUserDetails.setOnClickListener {
+            findNavController().navigate(PreferencesFragmentDirections.actionPreferencesFragmentToChangeUserInfoFragment())
+        }
     }
 
 }
