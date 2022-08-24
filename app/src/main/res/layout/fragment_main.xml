@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/opensans_regular"
         android:gravity="center"
-        android:text="Feels like: 17°"
+        tools:text="Feels like: 17°"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/ivIcon"

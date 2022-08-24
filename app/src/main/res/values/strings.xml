@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MidTerm Weather</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="moonset">Moonset</string>
@@ -22,7 +22,16 @@
     <string name="almost_there">Almost There</string>
     <string name="already_have_an_account">Already have an account?</string>
     <string name="welcome_message">Welcome back, %1$s</string>
-    <string name="processing">Processing...</string>
+    <string name="processing" tools:ignore="TypographyEllipsis">Processing...</string>
     <string name="reset_password">Reset Password</string>
+    <string name="change_current_city">Change Current City</string>
+    <string name="log_out">Log out</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="profile_preferences">Profile Preferences</string>
+    <string name="application_preferences">Application Preferences</string>
+    <string name="preferences">Preferences</string>
+    <string name="about_app">About App</string>
+    <string name="save">Save</string>
+    <string name="feels_like">Feels like: </string>
 
 </resources>

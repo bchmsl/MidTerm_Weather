@@ -1,26 +1,26 @@
-package com.bchmsl.midterm_weather.ui.main
+package com.bchmsl.midterm_weather.ui.weather.main
 
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapter.DailyForecastAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentMainBinding
 import com.bchmsl.midterm_weather.extensions.setImage
+import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.model.ForecastResponse
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
-import kotlin.reflect.typeOf
 
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: WeatherViewModel by activityViewModels()
     private val forecastAdapter by lazy { DailyForecastAdapter() }
 
     private lateinit var firebaseAuth : FirebaseAuth
@@ -57,7 +57,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     private fun observers() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.forecastResponse.collect { responseHandler ->
+            viewModel.forecastResponse?.collect { responseHandler ->
                 binding.lpiLoading.isVisible = responseHandler.isLoading
                 when (responseHandler) {
                     is ResponseHandler.Success -> handleForecastSuccess(responseHandler.data)
@@ -76,7 +76,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.apply {
             tvCityName.text = data.location?.name
             tvCondition.text = data.current?.condition?.text
-            tvCurrentTemperature.text = data.current?.tempC.toString()
+            tvCurrentTemperature.text = data.current?.tempC?.asTemp()
             ivIcon.setImage(data.current?.condition?.icon)
         }
         binding.rvForecast.adapter = forecastAdapter
@@ -86,11 +86,10 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
     private fun listeners() {
-        forecastAdapter.onItemClick = { data ->
+        forecastAdapter.onItemClick = { index ->
             findNavController().navigate(
                 MainFragmentDirections.actionMainFragmentToForecastOpenedFragment(
-                    data,
-                    binding.tvCityName.text.toString()
+                    index
                 )
             )
         }

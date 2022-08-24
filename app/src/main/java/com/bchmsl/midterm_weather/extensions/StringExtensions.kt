@@ -9,3 +9,4 @@ fun String.toWeekday(): String {
     val date = inputFormat.parse(this) as Date
     return outputFormat.format(date)
 }
+

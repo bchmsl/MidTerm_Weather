@@ -21,6 +21,8 @@ data class ForecastResponse(
         val lastUpdated: String?,
         @field:Json(name = "temp_c")
         val tempC: Double?,
+        @field:Json(name = "feelslike_c")
+        val feelslikeC: Double?,
         val condition: Forecast.ForecastDay.Day.Condition,
         val humidity: Int?
     )
@@ -45,7 +47,16 @@ data class ForecastResponse(
                 @field:Json(name = "avgtemp_c")
                 val avgtempC: Double?,
                 val condition: Condition?,
-                val avgHumidity:Double?
+                val avghumidity:Double?,
+                @field:Json(name = "totalprecip_mm")
+                val totalprecipMm: Double,
+                @field:Json(name = "maxwind_kph")
+                val maxwindKph: Double,
+                @field:Json(name = "daily_chance_of_rain")
+                val dailyChanceOfRain: Int?,
+                @field:Json(name = "avgvis_km")
+                val avgvisKm: Double?,
+                val uv: Double?
             ) {
 
                 data class Condition(
@@ -58,7 +69,9 @@ data class ForecastResponse(
                 val sunrise: String?,
                 val sunset: String?,
                 val moonrise: String?,
-                val moonset: String?
+                val moonset: String?,
+                @field:Json(name = "moon_illumination")
+                val moonIllumination: String
             )
         }
     }

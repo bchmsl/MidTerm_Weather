@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.bchmsl.midterm_weather.ui.main.MainFragment"
+        android:name="com.bchmsl.midterm_weather.ui.weather.main.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -19,15 +19,12 @@
     </fragment>
     <fragment
         android:id="@+id/forecastOpenedFragment"
-        android:name="com.bchmsl.midterm_weather.ui.forecast_opened.ForecastOpenedFragment"
+        android:name="com.bchmsl.midterm_weather.ui.weather.forecast_opened.ForecastOpenedFragment"
         android:label="fragment_forecast_opened"
         tools:layout="@layout/fragment_forecast_opened">
         <argument
-            android:name="data"
-            app:argType="com.bchmsl.midterm_weather.model.ForecastResponse$Forecast$ForecastDay" />
-        <argument
-            android:name="cityName"
-            app:argType="string" />
+            android:name="index"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/startFragment"

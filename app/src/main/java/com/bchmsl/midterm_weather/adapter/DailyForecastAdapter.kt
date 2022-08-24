@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bchmsl.midterm_weather.databinding.LayoutForecastItemBinding
 import com.bchmsl.midterm_weather.extensions.setImage
+import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.extensions.toWeekday
 import com.bchmsl.midterm_weather.model.ForecastResponse
 
@@ -14,7 +15,7 @@ class DailyForecastAdapter :
     ListAdapter<ForecastResponse.Forecast.ForecastDay, DailyForecastAdapter.ForecastViewHolder>(
         ForecastItemCallback()
     ) {
-    var onItemClick: ((data: ForecastResponse.Forecast.ForecastDay)-> Unit)? = null
+    var onItemClick: ((index: Int)-> Unit)? = null
     inner class ForecastViewHolder(private val binding: LayoutForecastItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind() {
@@ -22,7 +23,8 @@ class DailyForecastAdapter :
             binding.apply {
                 tvDay.text = currentItem.date?.toWeekday()
                 ivIcon.setImage(currentItem.day?.condition?.icon)
-                root.setOnClickListener { onItemClick?.invoke(currentItem) }
+                tvTemperature.text = currentItem.day?.avgtempC?.asTemp()
+                root.setOnClickListener { onItemClick?.invoke(adapterPosition) }
             }
         }
     }
