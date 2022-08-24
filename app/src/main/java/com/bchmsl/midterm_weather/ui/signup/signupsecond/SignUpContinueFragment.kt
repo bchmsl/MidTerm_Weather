@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.util.*
 
 class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(FragmentSignUpContinueBinding::inflate) {
     // firebaseAuth
@@ -40,6 +41,10 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         //user id
         uid = firebaseUser?.uid
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
+        listners()
+    }
+
+    private fun listners() {
         binding.apply {
             ibtnChoosePhoto.setOnClickListener {
                 ImagePicker.Companion.with(this@SignUpContinueFragment)
@@ -53,13 +58,14 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                 when {
                     checkEmpty(tilFirstName) || checkEmpty(tilLastName)  -> {}
                     imageUri==null -> {
-                    makeSnackBar(true, "Please upload an image")
+                        makeSnackBar(true, "Please upload an image")
                     }
                     else -> {
                         showProcessBar()
                         firstName = tilFirstName.editText?.text.toString()
                         lastName = tilLastName.editText?.text.toString()
-                        val user = User(firstName, lastName)
+                        firstName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                        val user = User(capitalize(firstName), capitalize(lastName))
                         if(uid != null) {
                             databaseReference.child(uid!!).setValue(user).addOnSuccessListener {
                                 //successful
@@ -120,6 +126,10 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
 
     private fun hideProcessBar() {
         processing.stopProcessing()
+    }
+
+    private fun capitalize(str: String): String {
+        return str.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     }
 
 

@@ -38,6 +38,9 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         binding.tvSignUp.setOnClickListener {
             goToSingUpFra()
         }
+        binding.tvForgotPassword.setOnClickListener {
+            goToResetPassFra()
+        }
     }
 
     private fun firebaseLogin() {
@@ -85,6 +88,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private fun goToMainFra(){
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToMainFragment())
+    }
+
+    private fun goToResetPassFra() {
+        findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToResetPasswordFragment())
     }
 
 }

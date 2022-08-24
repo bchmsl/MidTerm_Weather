@@ -74,6 +74,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     private var password = ""
     override fun start() {
         firebaseAuth = FirebaseAuth.getInstance()
+        listeners()
+
+
+    }
+
+    private fun listeners() {
         binding.apply {
             ibtnNext.setOnClickListener {
                 //validate data
@@ -88,7 +94,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                         makeSnackBar("Passwords should match")
                     }
                     else -> {
-                    //data is validated, continue signup
+                        //data is validated, continue signup
                         //get data
                         email = binding.tilEmail.editText?.text.toString()
                         password = binding.tilPassword.editText?.text.toString()
@@ -101,8 +107,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 goToLogInFra()
             }
         }
-
-
     }
 
     private fun firebaseSignUp() {

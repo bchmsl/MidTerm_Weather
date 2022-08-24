@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.launch
+import kotlin.reflect.typeOf
 
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
     private val viewModel: MainViewModel by viewModels()
@@ -47,10 +48,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                     val firstname = (it.value as HashMap<*, *>)["firstName"]
                     binding.tvGreeting.text = getString(R.string.welcome_message, firstname)
                 } else {
-                    Snackbar.make(binding.root, "No logged in User's name was found", Snackbar.LENGTH_SHORT)
-                        .setTextMaxLines(2)
-                        .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-                        .show()
+                    handleError("No logged in User's name was found")
                 }
             }
         }
@@ -63,15 +61,15 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                 binding.lpiLoading.isVisible = responseHandler.isLoading
                 when (responseHandler) {
                     is ResponseHandler.Success -> handleForecastSuccess(responseHandler.data)
-                    is ResponseHandler.Error -> handleError(responseHandler.error)
+                    is ResponseHandler.Error -> handleError(responseHandler.error.message!!)
                     else -> {}
                 }
             }
         }
     }
 
-    private fun handleError(error: Throwable) {
-        Snackbar.make(binding.root, "${error.message}", Snackbar.LENGTH_SHORT).show()
+    private fun handleError(error: String) {
+        Snackbar.make(binding.root, error, Snackbar.LENGTH_SHORT).show()
     }
 
     private fun handleForecastSuccess(data: ForecastResponse) {
