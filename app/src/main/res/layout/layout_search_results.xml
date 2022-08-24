@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:background="@drawable/preferences_item"
+    android:fontFamily="@font/opensans_regular"
+    android:gravity="center_vertical"
+    android:padding="10dp"
+    android:textColor="@color/black"
+    android:textSize="20sp"
+    tools:backgroundTint="@color/dark_blue"
+    tools:text="Tbilisi, Dushet'is Raioni, Georgia"
+    tools:textColor="@color/white" />

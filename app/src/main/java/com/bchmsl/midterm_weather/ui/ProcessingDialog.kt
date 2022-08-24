@@ -1,6 +1,5 @@
 package com.bchmsl.midterm_weather.ui
 
-import android.app.Activity
 import android.app.AlertDialog
 import androidx.fragment.app.Fragment
 import com.bchmsl.midterm_weather.R

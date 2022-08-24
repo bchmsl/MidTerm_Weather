@@ -12,7 +12,7 @@ interface WeatherApiClient {
     suspend fun searchCities(
         @Query("key") apiKey: String = BuildConfig.API_KEY,
         @Query("q") query: String
-    ): Response<SearchResponse>
+    ): Response<List<SearchResponse>>
 
     @GET("forecast.json")
     suspend fun getForecast(

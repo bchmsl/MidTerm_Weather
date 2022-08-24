@@ -1,5 +1,6 @@
 package com.bchmsl.midterm_weather.ui.weather.main
 
+import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -7,13 +8,14 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapter.DailyForecastAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentMainBinding
-import com.bchmsl.midterm_weather.extensions.setImage
+import com.bchmsl.midterm_weather.datastore.DataStoreProvider.readDatastoreData
 import com.bchmsl.midterm_weather.extensions.asTemp
+import com.bchmsl.midterm_weather.extensions.makeSnackbar
+import com.bchmsl.midterm_weather.extensions.setImage
 import com.bchmsl.midterm_weather.model.ForecastResponse
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -23,28 +25,27 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     private val viewModel: WeatherViewModel by activityViewModels()
     private val forecastAdapter by lazy { DailyForecastAdapter() }
 
-    private lateinit var firebaseAuth : FirebaseAuth
-    private  lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
     private var uid: String? = null
 
     override fun start() {
         setWelcomeMessage()
-
-        viewModel.getForecast()
-        observers()
+        getForecast()
+        listeners()
     }
 
     private fun setWelcomeMessage() {
         //init firebaseAuth
         firebaseAuth = FirebaseAuth.getInstance()
         //get current user main info
-        val firebaseUser  = firebaseAuth.currentUser
+        val firebaseUser = firebaseAuth.currentUser
         //user id
         uid = firebaseUser?.uid
-        if(uid!=null){
+        if (uid != null) {
             databaseReference = FirebaseDatabase.getInstance().getReference("Users")
             databaseReference.child(uid!!).get().addOnSuccessListener {
-                if (it.exists()){
+                if (it.exists()) {
                     val firstname = (it.value as HashMap<*, *>)["firstName"]
                     binding.tvGreeting.text = getString(R.string.welcome_message, firstname)
                 } else {
@@ -52,13 +53,14 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                 }
             }
         }
-
     }
 
-    private fun observers() {
+    private fun getForecast() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.forecastResponse?.collect { responseHandler ->
+            viewModel.getForecast(getDatastoreValue())
+            viewModel.forecastResponse.collect { responseHandler ->
                 binding.lpiLoading.isVisible = responseHandler.isLoading
+                Log.wtf("TAG", "Observed")
                 when (responseHandler) {
                     is ResponseHandler.Success -> handleForecastSuccess(responseHandler.data)
                     is ResponseHandler.Error -> handleError(responseHandler.error.message!!)
@@ -68,8 +70,12 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         }
     }
 
+    private suspend fun getDatastoreValue(): String {
+        return requireContext().readDatastoreData(defaultValue = "Tbilisi")
+    }
+
     private fun handleError(error: String) {
-        Snackbar.make(binding.root, error, Snackbar.LENGTH_SHORT).show()
+        binding.root.makeSnackbar(error)
     }
 
     private fun handleForecastSuccess(data: ForecastResponse) {
@@ -81,8 +87,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         }
         binding.rvForecast.adapter = forecastAdapter
         forecastAdapter.submitList(data.forecast?.forecastday)
-        listeners()
-
     }
 
     private fun listeners() {
@@ -92,6 +96,9 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
                     index
                 )
             )
+        }
+        binding.ibtnPreferences.setOnClickListener {
+            findNavController().navigate(MainFragmentDirections.actionMainFragmentToPreferencesFragment())
         }
     }
 }

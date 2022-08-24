@@ -33,5 +33,6 @@
     <string name="about_app">About App</string>
     <string name="save">Save</string>
     <string name="feels_like">Feels like: </string>
+    <string name="start_typing_city">Start typing city</string>
 
 </resources>

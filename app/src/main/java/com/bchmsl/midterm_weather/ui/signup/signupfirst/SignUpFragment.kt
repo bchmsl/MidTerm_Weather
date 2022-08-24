@@ -1,70 +1,14 @@
 package com.bchmsl.midterm_weather.ui.signup.signupfirst
 
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpBinding
+import com.bchmsl.midterm_weather.extensions.checkEmpty
+import com.bchmsl.midterm_weather.extensions.isValidEmail
+import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
+import com.bchmsl.midterm_weather.extensions.notGoodPass
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
-
-
-fun checkEmpty(Etext: TextInputLayout): Boolean {
-    return if (Etext.editText?.text.toString().trim().isEmpty()) {
-        Etext.helperText = "Required"
-        true
-    } else {
-        Etext.helperText = ""
-        false
-    }
-}
-
-fun isValidEmail(Etext: TextInputLayout): Boolean {
-    val email = Etext.editText?.text.toString().trim()
-    return if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-        Etext.helperText = "invalid email"
-        false
-    } else {
-        Etext.helperText = ""
-        true
-    }
-}
-
-fun isValidUsername(Etext: TextInputLayout): Boolean {
-    val username = Etext.editText?.text.toString().trim()
-    return if (username.length < 10) {
-        Etext.helperText = "username should be at least 10 characters"
-        false
-    } else {
-        Etext.helperText = ""
-        true
-    }
-
-}
-
-fun notGoodPass(Epassword: TextInputLayout): Boolean {
-    val password = Epassword.editText?.text.toString()
-    when {
-        password.length <= 8 -> {
-            Epassword.helperText = "Password should be more than 8 characters"
-            return true
-        }
-        password.contains(Regex("^[0-9]+[^a-zA-z]*$")) -> {
-            Epassword.helperText = "Password should contain at least one alphabet character"
-            return true
-        }
-        password.contains(Regex("^[a-zA-Z]+[^0-9]*$")) -> {
-            Epassword.helperText = "Password should contain at least one numeric character"
-            return true
-        }
-        else -> {
-            Epassword.helperText = ""
-            return false
-        }
-    }
-}
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     //FirebaseAuth
@@ -84,14 +28,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             ibtnNext.setOnClickListener {
                 //validate data
                 when {
-                    checkEmpty(tilEmail) || checkEmpty(tilPassword) || checkEmpty(
-                        tilRepeatPassword
-                    ) -> {
+                    tilEmail.checkEmpty() || tilPassword.checkEmpty() || tilRepeatPassword.checkEmpty() -> {
                     }
-                    notGoodPass(tilPassword) -> {}
-                    !isValidEmail(tilEmail) -> {}
+                    tilPassword.notGoodPass() -> {}
+                    !tilEmail.isValidEmail() -> {}
                     tilPassword.editText?.text.toString() != tilRepeatPassword.editText?.text.toString() -> {
-                        makeSnackBar("Passwords should match")
+                        binding.root.makeErrorSnackbar("Passwords should match")
                     }
                     else -> {
                         //data is validated, continue signup
@@ -134,15 +76,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 //hide progress bar
                 hideProcessBar()
 
-                makeSnackBar("Sign up failed due to ${e.message}")
+                binding.root.makeErrorSnackbar("Sign up failed due to ${e.message}")
             }
-    }
-
-    private fun makeSnackBar(message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
-            .setTextMaxLines(2)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-            .show()
     }
 
     private fun showProcessBar() {

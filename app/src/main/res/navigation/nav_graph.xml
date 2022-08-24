@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/startFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.bchmsl.midterm_weather.ui.weather.main.MainFragment"
@@ -16,6 +16,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_preferencesFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:destination="@id/preferencesFragment" />
     </fragment>
     <fragment
         android:id="@+id/forecastOpenedFragment"
@@ -91,4 +98,22 @@
             android:id="@+id/action_resetPasswordFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/preferencesFragment"
+        android:name="com.bchmsl.midterm_weather.ui.preferences.PreferencesFragment"
+        android:label="fragment_preferences"
+        tools:layout="@layout/fragment_preferences" >
+        <action
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            android:id="@+id/action_preferencesFragment_to_cityChangeFragment"
+            app:destination="@id/cityChangeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cityChangeFragment"
+        android:name="com.bchmsl.midterm_weather.ui.preferences.changecity.CityChangeFragment"
+        android:label="fragment_city_change"
+        tools:layout="@layout/fragment_city_change" />
 </navigation>

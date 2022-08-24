@@ -1,15 +1,13 @@
 package com.bchmsl.midterm_weather.ui.weather
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bchmsl.midterm_weather.model.ForecastResponse
-import com.bchmsl.midterm_weather.model.SearchResponse
 import com.bchmsl.midterm_weather.network.RetrofitProvider
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class WeatherViewModel : ViewModel() {
@@ -17,30 +15,27 @@ class WeatherViewModel : ViewModel() {
         private val apiClient by lazy { RetrofitProvider.getClient() }
     }
 
-    private val _searchResponse = MutableSharedFlow<ResponseHandler<SearchResponse>>()
-    val searchResponse get() = _searchResponse.asSharedFlow()
+    private var _forecastResponse =
+        MutableStateFlow<ResponseHandler<ForecastResponse>>(ResponseHandler.Loading())
+    val forecastResponse get() = _forecastResponse.asStateFlow()
 
-    private var _forecastResponse: Flow<ResponseHandler<ForecastResponse>>? = null
-    val forecastResponse get() = _forecastResponse
-
-    fun getForecast(city: String = "Tbilisi") {
+    fun getForecast(city: String) {
         viewModelScope.launch {
-            _forecastResponse = flow{
-                try {
-                    val response = apiClient.getForecast(query = city)
-                    if (response.isSuccessful) {
-                        val body = response.body()
-                        if (body != null) {
-                            emit(ResponseHandler.Success(body))
-                        } else {
-                            emit(ResponseHandler.Error(Throwable("Unresolved response")))
-                        }
+            try {
+                val response = apiClient.getForecast(query = city)
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    if (body != null) {
+                        _forecastResponse.emit(ResponseHandler.Success(body))
+                        Log.wtf("TAG", "EMITTED")
                     } else {
-                        emit(ResponseHandler.Error(Throwable("Connection timed out.")))
+                        _forecastResponse.emit(ResponseHandler.Error(Throwable("Unresolved response")))
                     }
-                } catch (e: Throwable) {
-                    emit(ResponseHandler.Error(e))
+                } else {
+                    _forecastResponse.emit(ResponseHandler.Error(Throwable("Connection timed out.")))
                 }
+            } catch (e: Throwable) {
+                _forecastResponse.emit(ResponseHandler.Error(e))
             }
         }
     }

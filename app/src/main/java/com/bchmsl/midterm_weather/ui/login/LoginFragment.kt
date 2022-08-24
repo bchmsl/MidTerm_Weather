@@ -1,18 +1,16 @@
 package com.bchmsl.midterm_weather.ui.login
 
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
+import com.bchmsl.midterm_weather.extensions.isValidEmail
+import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.bchmsl.midterm_weather.ui.signup.signupfirst.isValidEmail
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     // firebaseAuth
-    private lateinit var firebaseAuth : FirebaseAuth
+    private lateinit var firebaseAuth: FirebaseAuth
     private val processing = ProcessingDialog(this)
     private var email = ""
     private var password = ""
@@ -29,8 +27,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
             email = binding.tilEmail.editText?.text.toString()
             password = binding.tilPassword.editText?.text.toString()
             //validate data
-            if(!isValidEmail(binding.tilEmail)) {}
-            else {
+            if (binding.tilEmail.isValidEmail()) {
                 //data is validated, begin login
                 firebaseLogin()
             }
@@ -58,20 +55,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
 
             }
-            .addOnFailureListener{ e->
+            .addOnFailureListener { e ->
                 //login failed
 
                 //hide progress bar
                 hideProcessBar()
-                makeSnackBar("Login failed due to ${e.message}")
+                binding.root.makeErrorSnackbar("Login failed due to ${e.message}")
             }
-    }
-
-    private fun makeSnackBar(message: String){
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
-            .setTextMaxLines(2)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.regular_red))
-            .show()
     }
 
     private fun showProcessBar() {
@@ -82,11 +72,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         processing.stopProcessing()
     }
 
-    private fun goToSingUpFra(){
+    private fun goToSingUpFra() {
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToSignUpFragment())
     }
 
-    private fun goToMainFra(){
+    private fun goToMainFra() {
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToMainFragment())
     }
 

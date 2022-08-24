@@ -5,12 +5,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitProvider {
-    private val retrofit by lazy{
+    private val retrofitClient by lazy{
         Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create())
-            .build()
+            .build().create(WeatherApiClient::class.java)
     }
 
-    fun getClient(): WeatherApiClient = retrofit.create(WeatherApiClient::class.java)
+    fun getClient(): WeatherApiClient = retrofitClient
 }

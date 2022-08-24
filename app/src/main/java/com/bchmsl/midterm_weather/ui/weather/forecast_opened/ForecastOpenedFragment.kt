@@ -36,7 +36,7 @@ class ForecastOpenedFragment :
     private fun setData(index: Int) {
         lifecycleScope.launch {
             binding.apply {
-                viewModel.forecastResponse?.collect { responseHandler ->
+                viewModel.forecastResponse.collect { responseHandler ->
                     when (responseHandler) {
                         is ResponseHandler.Success<*> -> handleForecastSuccess(
                             responseHandler.data as ForecastResponse,

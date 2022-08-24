@@ -9,10 +9,12 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
+import com.bchmsl.midterm_weather.extensions.checkEmpty
+import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
+import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
 import com.bchmsl.midterm_weather.model.User
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.bchmsl.midterm_weather.ui.signup.signupfirst.checkEmpty
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.snackbar.Snackbar
@@ -23,10 +25,11 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.util.*
 
-class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(FragmentSignUpContinueBinding::inflate) {
+class SignUpContinueFragment :
+    BaseFragment<FragmentSignUpContinueBinding>(FragmentSignUpContinueBinding::inflate) {
     // firebaseAuth
-    private lateinit var firebaseAuth : FirebaseAuth
-    private  lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var databaseReference: DatabaseReference
     private lateinit var storageReference: StorageReference
     private val processing = ProcessingDialog(this)
     private var imageUri: Uri? = null
@@ -37,18 +40,18 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         //init firebase
         firebaseAuth = FirebaseAuth.getInstance()
         //get current user main info
-        val firebaseUser  = firebaseAuth.currentUser
+        val firebaseUser = firebaseAuth.currentUser
         //user id
         uid = firebaseUser?.uid
         databaseReference = FirebaseDatabase.getInstance().getReference("Users")
-        listners()
+        listeners()
     }
 
-    private fun listners() {
+    private fun listeners() {
         binding.apply {
             ibtnChoosePhoto.setOnClickListener {
                 ImagePicker.Companion.with(this@SignUpContinueFragment)
-                    .crop(150f,150f)
+                    .crop(150f, 150f)
                     .createIntent { intent ->
                         startForProfileImageResult.launch(intent)
                     }
@@ -56,8 +59,8 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
             }
             ibtnNext.setOnClickListener {
                 when {
-                    checkEmpty(tilFirstName) || checkEmpty(tilLastName)  -> {}
-                    imageUri==null -> {
+                    tilFirstName.checkEmpty() || tilLastName.checkEmpty() -> {}
+                    imageUri == null -> {
                         makeSnackBar(true, "Please upload an image")
                     }
                     else -> {
@@ -66,7 +69,7 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                         lastName = tilLastName.editText?.text.toString()
                         firstName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                         val user = User(capitalize(firstName), capitalize(lastName))
-                        if(uid != null) {
+                        if (uid != null) {
                             databaseReference.child(uid!!).setValue(user).addOnSuccessListener {
                                 //successful
 
@@ -76,12 +79,15 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                                 .addOnFailureListener {
                                     // failed
                                     hideProcessBar()
-                                    makeSnackBar(true,"failed to add additional sign up data  ${it.message}")
+                                    makeSnackBar(
+                                        true,
+                                        "failed to add additional sign up data  ${it.message}"
+                                    )
                                 }
 
                         } else {
                             hideProcessBar()
-                            makeSnackBar(true,"error: user ID is null")
+                            makeSnackBar(true, "error: user ID is null")
                         }
                     }
                 }
@@ -89,34 +95,28 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
         }
     }
 
-    private fun makeSnackBar(isFailure: Boolean, message: String){
-        val snackBar = Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
-            .setTextMaxLines(2)
-        if(isFailure) {
-            snackBar.setBackgroundTint(ContextCompat.getColor(requireContext(),
-                R.color.regular_red
-            ))
+    private fun makeSnackBar(isFailure: Boolean, message: String) {
+        if (isFailure) {
+            binding.root.makeErrorSnackbar(message)
         } else {
-            snackBar.setBackgroundTint(ContextCompat.getColor(requireContext(),
-                R.color.lime
-            ))
+            binding.root.makeSuccessSnackbar(message)
         }
-        snackBar.show()
     }
+
 
     private fun uploadProfilePic() {
         storageReference = FirebaseStorage.getInstance().getReference("Use rs/$uid")
         storageReference.putFile(imageUri!!).addOnSuccessListener {
             hideProcessBar()
-            makeSnackBar(false,"Registration was successful")
+            makeSnackBar(false, "Registration was successful")
             goToMainFra()
         }.addOnFailureListener {
             hideProcessBar()
-        makeSnackBar(true, "Failed to upload this image: ${it.message}")
+            makeSnackBar(true, "Failed to upload this image: ${it.message}")
         }
     }
 
-    private fun goToMainFra(){
+    private fun goToMainFra() {
         findNavController().navigate(SignUpContinueFragmentDirections.actionSignUpContinueFragmentToMainFragment())
     }
 
@@ -153,17 +153,23 @@ class SignUpContinueFragment : BaseFragment<FragmentSignUpContinueBinding>(Fragm
                 ImagePicker.RESULT_ERROR -> {
                     Snackbar.make(binding.root, ImagePicker.getError(data), Snackbar.LENGTH_SHORT)
                         .setTextMaxLines(1)
-                        .setBackgroundTint(ContextCompat.getColor(requireContext(),
-                            R.color.regular_red
-                        ))
+                        .setBackgroundTint(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.regular_red
+                            )
+                        )
                         .show()
                 }
                 else -> {
                     Snackbar.make(binding.root, "Task Cancelled", Snackbar.LENGTH_SHORT)
                         .setTextMaxLines(1)
-                        .setBackgroundTint(ContextCompat.getColor(requireContext(),
-                            R.color.regular_red
-                        ))
+                        .setBackgroundTint(
+                            ContextCompat.getColor(
+                                requireContext(),
+                                R.color.regular_red
+                            )
+                        )
                         .show()
                 }
             }
