@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:fontFamily="@font/opensans_bold"
-        android:text="Welcome\nBack"
+        android:text="@string/welcome_back"
         android:textColor="@color/white"
         android:textSize="50sp"
         app:layout_constraintBottom_toBottomOf="@id/ivDecoration"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Your Email"
+        android:hint="@string/your_email"
         app:errorEnabled="true"
         app:boxBackgroundColor="#1A000000"
         app:boxCornerRadiusBottomEnd="20dp"
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:hint="Password"
+        android:hint="@string/password"
         app:boxBackgroundColor="#1A000000"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
@@ -81,7 +81,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="50dp"
         android:fontFamily="@font/opensans_bold"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:textColor="@color/black"
         android:textSize="40sp"
         app:layout_constraintBottom_toBottomOf="@+id/ibtnNext"
@@ -121,7 +121,7 @@
         android:layout_margin="30dp"
         android:drawableBottom="@color/black"
         android:fontFamily="@font/opensans_bold"
-        android:text="Sign Up"
+        android:text="@string/sign_up"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -145,14 +145,11 @@
         android:layout_margin="30dp"
         android:drawableBottom="@color/black"
         android:fontFamily="@font/opensans_bold"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvSignUp" />
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

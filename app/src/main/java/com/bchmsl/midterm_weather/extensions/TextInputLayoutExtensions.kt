@@ -24,18 +24,6 @@ fun TextInputLayout.isValidEmail(): Boolean {
     }
 }
 
-fun TextInputLayout.isValidUsername(): Boolean {
-    val username = this.editText?.text.toString().trim()
-    return if (username.length < 10) {
-        this.helperText = "username should be at least 10 characters"
-        false
-    } else {
-        this.helperText = ""
-        true
-    }
-
-}
-
 fun TextInputLayout.notGoodPass(): Boolean {
     val password = this.editText?.text.toString()
     when {

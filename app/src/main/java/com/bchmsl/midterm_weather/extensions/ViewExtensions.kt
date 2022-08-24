@@ -1,8 +1,6 @@
 package com.bchmsl.midterm_weather.extensions
 
-import android.content.Context
 import android.view.View
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.app.App
