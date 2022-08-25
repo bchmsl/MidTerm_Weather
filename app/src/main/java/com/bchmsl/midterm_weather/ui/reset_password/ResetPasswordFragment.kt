@@ -31,6 +31,9 @@ class ResetPasswordFragment :
                     }
                 }
             }
+            ibtnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -41,11 +44,11 @@ class ResetPasswordFragment :
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener {
             hideProcessBar()
-            makeSnackBar(false, "Email sent to reset your password")
+            binding.root.makeSuccessSnackbar("Email sent to reset your password")
             goToLogInFra()
         }.addOnFailureListener {
             hideProcessBar()
-            makeSnackBar(true, "failure due to ${it.message}")
+            binding.root.makeErrorSnackbar("failure due to ${it.message}")
         }
     }
 
@@ -61,11 +64,5 @@ class ResetPasswordFragment :
         processing.stopProcessing()
     }
 
-    private fun makeSnackBar(isFailure: Boolean, message: String) {
-        if (isFailure) {
-            binding.root.makeErrorSnackbar(message)
-        } else {
-            binding.root.makeSuccessSnackbar(message)
-        }
+
     }
-}

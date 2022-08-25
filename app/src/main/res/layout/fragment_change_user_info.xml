@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/dark_blue">
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/lpiLoading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminate="true"
+        app:indicatorColor="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:indeterminate="false"
+        tools:progress="56" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView2"
         android:layout_width="match_parent"
@@ -45,6 +56,7 @@
         app:layout_constraintVertical_chainStyle="packed" />
 
     <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnCamera"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_margin="5dp"
@@ -75,6 +87,7 @@
         tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/firstNameUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/opensans_semibold"
@@ -99,6 +112,7 @@
         tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/lastNameUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/opensans_semibold"

@@ -48,6 +48,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
             tvSignIn.setOnClickListener {
                 goToLogInFra()
             }
+            ibtnBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
         }
     }
 

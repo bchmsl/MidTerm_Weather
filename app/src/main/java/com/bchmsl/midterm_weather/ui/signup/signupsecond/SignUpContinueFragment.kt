@@ -5,9 +5,7 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
 import com.bchmsl.midterm_weather.extensions.checkEmpty
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
@@ -17,7 +15,6 @@ import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -61,13 +58,12 @@ class SignUpContinueFragment :
                 when {
                     tilFirstName.checkEmpty() || tilLastName.checkEmpty() -> {}
                     imageUri == null -> {
-                        makeSnackBar(true, "Please upload an image")
+                        binding.root.makeErrorSnackbar("Please upload an image")
                     }
                     else -> {
                         showProcessBar()
                         firstName = tilFirstName.editText?.text.toString()
                         lastName = tilLastName.editText?.text.toString()
-                        firstName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
                         val user = User(capitalize(firstName), capitalize(lastName))
                         if (uid != null) {
                             databaseReference.child(uid!!).setValue(user).addOnSuccessListener {
@@ -79,15 +75,12 @@ class SignUpContinueFragment :
                                 .addOnFailureListener {
                                     // failed
                                     hideProcessBar()
-                                    makeSnackBar(
-                                        true,
-                                        "failed to add additional sign up data  ${it.message}"
-                                    )
+                                    binding.root.makeErrorSnackbar("failed to add additional sign up data  ${it.message}")
                                 }
 
                         } else {
                             hideProcessBar()
-                            makeSnackBar(true, "error: user ID is null")
+                            binding.root.makeErrorSnackbar("error: user ID is null")
                         }
                     }
                 }
@@ -95,24 +88,17 @@ class SignUpContinueFragment :
         }
     }
 
-    private fun makeSnackBar(isFailure: Boolean, message: String) {
-        if (isFailure) {
-            binding.root.makeErrorSnackbar(message)
-        } else {
-            binding.root.makeSuccessSnackbar(message)
-        }
-    }
 
 
     private fun uploadProfilePic() {
-        storageReference = FirebaseStorage.getInstance().getReference("Use rs/$uid")
+        storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
         storageReference.putFile(imageUri!!).addOnSuccessListener {
             hideProcessBar()
-            makeSnackBar(false, "Registration was successful")
+            binding.root.makeSuccessSnackbar("Registration was successful")
             goToMainFra()
         }.addOnFailureListener {
             hideProcessBar()
-            makeSnackBar(true, "Failed to upload this image: ${it.message}")
+            binding.root.makeErrorSnackbar("Failed to upload this image: ${it.message}")
         }
     }
 
@@ -151,26 +137,10 @@ class SignUpContinueFragment :
 
                 }
                 ImagePicker.RESULT_ERROR -> {
-                    Snackbar.make(binding.root, ImagePicker.getError(data), Snackbar.LENGTH_SHORT)
-                        .setTextMaxLines(1)
-                        .setBackgroundTint(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.regular_red
-                            )
-                        )
-                        .show()
+                    binding.root.makeErrorSnackbar(ImagePicker.getError(data))
                 }
                 else -> {
-                    Snackbar.make(binding.root, "Task Cancelled", Snackbar.LENGTH_SHORT)
-                        .setTextMaxLines(1)
-                        .setBackgroundTint(
-                            ContextCompat.getColor(
-                                requireContext(),
-                                R.color.regular_red
-                            )
-                        )
-                        .show()
+                    binding.root.makeErrorSnackbar("Task Cancelled")
                 }
             }
         }

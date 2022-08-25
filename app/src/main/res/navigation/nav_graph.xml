@@ -74,8 +74,7 @@
         <action
             android:id="@+id/action_logInFragment_to_resetPasswordFragment"
             app:destination="@id/resetPasswordFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out" />
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/signUpContinueFragment"
@@ -114,6 +113,9 @@
             app:popExitAnim="@anim/to_right"
             android:id="@+id/action_preferencesFragment_to_changeUserInfoFragment"
             app:destination="@id/changeUserInfoFragment" />
+        <action
+            android:id="@+id/action_preferencesFragment_to_logInFragment"
+            app:destination="@id/logInFragment" />
     </fragment>
     <fragment
         android:id="@+id/cityChangeFragment"
@@ -124,5 +126,9 @@
         tools:layout="@layout/fragment_change_user_info"
         android:id="@+id/changeUserInfoFragment"
         android:name="com.bchmsl.midterm_weather.ui.preferences.changeinfo.ChangeUserInfoFragment"
-        android:label="ChangeUserInfoFragment" />
+        android:label="ChangeUserInfoFragment" >
+        <action
+            android:id="@+id/action_changeUserInfoFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>
