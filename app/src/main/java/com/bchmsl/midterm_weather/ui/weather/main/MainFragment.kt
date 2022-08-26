@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapter.DailyForecastAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentMainBinding
-import com.bchmsl.midterm_weather.datastore.DataStoreProvider.readDatastoreData
 import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.extensions.setImage
@@ -35,6 +34,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         getForecast()
         listeners()
     }
+
 
     private fun setWelcomeMessage() {
         //init firebaseAuth
