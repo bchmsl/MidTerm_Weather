@@ -10,18 +10,17 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapter.SearchAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentCityChangeBinding
-import com.bchmsl.midterm_weather.datastore.DataStoreProvider.writeData
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.model.SearchResponse
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import kotlinx.coroutines.launch
 
-
 class CityChangeFragment :
     BaseFragment<FragmentCityChangeBinding>(FragmentCityChangeBinding::inflate) {
     private val viewModel: CityChangeViewModel by viewModels()
     private val searchAdapter by lazy { SearchAdapter() }
+
     override fun start() {
         listeners()
         setupRecycler()
@@ -37,9 +36,7 @@ class CityChangeFragment :
         }
         searchAdapter.itemClick = {
             lifecycleScope.launch {
-                if (it.name != null) {
-                    requireContext().writeData(it.name)
-                }
+                viewModel.saveCity(it)
             }.invokeOnCompletion {
                 findNavController().popBackStack(R.id.mainFragment, false)
             }

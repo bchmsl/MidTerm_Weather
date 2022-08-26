@@ -19,6 +19,7 @@ import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
@@ -57,7 +58,8 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
     private fun getForecast() {
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.getForecast(getDatastoreValue())
+            viewModel.getDatastoreValue()
+            viewModel.readCityName?.firstOrNull()?.let { viewModel.getForecast(it) }
             viewModel.forecastResponse.collect { responseHandler ->
                 binding.lpiLoading.isVisible = responseHandler.isLoading
                 Log.wtf("TAG", "Observed")
@@ -70,9 +72,6 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         }
     }
 
-    private suspend fun getDatastoreValue(): String {
-        return requireContext().readDatastoreData(defaultValue = "Tbilisi")
-    }
 
     private fun handleError(error: String) {
         binding.root.makeSnackbar(error)

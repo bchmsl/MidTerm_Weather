@@ -2,6 +2,8 @@ package com.bchmsl.midterm_weather.ui.preferences.changecity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bchmsl.midterm_weather.app.App
+import com.bchmsl.midterm_weather.datastore.DataStoreProvider.writeData
 import com.bchmsl.midterm_weather.model.SearchResponse
 import com.bchmsl.midterm_weather.network.RetrofitProvider
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
@@ -35,7 +37,12 @@ class CityChangeViewModel: ViewModel() {
             } catch (e: Throwable) {
                 _searchResponse.emit(ResponseHandler.Error(e))
             }
+        }
+    }
 
+    suspend fun saveCity(query: SearchResponse){
+        if (query.name != null) {
+            App.context.writeData(query.name)
         }
     }
 }
