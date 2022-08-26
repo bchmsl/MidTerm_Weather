@@ -3,7 +3,7 @@ package com.bchmsl.midterm_weather.extensions
 import com.google.android.material.textfield.TextInputLayout
 
 
-fun TextInputLayout.checkEmpty(): Boolean {
+fun TextInputLayout.isFieldEmpty(): Boolean {
     return if (this.editText?.text.toString().trim().isEmpty()) {
         this.helperText = "Required"
         true

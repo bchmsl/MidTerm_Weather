@@ -50,7 +50,7 @@ class CityChangeFragment :
                 viewModel.searchResponse.collect { responseHandler ->
                     binding.lpiSearch.isVisible = responseHandler.isLoading
                     when (responseHandler) {
-                        is ResponseHandler.Success -> handleSearchSuccess(responseHandler.data)
+                        is ResponseHandler.Success -> handleSearchSuccess(responseHandler.data!!)
                         is ResponseHandler.Error -> handleError(responseHandler.error.message!!)
                         else -> {}
                     }

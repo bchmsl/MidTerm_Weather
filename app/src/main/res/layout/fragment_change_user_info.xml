@@ -49,7 +49,7 @@
         android:layout_marginTop="50dp"
         app:civ_border_color="@color/white"
         app:civ_border_width="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/tilEmail"
+        app:layout_constraintBottom_toTopOf="@+id/tilFirstName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvProfileInfoTitle"
@@ -70,24 +70,23 @@
         app:layout_constraintEnd_toEndOf="@id/imageUser" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilEmail"
+        android:id="@+id/tilFirstName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="10dp"
-        android:hint="First Name"
+        android:hint="@string/first_name"
         app:boxBackgroundColor="#DAFFFFFF"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
         app:boxCornerRadiusTopStart="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/tilPassword"
+        app:layout_constraintBottom_toTopOf="@+id/tilLastName"
         app:layout_constraintTop_toBottomOf="@+id/imageUser"
         tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/firstNameUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/opensans_semibold"
@@ -95,24 +94,23 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilPassword"
+        android:id="@+id/tilLastName"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:layout_marginVertical="10dp"
-        android:hint="Last Name"
+        android:hint="@string/last_name"
         app:boxBackgroundColor="#DAFFFFFF"
         app:boxCornerRadiusBottomEnd="20dp"
         app:boxCornerRadiusBottomStart="20dp"
         app:boxCornerRadiusTopEnd="20dp"
         app:boxCornerRadiusTopStart="20dp"
         app:layout_constraintBottom_toTopOf="@+id/tvFinishedEditing"
-        app:layout_constraintTop_toBottomOf="@+id/tilEmail"
+        app:layout_constraintTop_toBottomOf="@+id/tilFirstName"
         tools:layout_editor_absoluteX="10dp">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/lastNameUser"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/opensans_semibold"
@@ -126,13 +124,13 @@
         android:layout_marginTop="60dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/opensans_light"
-        android:text="Finished editing?"
+        android:text="@string/finished_editing"
         android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/btnSave"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tilPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tilLastName"
         tools:layout_editor_absoluteX="122dp" />
 
     <com.google.android.material.button.MaterialButton

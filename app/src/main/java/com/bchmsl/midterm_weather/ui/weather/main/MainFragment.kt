@@ -77,15 +77,15 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.root.makeSnackbar(error)
     }
 
-    private fun handleForecastSuccess(data: ForecastResponse) {
+    private fun handleForecastSuccess(data: ForecastResponse?) {
         binding.apply {
-            tvCityName.text = data.location?.name
-            tvCondition.text = data.current?.condition?.text
-            tvCurrentTemperature.text = data.current?.tempC?.asTemp()
-            ivIcon.setImage(data.current?.condition?.icon)
+            tvCityName.text = data?.location?.name
+            tvCondition.text = data?.current?.condition?.text
+            tvCurrentTemperature.text = data?.current?.tempC?.asTemp()
+            ivIcon.setImage(data?.current?.condition?.icon)
         }
         binding.rvForecast.adapter = forecastAdapter
-        forecastAdapter.submitList(data.forecast?.forecastday)
+        forecastAdapter.submitList(data?.forecast?.forecastday)
     }
 
     private fun listeners() {

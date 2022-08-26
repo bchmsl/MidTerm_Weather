@@ -1,80 +1,86 @@
 package com.bchmsl.midterm_weather.ui.login
 
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
-import com.bchmsl.midterm_weather.extensions.checkEmpty
+import com.bchmsl.midterm_weather.extensions.isFieldEmpty
 import com.bchmsl.midterm_weather.extensions.isValidEmail
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
+import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     // firebaseAuth
-    private lateinit var firebaseAuth : FirebaseAuth
+    private val viewModel:LoginViewModel by viewModels()
     private val processing = ProcessingDialog(this)
-    private var email = ""
-    private var password = ""
 
     override fun start() {
         //init firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance()
         listeners()
     }
 
     private fun listeners() {
         binding.ibtnNext.setOnClickListener {
             //get data
-            email = binding.tilEmail.editText?.text.toString()
-            password = binding.tilPassword.editText?.text.toString()
+            val email = binding.tilEmail.editText?.text.toString()
+            val password = binding.tilPassword.editText?.text.toString()
             //validate data
-            when {
-                !binding.tilEmail.isValidEmail() -> {}
-                binding.tilPassword.checkEmpty() -> {}
-                else -> {
-                    //data is validated, begin login
-                    firebaseLogin()
-                }
+            if (checkFields()){
+                firebaseLogin(email, password)
             }
         }
         binding.tvSignUp.setOnClickListener {
-            goToSingUpFra()
+            goToSignUpFra()
         }
         binding.tvForgotPassword.setOnClickListener {
             goToResetPassFra()
         }
     }
 
-    private fun firebaseLogin() {
+    private fun firebaseLogin(email: String, password: String) {
         //show progress bar
         showProcessBar()
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                //login success
-                val firebaseUser = firebaseAuth.currentUser
-                if(!firebaseUser!!.isEmailVerified){
-                binding.root.makeSnackbar("Please Validate Email")
+        viewModel.loginUser(email, password)
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.signInResponse.collect{
+                    when(it){
+                        is ResponseHandler.Success<*> -> {handleSuccess(it.data as FirebaseUser)}
+                        is ResponseHandler.Error -> {handleError(it.error)}
+                        else -> {}
+                    }
                 }
-                    //hide progress bar
-                    hideProcessBar()
-
-                    //go to LoggedIn/profile Fragment
-                    goToMainFra()
-
             }
-            .addOnFailureListener{ e->
-                //login failed
-
-                //hide progress bar
-                hideProcessBar()
-                binding.root.makeErrorSnackbar("Login failed due to ${e.message}")
-            }
+        }
     }
 
+    private fun handleError(e: Throwable) {
+        hideProcessBar()
+        binding.root.makeErrorSnackbar("Login failed due to ${e.message}")
+    }
+
+    private fun handleSuccess(user: FirebaseUser?) {
+        hideProcessBar()
+        if(!user!!.isEmailVerified){
+            binding.root.makeSnackbar("Please Validate Email")
+        }
+        goToMainFra()
+    }
+
+    private fun checkFields():Boolean{
+        return when {
+            !binding.tilEmail.isValidEmail() -> false
+            binding.tilPassword.isFieldEmpty() -> false
+            else -> true
+        }
+    }
 
 
     private fun showProcessBar() {
@@ -85,7 +91,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         processing.stopProcessing()
     }
 
-    private fun goToSingUpFra(){
+    private fun goToSignUpFra(){
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToSignUpFragment())
     }
 
@@ -96,5 +102,4 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun goToResetPassFra() {
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToResetPasswordFragment())
     }
-
 }

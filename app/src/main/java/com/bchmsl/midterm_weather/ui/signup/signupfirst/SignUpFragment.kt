@@ -1,44 +1,36 @@
 package com.bchmsl.midterm_weather.ui.signup.signupfirst
 
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpBinding
 import com.bchmsl.midterm_weather.extensions.*
+import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
     //FirebaseAuth
-    private lateinit var firebaseAuth: FirebaseAuth
+    val viewModel: SignUpViewModel by viewModels()
     private val processing = ProcessingDialog(this)
-    private var email = ""
-    private var password = ""
     override fun start() {
-        firebaseAuth = FirebaseAuth.getInstance()
         listeners()
-
-
     }
 
     private fun listeners() {
         binding.apply {
             ibtnNext.setOnClickListener {
                 //validate data
-                when {
-                    tilEmail.checkEmpty() || tilPassword.checkEmpty() || tilRepeatPassword.checkEmpty() -> {
-                    }
-                    tilPassword.notGoodPass() -> {}
-                    !tilEmail.isValidEmail() -> {}
-                    tilPassword.editText?.text.toString() != tilRepeatPassword.editText?.text.toString() -> {
-                        binding.root.makeErrorSnackbar("Passwords should match")
-                    }
-                    else -> {
-                        //data is validated, continue signup
-                        //get data
-                        email = binding.tilEmail.editText?.text.toString()
-                        password = binding.tilPassword.editText?.text.toString()
-                        firebaseSignUp()
-                    }
+                if (checkFields()) {
+                    val email = tilEmail.editText?.text.toString()
+                    val password = tilPassword.editText?.text.toString()
+                    firebaseSignUp(email, password)
                 }
 
             }
@@ -51,34 +43,56 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         }
     }
 
-    private fun firebaseSignUp() {
+    private fun firebaseSignUp(email: String, password: String) {
         //show progress bar
         showProcessBar()
         //create account
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                //sing up success
-
-                //hide progress bar
-                hideProcessBar()
-
-                //get current use
-                val firebaseUser = firebaseAuth.currentUser
-                firebaseUser?.sendEmailVerification()
-                val email = firebaseUser!!.email
-//                Toast.makeText(requireContext(), "Almost done", Toast.LENGTH_SHORT ).show()
-                //go to fragment of second part of registration
-                goToSingUpContinueFra()
-
+        viewModel.signupUser(email, password)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.signUnResponse.collect {
+                    when (it) {
+                        is ResponseHandler.Success<*> -> {
+                            handleSuccess(it.data as FirebaseUser)
+                        }
+                        is ResponseHandler.Error -> {
+                            handleError(it.error)
+                        }
+                        else -> {}
+                    }
+                }
             }
-            .addOnFailureListener { e ->
-                //sing up failed
+        }
+    }
 
-                //hide progress bar
-                hideProcessBar()
+    private fun handleError(e: Throwable) {
+        hideProcessBar()
+        binding.root.makeErrorSnackbar("Sign up failed due to ${e.message}")
+    }
 
-                binding.root.makeErrorSnackbar("Sign up failed due to ${e.message}")
+    private fun handleSuccess(firebaseUser: FirebaseUser) {
+        hideProcessBar()
+        firebaseUser.sendEmailVerification()
+        goToSingUpContinueFra()
+    }
+
+    private fun checkFields(): Boolean {
+        binding.apply {
+            return when {
+                tilEmail.isFieldEmpty() || tilPassword.isFieldEmpty() || tilRepeatPassword.isFieldEmpty() -> false
+                tilPassword.notGoodPass() -> false
+                !tilEmail.isValidEmail() -> false
+                tilPassword.editText?.text.toString() != tilRepeatPassword.editText?.text.toString() -> {
+                    binding.root.makeErrorSnackbar("Passwords should match")
+                    false
+                }
+                else -> {
+                    //data is validated, continue signup
+                    //get data
+                    true
+                }
             }
+        }
     }
 
     private fun showProcessBar() {
@@ -89,7 +103,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         processing.stopProcessing()
     }
 
-
     private fun goToSingUpContinueFra() {
         findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToSignUpContinueFragment())
     }
@@ -97,6 +110,4 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     private fun goToLogInFra() {
         findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
     }
-
-
 }

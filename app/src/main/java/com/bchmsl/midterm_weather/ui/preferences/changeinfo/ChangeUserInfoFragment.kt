@@ -8,40 +8,31 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentChangeUserInfoBinding
+import com.bchmsl.midterm_weather.extensions.capitalizeFirstChar
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
-import com.bchmsl.midterm_weather.ui.ProcessingDialog
+import com.bchmsl.midterm_weather.firebase.Firebase
+import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.bchmsl.midterm_weather.ui.login.LoginFragmentDirections
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.database.DataSnapshot
+import kotlinx.coroutines.launch
 import java.io.File
-import java.util.*
-import kotlin.collections.HashMap
 
 class ChangeUserInfoFragment :
     BaseFragment<FragmentChangeUserInfoBinding>(FragmentChangeUserInfoBinding::inflate) {
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var storageReference: StorageReference
-    private val processing = ProcessingDialog(this)
+    private val viewModel: ChangeUserInfoViewModel by viewModels()
     private var imageUri: Uri? = null
-    private var firstName = ""
-    private var lastName = ""
-    private var uid: String? = null
+    private val uid: String? by lazy { Firebase.firebaseAuth.uid }
     override fun start() {
         getUserInfo()
         listeners()
-
     }
 
     private fun getUserInfo() {
@@ -49,45 +40,61 @@ class ChangeUserInfoFragment :
         binding.lpiLoading.visibility = View.VISIBLE
         //disable save button while loading is happening
         disableSaveButton()
-        //init firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance()
-        //get current user main info
-        val firebaseUser = firebaseAuth.currentUser
         //user id
-        uid = firebaseUser?.uid
         if (uid != null) {
-            databaseReference = FirebaseDatabase.getInstance().getReference("Users")
-            databaseReference.child(uid!!).get().addOnSuccessListener { it ->
-                if (it.exists()) {
-                    firstName = (it.value as HashMap<*, *>)["firstName"].toString()
-                    lastName = (it.value as HashMap<*, *>)["lastName"].toString()
-                    //get image
-                    storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
-                    val localFile: File = File.createTempFile("tempFile", "jpg")
-                    storageReference.getFile(localFile).addOnSuccessListener {
-                        binding.apply {
-                            firstNameUser.setText(firstName)
-                            lastNameUser.setText(lastName)
-                            val bitmap: Bitmap =
-                                BitmapFactory.decodeFile(localFile.absolutePath)
-                            imageUser.setImageBitmap(bitmap)
+            viewModel.getUserInfo(uid!!)
+            lifecycleScope.launch {
+                viewModel.userInfoResponse.collect {
+                    when (it) {
+                        is ResponseHandler.Success<*> -> {
+                            handleUserInfoSuccess(it.data as DataSnapshot)
                         }
-                        hideLoading()
-                        //enable save button after loading finished
-                        enableSaveButton()
-                    }.addOnFailureListener { exception ->
-                        handleError("image:" + exception.message!!)
-                        hideLoading()
+                        is ResponseHandler.Error -> {
+                            handleError(it.error)
+                        }
+                        else -> {}
                     }
-
-                } else {
-                    handleError("No logged in User's info was found")
-                    //hide loading bar
-                    hideLoading()
                 }
             }
         }
+    }
 
+    private fun handleUserInfoSuccess(dataSnapshot: DataSnapshot) {
+        if (dataSnapshot.exists()) {
+            val firstName = (dataSnapshot.value as HashMap<*, *>)["firstName"].toString()
+            val lastName = (dataSnapshot.value as HashMap<*, *>)["lastName"].toString()
+            //get image
+            val localFile = File.createTempFile("tempFile", "jpg")
+            viewModel.getUserImage(uid!!, localFile)
+            lifecycleScope.launch {
+                viewModel.userImageResponse.collect {
+                    when (it) {
+                        is ResponseHandler.Success<*> -> {
+                            handleUserImageSuccess(localFile, firstName, lastName)
+                        }
+                        is ResponseHandler.Error -> {
+                            handleError(Throwable("image: ${it.error.message!!}"))
+                        }
+                        else -> {}
+                    }
+                }
+            }
+        } else {
+            handleError(Throwable("No logged in User's info was found"))
+        }
+    }
+
+    private fun handleUserImageSuccess(localFile: File, firstName: String, lastName: String) {
+        binding.apply {
+            tilFirstName.editText?.setText(firstName)
+            tilLastName.editText?.setText(lastName)
+            val bitmap: Bitmap =
+                BitmapFactory.decodeFile(localFile.absolutePath)
+            imageUser.setImageBitmap(bitmap)
+        }
+        hideLoading()
+        //enable save button after loading finished
+        enableSaveButton()
     }
 
     private fun disableSaveButton() {
@@ -127,28 +134,27 @@ class ChangeUserInfoFragment :
 
     private fun updateInfo() {
         binding.apply {
-            databaseReference = FirebaseDatabase.getInstance().getReference("Users")
-            val thisUserInfo = databaseReference.child(uid!!)
-            thisUserInfo.child("firstName").setValue(capitalize(firstNameUser.text.toString()))
-            thisUserInfo.child("lastName").setValue(capitalize(lastNameUser.text.toString()))
-            storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
-            if (imageUri != null) storageReference.putFile(imageUri!!)
+            if (imageUri != null){
+                viewModel.updateUserInfo(
+                    uid!!,
+                    tilFirstName.editText?.text.toString().capitalizeFirstChar(),
+                    tilLastName.editText?.text.toString().capitalizeFirstChar(),
+                    imageUri!!
+                )
+            }
             root.makeSuccessSnackbar("Success")
             goToMainFra()
 
         }
     }
 
-    private fun handleError(error: String) {
-        binding.root.makeSnackbar(error)
+    private fun handleError(error: Throwable) {
+        binding.root.makeSnackbar(error.message.toString())
+        hideLoading()
     }
 
     private fun goToMainFra() {
         findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToMainFragment())
-    }
-
-    private fun capitalize(str: String): String {
-        return str.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
     }
 
     private val startForProfileImageResult =

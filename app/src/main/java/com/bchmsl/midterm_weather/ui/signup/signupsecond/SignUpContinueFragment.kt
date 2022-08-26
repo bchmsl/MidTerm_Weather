@@ -5,100 +5,130 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
-import com.bchmsl.midterm_weather.extensions.checkEmpty
+import com.bchmsl.midterm_weather.extensions.isFieldEmpty
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
+import com.bchmsl.midterm_weather.firebase.Firebase
 import com.bchmsl.midterm_weather.model.User
+import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.*
 
 class SignUpContinueFragment :
     BaseFragment<FragmentSignUpContinueBinding>(FragmentSignUpContinueBinding::inflate) {
     // firebaseAuth
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var storageReference: StorageReference
     private val processing = ProcessingDialog(this)
     private var imageUri: Uri? = null
-    private var firstName = ""
-    private var lastName = ""
-    private var uid: String? = null
+    private val uid: String? by lazy { Firebase.firebaseAuth.currentUser?.uid }
+
+    private val viewModel: SignUpContinueViewModel by viewModels()
     override fun start() {
-        //init firebase
-        firebaseAuth = FirebaseAuth.getInstance()
-        //get current user main info
-        val firebaseUser = firebaseAuth.currentUser
-        //user id
-        uid = firebaseUser?.uid
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         listeners()
     }
 
     private fun listeners() {
         binding.apply {
             ibtnChoosePhoto.setOnClickListener {
-                ImagePicker.Companion.with(this@SignUpContinueFragment)
-                    .crop(150f, 150f)
-                    .createIntent { intent ->
-                        startForProfileImageResult.launch(intent)
-                    }
-
+                choosePhoto()
             }
             ibtnNext.setOnClickListener {
-                when {
-                    tilFirstName.checkEmpty() || tilLastName.checkEmpty() -> {}
-                    imageUri == null -> {
-                        binding.root.makeErrorSnackbar("Please upload an image")
-                    }
-                    else -> {
-                        showProcessBar()
-                        firstName = tilFirstName.editText?.text.toString()
-                        lastName = tilLastName.editText?.text.toString()
-                        val user = User(capitalize(firstName), capitalize(lastName))
-                        if (uid != null) {
-                            databaseReference.child(uid!!).setValue(user).addOnSuccessListener {
-                                //successful
-
-                                //now uploading profile picture
-                                uploadProfilePic()
-                            }
-                                .addOnFailureListener {
-                                    // failed
-                                    hideProcessBar()
-                                    binding.root.makeErrorSnackbar("failed to add additional sign up data  ${it.message}")
-                                }
-
-                        } else {
-                            hideProcessBar()
-                            binding.root.makeErrorSnackbar("error: user ID is null")
-                        }
-                    }
+                if (checkFields()) {
+                    uploadToDatabase()
                 }
             }
         }
     }
 
+    private fun choosePhoto() {
+        ImagePicker.Companion.with(this@SignUpContinueFragment)
+            .crop(150f, 150f)
+            .createIntent { intent ->
+                startForProfileImageResult.launch(intent)
+            }
+    }
+
+    private fun uploadToDatabase() {
+        binding.apply {
+            showProcessBar()
+            val firstName = tilFirstName.editText?.text.toString()
+            val lastName = tilLastName.editText?.text.toString()
+            val user = User(capitalize(firstName), capitalize(lastName))
+            if (uid != null) {
+                viewModel.addToDatabase(uid!!, user)
+                lifecycleScope.launch {
+                    viewModel.addToDatabaseResponse.collect {
+                        when (it) {
+                            is ResponseHandler.Success<*> -> {
+                                uploadProfilePic()
+                            }
+                            is ResponseHandler.Error -> {
+                                handleError(Throwable("failed to add additional sign up data  ${it.error.message}"))
+                            }
+                            else -> {}
+                        }
+                    }
+                }
+            } else {
+                hideProcessBar()
+                handleError(Throwable("error: user ID is null"))
+            }
+        }
+    }
 
 
     private fun uploadProfilePic() {
-        storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
-        storageReference.putFile(imageUri!!).addOnSuccessListener {
-            hideProcessBar()
-            binding.root.makeSuccessSnackbar("Registration was successful")
-            goToMainFra()
-        }.addOnFailureListener {
-            hideProcessBar()
-            binding.root.makeErrorSnackbar("Failed to upload this image: ${it.message}")
+        viewModel.uploadProfilePic(uid, imageUri)
+        lifecycleScope.launch {
+            viewModel.uploadProfilePicResponse.collect {
+                when (it) {
+                    is ResponseHandler.Success<*> -> {
+                        handleUploadProfilePicSuccess()
+                    }
+                    is ResponseHandler.Error -> {
+                        handleError(Throwable("Failed to upload this image: ${it.error.message}"))
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun handleUploadProfilePicSuccess() {
+        hideProcessBar()
+        binding.root.makeSuccessSnackbar("Registration was successful")
+        goToMainFra()
+    }
+
+    private fun handleError(error: Throwable) {
+        hideProcessBar()
+        binding.root.makeErrorSnackbar(error.message!!)
+    }
+
+    private fun checkFields(): Boolean {
+        binding.apply {
+            return when {
+                tilFirstName.isFieldEmpty() || tilLastName.isFieldEmpty() -> false
+                imageUri == null -> {
+                    handleError(Throwable("Please upload an image"))
+                    false
+                }
+                else -> true
+            }
         }
     }
 

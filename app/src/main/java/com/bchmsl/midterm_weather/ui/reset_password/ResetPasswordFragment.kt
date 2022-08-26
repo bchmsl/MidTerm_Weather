@@ -1,19 +1,24 @@
 package com.bchmsl.midterm_weather.ui.reset_password
 
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentResetPasswordBinding
-import com.bchmsl.midterm_weather.extensions.checkEmpty
+import com.bchmsl.midterm_weather.extensions.isFieldEmpty
 import com.bchmsl.midterm_weather.extensions.isValidEmail
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
+import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.launch
 
 class ResetPasswordFragment :
     BaseFragment<FragmentResetPasswordBinding>(FragmentResetPasswordBinding::inflate) {
     // firebaseAuth
-    private lateinit var firebaseAuth: FirebaseAuth
+    private val viewModel: ResetPasswordViewModel by viewModels()
     private val processing = ProcessingDialog(this)
     override fun start() {
         listeners()
@@ -24,7 +29,7 @@ class ResetPasswordFragment :
             ibtnNext.setOnClickListener {
                 val email: String = tilEmail.editText!!.text.toString()
                 when {
-                    tilEmail.checkEmpty() -> {}
+                    tilEmail.isFieldEmpty() -> {}
                     !tilEmail.isValidEmail() -> {}
                     else -> {
                         resetPassword(email)
@@ -39,17 +44,31 @@ class ResetPasswordFragment :
 
     private fun resetPassword(email: String) {
         showProcessBar()
-
-        //init firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance()
-        firebaseAuth.sendPasswordResetEmail(email).addOnSuccessListener {
-            hideProcessBar()
-            binding.root.makeSuccessSnackbar("Email sent to reset your password")
-            goToLogInFra()
-        }.addOnFailureListener {
-            hideProcessBar()
-            binding.root.makeErrorSnackbar("failure due to ${it.message}")
+        viewModel.resetPassword(email)
+        lifecycleScope.launch {
+            viewModel.resetPasswordResponse.collect {
+                when (it) {
+                    is ResponseHandler.Success<*> -> {
+                        handleSuccess()
+                    }
+                    is ResponseHandler.Error -> {
+                        handleError(it.error)
+                    }
+                    else -> {}
+                }
+            }
         }
+    }
+
+    private fun handleSuccess() {
+        hideProcessBar()
+        binding.root.makeSuccessSnackbar("Email sent to reset your password")
+        goToLogInFra()
+    }
+
+    private fun handleError(e: Throwable) {
+        hideProcessBar()
+        binding.root.makeErrorSnackbar("failure due to ${e.message}")
     }
 
     private fun goToLogInFra() {
@@ -63,6 +82,4 @@ class ResetPasswordFragment :
     private fun hideProcessBar() {
         processing.stopProcessing()
     }
-
-
-    }
+}

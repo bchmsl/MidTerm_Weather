@@ -10,3 +10,6 @@ fun String.toWeekday(): String {
     return outputFormat.format(date)
 }
 
+fun String.capitalizeFirstChar(): String =
+    this.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+

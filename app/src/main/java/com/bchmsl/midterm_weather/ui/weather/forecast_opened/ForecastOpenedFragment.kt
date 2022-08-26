@@ -14,6 +14,7 @@ import com.bchmsl.midterm_weather.model.ForecastResponse
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
+import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.launch
 
 
