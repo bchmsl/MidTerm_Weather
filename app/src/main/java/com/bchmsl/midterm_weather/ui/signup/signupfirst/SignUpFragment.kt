@@ -6,13 +6,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpBinding
-import com.bchmsl.midterm_weather.extensions.*
+import com.bchmsl.midterm_weather.extensions.isFieldEmpty
+import com.bchmsl.midterm_weather.extensions.isValidEmail
+import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
+import com.bchmsl.midterm_weather.extensions.notGoodPass
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {

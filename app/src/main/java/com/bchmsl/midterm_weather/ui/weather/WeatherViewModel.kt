@@ -1,7 +1,6 @@
 package com.bchmsl.midterm_weather.ui.weather
 
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bchmsl.midterm_weather.app.App

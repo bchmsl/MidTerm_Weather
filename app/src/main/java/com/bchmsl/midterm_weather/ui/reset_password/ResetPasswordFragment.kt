@@ -11,8 +11,6 @@ import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
 class ResetPasswordFragment :
