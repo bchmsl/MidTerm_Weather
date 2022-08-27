@@ -42,5 +42,7 @@
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="finished_editing">Finished editing?</string>
+    <string name="emailVerStatus">Email: %1$s</string>
+    <string name="sign_out_verify">Sign out and Verify</string>
 
 </resources>

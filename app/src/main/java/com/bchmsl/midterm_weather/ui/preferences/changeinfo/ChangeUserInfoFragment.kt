@@ -11,6 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentChangeUserInfoBinding
 import com.bchmsl.midterm_weather.extensions.capitalizeFirstChar
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
@@ -32,7 +33,19 @@ class ChangeUserInfoFragment :
     private val uid: String? by lazy { Firebase.firebaseAuth.uid }
     override fun start() {
         getUserInfo()
+        checkEmailVerification()
         listeners()
+    }
+
+    private fun checkEmailVerification() {
+        if(viewModel.isEmailVerified()==true) {
+            binding.EmailVerStatus.text = getString(R.string.emailVerStatus, "Verified")
+        }
+        else {
+            binding.EmailVerStatus.text = getString(R.string.emailVerStatus, "Not verified")
+            binding.btnVerify.visibility = View.VISIBLE
+        }
+        binding.EmailVerStatus.visibility = View.VISIBLE
     }
 
     private fun getUserInfo() {
@@ -130,6 +143,20 @@ class ChangeUserInfoFragment :
                 }
 
         }
+        binding.btnVerify.setOnClickListener {
+            sendVerification()
+            signOut()
+        }
+    }
+
+    private fun signOut() {
+        viewModel.signOut()
+        goToLoginFra()
+    }
+
+    private fun sendVerification() {
+        viewModel.sendEmailVerification()
+        binding.root.makeSnackbar("Verification email was sent")
     }
 
     private fun updateInfo() {
@@ -155,6 +182,10 @@ class ChangeUserInfoFragment :
 
     private fun goToMainFra() {
         findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToMainFragment())
+    }
+
+    private fun goToLoginFra(){
+        findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToLogInFragment())
     }
 
     private val startForProfileImageResult =

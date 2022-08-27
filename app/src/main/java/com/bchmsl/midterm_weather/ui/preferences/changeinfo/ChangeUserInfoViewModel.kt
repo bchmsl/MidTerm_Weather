@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.bchmsl.midterm_weather.firebase.Firebase
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.google.firebase.database.DataSnapshot
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
 
@@ -41,4 +39,14 @@ class ChangeUserInfoViewModel: ViewModel() {
     fun updateUserInfo(uid:String, firstName: String, lastName: String, imageUri: Uri){
         Firebase.updateUserInfo(uid, firstName, lastName, imageUri)
     }
+
+    fun isEmailVerified(): Boolean?{
+       return Firebase.emailVerificationStatus()
+    }
+
+    fun sendEmailVerification(){
+        Firebase.sendEmailVerification()
+    }
+
+    fun signOut() = Firebase.signOut()
 }

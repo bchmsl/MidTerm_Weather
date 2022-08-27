@@ -43,4 +43,10 @@ object Firebase {
 
     fun resetPassword(email: String) = firebaseAuth.sendPasswordResetEmail(email)
 
+    fun emailVerificationStatus() = firebaseAuth.currentUser?.isEmailVerified
+
+    fun sendEmailVerification() = firebaseAuth.currentUser?.sendEmailVerification()
+
+    fun signOut() = firebaseAuth.signOut()
+
 }

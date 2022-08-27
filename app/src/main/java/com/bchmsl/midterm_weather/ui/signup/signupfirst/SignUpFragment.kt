@@ -72,7 +72,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
     private fun handleSuccess(firebaseUser: FirebaseUser) {
         hideProcessBar()
-        firebaseUser.sendEmailVerification()
         goToSingUpContinueFra()
     }
 
