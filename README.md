@@ -1,7 +1,7 @@
 
 Weather App
 
-This is a weather app. It shows forecast of upcoming 7 days including todays'. It also has user authentification system.
+This is a weather app. It shows forecast of upcoming 7 days including today's. It also has user authentification system.
 
 
 ## Features
