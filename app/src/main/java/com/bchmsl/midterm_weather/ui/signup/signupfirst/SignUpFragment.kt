@@ -6,10 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpBinding
-import com.bchmsl.midterm_weather.extensions.isFieldEmpty
-import com.bchmsl.midterm_weather.extensions.isValidEmail
-import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
-import com.bchmsl.midterm_weather.extensions.notGoodPass
+import com.bchmsl.midterm_weather.extensions.*
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
@@ -26,6 +23,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     private fun listeners() {
         binding.apply {
             ibtnNext.setOnClickListener {
+                it.hideKeyboard()
                 //validate data
                 if (checkFields()) {
                     val email = tilEmail.editText?.text.toString()
@@ -35,9 +33,11 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
             }
             tvSignIn.setOnClickListener {
+                it.hideKeyboard()
                 goToLogInFra()
             }
             ibtnBack.setOnClickListener {
+                it.hideKeyboard()
                 findNavController().popBackStack()
             }
         }

@@ -6,10 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
-import com.bchmsl.midterm_weather.extensions.isFieldEmpty
-import com.bchmsl.midterm_weather.extensions.isValidEmail
-import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
-import com.bchmsl.midterm_weather.extensions.makeSnackbar
+import com.bchmsl.midterm_weather.extensions.*
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
@@ -18,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
     // firebaseAuth
-    private val viewModel:LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels()
     private val processing = ProcessingDialog(this)
 
     override fun start() {
@@ -29,17 +26,20 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     private fun listeners() {
         binding.ibtnNext.setOnClickListener {
             //get data
+            it.hideKeyboard()
             val email = binding.tilEmail.editText?.text.toString()
             val password = binding.tilPassword.editText?.text.toString()
             //validate data
-            if (checkFields()){
+            if (checkFields()) {
                 firebaseLogin(email, password)
             }
         }
         binding.tvSignUp.setOnClickListener {
+            it.hideKeyboard()
             goToSignUpFra()
         }
         binding.tvForgotPassword.setOnClickListener {
+            it.hideKeyboard()
             goToResetPassFra()
         }
     }
@@ -48,12 +48,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         //show progress bar
         showProcessBar()
         viewModel.loginUser(email, password)
-        viewLifecycleOwner.lifecycleScope.launch{
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.signInResponse.collect{
-                    when(it){
-                        is ResponseHandler.Success<*> -> {handleSuccess(it.data as FirebaseUser)}
-                        is ResponseHandler.Error -> {handleError(it.error)}
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.signInResponse.collect {
+                    when (it) {
+                        is ResponseHandler.Success<*> -> {
+                            handleSuccess(it.data as FirebaseUser)
+                        }
+                        is ResponseHandler.Error -> {
+                            handleError(it.error)
+                        }
                         else -> {}
                     }
                 }
@@ -68,13 +72,13 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
 
     private fun handleSuccess(user: FirebaseUser?) {
         hideProcessBar()
-        if(!user!!.isEmailVerified){
+        if (!user!!.isEmailVerified) {
             binding.root.makeSnackbar("Please Validate Email")
         }
         goToMainFra()
     }
 
-    private fun checkFields():Boolean{
+    private fun checkFields(): Boolean {
         return when {
             !binding.tilEmail.isValidEmail() -> false
             binding.tilPassword.isFieldEmpty() -> false
@@ -91,15 +95,17 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         processing.stopProcessing()
     }
 
-    private fun goToSignUpFra(){
+    private fun goToSignUpFra() {
+
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToSignUpFragment())
     }
 
-    private fun goToMainFra(){
+    private fun goToMainFra() {
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToMainFragment())
     }
 
     private fun goToResetPassFra() {
         findNavController().navigate(LoginFragmentDirections.actionLogInFragmentToResetPasswordFragment())
     }
+
 }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapter.SearchAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentCityChangeBinding
+import com.bchmsl.midterm_weather.extensions.hideKeyboard
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.model.SearchResponse
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
@@ -35,6 +36,7 @@ class CityChangeFragment :
             startSearching(it.toString())
         }
         searchAdapter.itemClick = {
+            binding.rvSearchResults.hideKeyboard()
             lifecycleScope.launch {
                 viewModel.saveCity(it)
             }.invokeOnCompletion {

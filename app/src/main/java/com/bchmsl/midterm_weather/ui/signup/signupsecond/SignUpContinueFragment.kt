@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
+import com.bchmsl.midterm_weather.extensions.hideKeyboard
 import com.bchmsl.midterm_weather.extensions.isFieldEmpty
 import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
@@ -37,9 +38,11 @@ class SignUpContinueFragment :
     private fun listeners() {
         binding.apply {
             ibtnChoosePhoto.setOnClickListener {
+                it.hideKeyboard()
                 choosePhoto()
             }
             ibtnNext.setOnClickListener {
+                it.hideKeyboard()
                 if (checkFields()) {
                     uploadToDatabase()
                 }

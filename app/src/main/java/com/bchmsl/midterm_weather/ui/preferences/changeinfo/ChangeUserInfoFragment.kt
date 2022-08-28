@@ -13,10 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentChangeUserInfoBinding
-import com.bchmsl.midterm_weather.extensions.capitalizeFirstChar
-import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
-import com.bchmsl.midterm_weather.extensions.makeSnackbar
-import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
+import com.bchmsl.midterm_weather.extensions.*
 import com.bchmsl.midterm_weather.firebase.Firebase
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
@@ -130,12 +127,15 @@ class ChangeUserInfoFragment :
 
     private fun listeners() {
         binding.tvProfileInfoTitle.setOnClickListener {
+            it.hideKeyboard()
             findNavController().popBackStack()
         }
         binding.btnSave.setOnClickListener {
+            it.hideKeyboard()
             updateInfo()
         }
         binding.btnCamera.setOnClickListener {
+            it.hideKeyboard()
             ImagePicker.Companion.with(this@ChangeUserInfoFragment)
                 .crop(150f, 150f)
                 .createIntent { intent ->
@@ -144,6 +144,7 @@ class ChangeUserInfoFragment :
 
         }
         binding.btnVerify.setOnClickListener {
+            it.hideKeyboard()
             sendVerification()
             signOut()
         }

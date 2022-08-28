@@ -4,10 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentResetPasswordBinding
-import com.bchmsl.midterm_weather.extensions.isFieldEmpty
-import com.bchmsl.midterm_weather.extensions.isValidEmail
-import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
-import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
+import com.bchmsl.midterm_weather.extensions.*
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
@@ -25,6 +22,7 @@ class ResetPasswordFragment :
     private fun listeners() {
         binding.apply {
             ibtnNext.setOnClickListener {
+                it.hideKeyboard()
                 val email: String = tilEmail.editText!!.text.toString()
                 when {
                     tilEmail.isFieldEmpty() -> {}
@@ -35,6 +33,7 @@ class ResetPasswordFragment :
                 }
             }
             ibtnBack.setOnClickListener {
+                it.hideKeyboard()
                 findNavController().popBackStack()
             }
         }
