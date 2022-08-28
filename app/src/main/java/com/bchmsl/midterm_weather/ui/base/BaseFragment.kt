@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
+import com.bchmsl.midterm_weather.extensions.makeSnackbar
 
 typealias inflate<T> = (LayoutInflater, ViewGroup, Boolean) -> T
 
@@ -34,5 +35,7 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: inflate<VB>) 
     }
 
     abstract fun start()
+
+    //
 
 }
