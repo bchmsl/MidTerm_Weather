@@ -1,6 +1,7 @@
 package com.bchmsl.midterm_weather.ui.weather.main
 
 import android.util.Log
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -12,9 +13,9 @@ import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.extensions.setImage
 import com.bchmsl.midterm_weather.model.ForecastResponse
-import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -83,6 +84,7 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
             tvCondition.text = data?.current?.condition?.text
             tvCurrentTemperature.text = data?.current?.tempC?.asTemp()
             ivIcon.setImage(data?.current?.condition?.icon)
+            rvForecast.visibility = View.VISIBLE
         }
         binding.rvForecast.adapter = forecastAdapter
         forecastAdapter.submitList(data?.forecast?.forecastday)

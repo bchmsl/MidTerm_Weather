@@ -18,6 +18,7 @@ interface WeatherApiClient {
     suspend fun getForecast(
         @Query("key") apiKey: String = BuildConfig.API_KEY,
         @Query("q") query: String,
-        @Query("days") daysCount: Int = 7
+        @Query("days") daysCount: Int = 7,
+        @Query("aqi") aqi: String = "yes"
     ):Response<ForecastResponse>
 }

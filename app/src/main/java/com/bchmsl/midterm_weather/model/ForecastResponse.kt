@@ -8,7 +8,7 @@ data class ForecastResponse(
     val location: Location?,
     val current: Current?,
     val forecast: Forecast?,
-    ):Serializable {
+) : Serializable {
 
     data class Location(
         val name: String?,
@@ -16,7 +16,6 @@ data class ForecastResponse(
     )
 
     data class Current(
-
         @field:Json(name = "last_updated")
         val lastUpdated: String?,
         @field:Json(name = "temp_c")
@@ -37,7 +36,7 @@ data class ForecastResponse(
             val dateEpoch: Long?,
             val day: Day?,
             val astro: Astro?,
-        ): Serializable {
+        ) : Serializable {
 
             data class Day(
                 @field:Json(name = "maxtemp_c")
@@ -47,7 +46,7 @@ data class ForecastResponse(
                 @field:Json(name = "avgtemp_c")
                 val avgtempC: Double?,
                 val condition: Condition?,
-                val avghumidity:Double?,
+                val avghumidity: Double?,
                 @field:Json(name = "totalprecip_mm")
                 val totalprecipMm: Double,
                 @field:Json(name = "maxwind_kph")
@@ -56,12 +55,21 @@ data class ForecastResponse(
                 val dailyChanceOfRain: Int?,
                 @field:Json(name = "avgvis_km")
                 val avgvisKm: Double?,
-                val uv: Double?
+                val uv: Double?,
+                @field:Json(name = "air_quality")
+                val airQuality: AirQuality?
             ) {
 
                 data class Condition(
                     val text: String?,
                     val icon: String?
+                )
+
+                data class AirQuality(
+                    val co: String?,
+                    val no2: String?,
+                    val o3: String?,
+                    val so2: String?
                 )
             }
 
