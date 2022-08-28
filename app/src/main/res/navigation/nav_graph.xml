@@ -18,11 +18,11 @@
             app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_mainFragment_to_preferencesFragment"
+            app:destination="@id/preferencesFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
-            app:destination="@id/preferencesFragment" />
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/forecastOpenedFragment"
@@ -37,85 +37,115 @@
         android:id="@+id/startFragment"
         android:name="com.bchmsl.midterm_weather.ui.start.InitFragment"
         android:label="fragment_start"
-        tools:layout="@layout/fragment_init" >
+        tools:layout="@layout/fragment_init">
         <action
             android:id="@+id/action_startFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/nav_graph" />
         <action
             android:id="@+id/action_startFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        tools:layout="@layout/fragment_sign_up"
         android:name="com.bchmsl.midterm_weather.ui.signup.signupfirst.SignUpFragment"
-        android:label="SignUpFragment" >
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_signUpContinueFragment"
-            app:destination="@id/signUpContinueFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/signUpContinueFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
 
-    <fragment android:id="@+id/logInFragment"
-        tools:layout="@layout/fragment_login"
+    <fragment
+        android:id="@+id/logInFragment"
         android:name="com.bchmsl.midterm_weather.ui.login.LoginFragment"
-        android:label="LogInFragment">
+        android:label="LogInFragment"
+        tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_logInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/startFragment" />
         <action
             android:id="@+id/action_logInFragment_to_mainFragment"
             app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_logInFragment_to_resetPasswordFragment"
             app:destination="@id/resetPasswordFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/signUpContinueFragment"
         android:name="com.bchmsl.midterm_weather.ui.signup.signupsecond.SignUpContinueFragment"
         android:label="fragment_sign_up_continue"
-        tools:layout="@layout/fragment_sign_up_continue" >
+        tools:layout="@layout/fragment_sign_up_continue">
         <action
             android:id="@+id/action_signUpContinueFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
         android:name="com.bchmsl.midterm_weather.ui.reset_password.ResetPasswordFragment"
         android:label="fragment_reset_password"
-        tools:layout="@layout/fragment_reset_password" >
-        <action
-            android:id="@+id/action_resetPasswordFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_reset_password"/>
     <fragment
         android:id="@+id/preferencesFragment"
         android:name="com.bchmsl.midterm_weather.ui.preferences.PreferencesFragment"
         android:label="fragment_preferences"
-        tools:layout="@layout/fragment_preferences" >
+        tools:layout="@layout/fragment_preferences">
         <action
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
-            app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
             android:id="@+id/action_preferencesFragment_to_cityChangeFragment"
-            app:destination="@id/cityChangeFragment" />
-        <action
+            app:destination="@id/cityChangeFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right"
+            app:popExitAnim="@anim/to_right" />
+        <action
             android:id="@+id/action_preferencesFragment_to_changeUserInfoFragment"
-            app:destination="@id/changeUserInfoFragment" />
+            app:destination="@id/changeUserInfoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_preferencesFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/cityChangeFragment"
@@ -123,15 +153,24 @@
         android:label="fragment_city_change"
         tools:layout="@layout/fragment_city_change" />
     <fragment
-        tools:layout="@layout/fragment_change_user_info"
         android:id="@+id/changeUserInfoFragment"
         android:name="com.bchmsl.midterm_weather.ui.preferences.changeinfo.ChangeUserInfoFragment"
-        android:label="ChangeUserInfoFragment" >
+        android:label="ChangeUserInfoFragment"
+        tools:layout="@layout/fragment_change_user_info">
         <action
             android:id="@+id/action_changeUserInfoFragment_to_mainFragment"
-            app:destination="@id/mainFragment" />
+            app:destination="@id/mainFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
         <action
             android:id="@+id/action_changeUserInfoFragment_to_logInFragment"
-            app:destination="@id/logInFragment" />
+            app:destination="@id/logInFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
 </navigation>

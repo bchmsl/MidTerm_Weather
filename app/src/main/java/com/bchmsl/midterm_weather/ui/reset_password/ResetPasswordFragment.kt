@@ -70,7 +70,7 @@ class ResetPasswordFragment :
     }
 
     private fun goToLogInFra() {
-        findNavController().navigate(ResetPasswordFragmentDirections.actionResetPasswordFragmentToLogInFragment())
+        findNavController().popBackStack()
     }
 
     private fun showProcessBar() {

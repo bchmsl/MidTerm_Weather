@@ -13,7 +13,6 @@ import com.bchmsl.midterm_weather.extensions.notGoodPass
 import com.bchmsl.midterm_weather.network.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 
 class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding::inflate) {
@@ -54,7 +53,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
                 viewModel.signUnResponse.collect {
                     when (it) {
                         is ResponseHandler.Success<*> -> {
-                            handleSuccess(it.data as FirebaseUser)
+                            handleSuccess()
                         }
                         is ResponseHandler.Error -> {
                             handleError(it.error)
@@ -71,7 +70,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         binding.root.makeErrorSnackbar("Sign up failed due to ${e.message}")
     }
 
-    private fun handleSuccess(firebaseUser: FirebaseUser) {
+    private fun handleSuccess() {
         hideProcessBar()
         goToSingUpContinueFra()
     }
@@ -108,6 +107,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
     }
 
     private fun goToLogInFra() {
-        findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLogInFragment())
+        findNavController().popBackStack()
     }
 }
