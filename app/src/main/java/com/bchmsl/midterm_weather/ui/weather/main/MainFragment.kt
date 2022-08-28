@@ -4,7 +4,9 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapter.DailyForecastAdapter
@@ -16,20 +18,12 @@ import com.bchmsl.midterm_weather.model.ForecastResponse
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
 import com.bchmsl.midterm_weather.utils.ResponseHandler
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::inflate) {
     private val viewModel: WeatherViewModel by activityViewModels()
     private val forecastAdapter by lazy { DailyForecastAdapter() }
-
-    private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var databaseReference: DatabaseReference
-    private var uid: String? = null
-
     override fun start() {
         setWelcomeMessage()
         getForecast()
@@ -38,23 +32,26 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
 
 
     private fun setWelcomeMessage() {
-        //init firebaseAuth
-        firebaseAuth = FirebaseAuth.getInstance()
-        //get current user main info
-        val firebaseUser = firebaseAuth.currentUser
-        //user id
-        uid = firebaseUser?.uid
-        if (uid != null) {
-            databaseReference = FirebaseDatabase.getInstance().getReference("Users")
-            databaseReference.child(uid!!).get().addOnSuccessListener {
-                if (it.exists()) {
-                    val firstname = (it.value as HashMap<*, *>)["firstName"]
-                    binding.tvGreeting.text = getString(R.string.welcome_message, firstname)
-                } else {
-                    handleError("No logged in User's name was found")
+        viewModel.getUserFirstName()
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.userFirstNameResponse.collect {
+                    when (it) {
+                        is ResponseHandler.Success -> {
+                            val firstname = (it.data?.value as HashMap<*, *>)["firstName"]
+                            binding.tvGreeting.text =
+                                getString(R.string.welcome_message, firstname)
+                        }
+                        is ResponseHandler.Error -> {
+                            handleError("No logged in User's name was found")
+                        }
+                        else -> {}
+                    }
                 }
+
             }
         }
+
     }
 
     private fun getForecast() {

@@ -14,9 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentChangeUserInfoBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.utils.firebase.Firebase
-import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.firebase.database.DataSnapshot
@@ -27,7 +26,6 @@ class ChangeUserInfoFragment :
     BaseFragment<FragmentChangeUserInfoBinding>(FragmentChangeUserInfoBinding::inflate) {
     private val viewModel: ChangeUserInfoViewModel by viewModels()
     private var imageUri: Uri? = null
-    private val uid: String? by lazy { Firebase.firebaseAuth.uid }
     override fun start() {
         getUserInfo()
         checkEmailVerification()
@@ -35,10 +33,9 @@ class ChangeUserInfoFragment :
     }
 
     private fun checkEmailVerification() {
-        if(viewModel.isEmailVerified()==true) {
+        if (viewModel.isEmailVerified() == true) {
             binding.EmailVerStatus.text = getString(R.string.emailVerStatus, "Verified")
-        }
-        else {
+        } else {
             binding.EmailVerStatus.text = getString(R.string.emailVerStatus, "Not verified")
             binding.btnVerify.visibility = View.VISIBLE
         }
@@ -51,22 +48,21 @@ class ChangeUserInfoFragment :
         //disable save button while loading is happening
         disableSaveButton()
         //user id
-        if (uid != null) {
-            viewModel.getUserInfo(uid!!)
-            lifecycleScope.launch {
-                viewModel.userInfoResponse.collect {
-                    when (it) {
-                        is ResponseHandler.Success<*> -> {
-                            handleUserInfoSuccess(it.data as DataSnapshot)
-                        }
-                        is ResponseHandler.Error -> {
-                            handleError(it.error)
-                        }
-                        else -> {}
+        viewModel.getUserInfo()
+        lifecycleScope.launch {
+            viewModel.userInfoResponse.collect {
+                when (it) {
+                    is ResponseHandler.Success<*> -> {
+                        handleUserInfoSuccess(it.data as DataSnapshot)
                     }
+                    is ResponseHandler.Error -> {
+                        handleError(it.error)
+                    }
+                    else -> {}
                 }
             }
         }
+
     }
 
     private fun handleUserInfoSuccess(dataSnapshot: DataSnapshot) {
@@ -75,7 +71,7 @@ class ChangeUserInfoFragment :
             val lastName = (dataSnapshot.value as HashMap<*, *>)["lastName"].toString()
             //get image
             val localFile = File.createTempFile("tempFile", "jpg")
-            viewModel.getUserImage(uid!!, localFile)
+            viewModel.getUserImage(localFile)
             lifecycleScope.launch {
                 viewModel.userImageResponse.collect {
                     when (it) {
@@ -162,9 +158,8 @@ class ChangeUserInfoFragment :
 
     private fun updateInfo() {
         binding.apply {
-            if (imageUri != null){
+            if (imageUri != null) {
                 viewModel.updateUserInfo(
-                    uid!!,
                     tilFirstName.editText?.text.toString().capitalizeFirstChar(),
                     tilLastName.editText?.text.toString().capitalizeFirstChar(),
                     imageUri!!
@@ -185,7 +180,7 @@ class ChangeUserInfoFragment :
         findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToMainFragment())
     }
 
-    private fun goToLoginFra(){
+    private fun goToLoginFra() {
         findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToLogInFragment())
     }
 

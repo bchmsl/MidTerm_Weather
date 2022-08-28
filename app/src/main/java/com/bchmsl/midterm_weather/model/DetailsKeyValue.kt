@@ -2,8 +2,8 @@ package com.bchmsl.midterm_weather.model
 
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.extensions.asTemp
+import com.bchmsl.midterm_weather.extensions.isPercent
 import com.bchmsl.midterm_weather.extensions.plus
-import com.bchmsl.midterm_weather.extensions.shorten
 
 typealias D = R.drawable
 
@@ -111,28 +111,26 @@ data class DetailsKeyValue(
                 ),
                 DetailsKeyValue(
                     "Air Quality\nCO",
-                    chosenDay?.day?.airQuality?.co?.toDouble()?.shorten(),
+                    chosenDay?.day?.airQuality?.co?.toDouble().isPercent(10000.0),
                     image = D.ic_air_quality
                 ),
                 DetailsKeyValue(
                     "Air Quality\nNO2",
-                    chosenDay?.day?.airQuality?.no2?.toDouble()?.shorten(),
+                    chosenDay?.day?.airQuality?.no2?.toDouble().isPercent(500.0),
                     image = D.ic_air_quality
 
                 ),
                 DetailsKeyValue(
                     "Air Quality\nO3",
-                    chosenDay?.day?.airQuality?.o3?.toDouble()?.shorten(),
+                    chosenDay?.day?.airQuality?.o3?.toDouble().isPercent(240.0),
                     image = D.ic_air_quality
                 ),
                 DetailsKeyValue(
                     "Air Quality\nSO2",
-                    chosenDay?.day?.airQuality?.so2?.toDouble()?.shorten(),
+                    chosenDay?.day?.airQuality?.so2?.toDouble().isPercent(500.0),
                     image = D.ic_air_quality
                 )
-
             )
         }
     }
-
 }

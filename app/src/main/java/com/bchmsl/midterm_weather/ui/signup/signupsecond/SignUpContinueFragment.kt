@@ -11,11 +11,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.bchmsl.midterm_weather.model.User
-import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.coroutines.launch
@@ -26,8 +25,6 @@ class SignUpContinueFragment :
     // firebaseAuth
     private val processing = ProcessingDialog(this)
     private var imageUri: Uri? = null
-    private val uid: String? by lazy { Firebase.firebaseAuth.currentUser?.uid }
-
     private val viewModel: SignUpContinueViewModel by viewModels()
     override fun start() {
         listeners()
@@ -65,31 +62,27 @@ class SignUpContinueFragment :
             val firstName = tilFirstName.editText?.text.toString()
             val lastName = tilLastName.editText?.text.toString()
             val user = User(capitalize(firstName), capitalize(lastName))
-            if (uid != null) {
-                viewModel.addToDatabase(uid!!, user)
-                lifecycleScope.launch {
-                    viewModel.addToDatabaseResponse.collect {
-                        when (it) {
-                            is ResponseHandler.Success<*> -> {
-                                uploadProfilePic()
-                            }
-                            is ResponseHandler.Error -> {
-                                handleError(Throwable("failed to add additional sign up data  ${it.error.message}"))
-                            }
-                            else -> {}
+            viewModel.addToDatabase(user)
+            lifecycleScope.launch {
+                viewModel.addToDatabaseResponse.collect {
+                    when (it) {
+                        is ResponseHandler.Success<*> -> {
+                            uploadProfilePic()
                         }
+                        is ResponseHandler.Error -> {
+                            handleError(Throwable("failed to add additional sign up data  ${it.error.message}"))
+                        }
+                        else -> {}
                     }
                 }
-            } else {
-                hideProcessBar()
-                handleError(Throwable("error: user ID is null"))
             }
+
         }
     }
 
 
     private fun uploadProfilePic() {
-        viewModel.uploadProfilePic(uid, imageUri)
+        viewModel.uploadProfilePic(imageUri)
         lifecycleScope.launch {
             viewModel.uploadProfilePicResponse.collect {
                 when (it) {
@@ -123,7 +116,7 @@ class SignUpContinueFragment :
                     hideProcessBar()
                     false
                 }
-                !tilFirstName.isValidName()  ->  {
+                !tilFirstName.isValidName() -> {
                     hideProcessBar()
                     false
                 }

@@ -2,9 +2,7 @@ package com.bchmsl.midterm_weather.ui.preferences
 
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentPreferencesBinding
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 

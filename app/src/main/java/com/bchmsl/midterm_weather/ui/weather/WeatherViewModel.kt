@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bchmsl.midterm_weather.app.App
-import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.readDatastoreData
 import com.bchmsl.midterm_weather.model.ForecastResponse
 import com.bchmsl.midterm_weather.network.RetrofitProvider
 import com.bchmsl.midterm_weather.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.readDatastoreData
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
+import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -50,6 +52,18 @@ class WeatherViewModel : ViewModel() {
     suspend fun getDatastoreValue() {
         _readCityName = flow {
             emit(App.context.readDatastoreData(defaultValue = "Tbilisi"))
+        }
+    }
+
+    private val _userFirstNameResponse =
+        MutableStateFlow<ResponseHandler<DataSnapshot>>(ResponseHandler.Loading())
+    val userFirstNameResponse get() = _userFirstNameResponse.asStateFlow()
+
+    fun getUserFirstName() {
+        Firebase.getUserFirstName()?.addOnSuccessListener {
+            _userFirstNameResponse.tryEmit(ResponseHandler.Success(it))
+        }?.addOnFailureListener {
+            _userFirstNameResponse.tryEmit(ResponseHandler.Error(it))
         }
     }
 }

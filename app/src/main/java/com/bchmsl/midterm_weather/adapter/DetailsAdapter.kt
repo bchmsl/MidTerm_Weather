@@ -20,11 +20,7 @@ class DetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bind() {
             val currentItem = adapterList[adapterPosition]
             binding.tvKey.text = currentItem.key
-            binding.tvValue.text = if (currentItem.value != null) {
-                currentItem.value.toString()
-            } else {
-                "-"
-            }
+            binding.tvValue.text = currentItem.value.toString()
             currentItem.image?.let { binding.ivIcon.setImageResource(it) }
         }
     }
@@ -84,7 +80,5 @@ class DetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun submitList(newList: List<DetailsKeyValue>) {
         adapterList = newList
         notifyItemRangeChanged(0, adapterList.size)
-
     }
-
 }

@@ -4,6 +4,9 @@ fun Double.asTemp(): String {
     return this.toInt().plus("°")
 }
 
-fun Double.shorten(): String {
-    return String.format("%.1f", this)
+fun Double?.isPercent(of: Double?): String {
+    if (this == null || of == null) {
+        return "N/A"
+    }
+    return String.format("%.2f%%", this * 100 / of)
 }
