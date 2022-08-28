@@ -4,13 +4,13 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bchmsl.midterm_weather.app.App
-import com.bchmsl.midterm_weather.model.ForecastResponse
+import com.bchmsl.midterm_weather.models.ForecastResponse
 import com.bchmsl.midterm_weather.network.RetrofitProvider
 import com.bchmsl.midterm_weather.utils.ResponseHandler
-import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.readDatastoreData
+import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.readCity
+import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.readUnit
 import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
@@ -24,9 +24,6 @@ class WeatherViewModel : ViewModel() {
     private val _forecastResponse =
         MutableStateFlow<ResponseHandler<ForecastResponse>>(ResponseHandler.Loading())
     val forecastResponse get() = _forecastResponse.asStateFlow()
-
-    private var _readCityName: Flow<String>? = null
-    val readCityName get() = _readCityName
 
     fun getForecast(city: String) {
         viewModelScope.launch {
@@ -49,11 +46,10 @@ class WeatherViewModel : ViewModel() {
         }
     }
 
-    suspend fun getDatastoreValue() {
-        _readCityName = flow {
-            emit(App.context.readDatastoreData(defaultValue = "Tbilisi"))
-        }
+    suspend fun getDatastoreValue() = flow {
+        emit(App.context.readCity(defaultValue = "Tbilisi"))
     }
+
 
     private val _userFirstNameResponse =
         MutableStateFlow<ResponseHandler<DataSnapshot>>(ResponseHandler.Loading())
@@ -65,5 +61,9 @@ class WeatherViewModel : ViewModel() {
         }?.addOnFailureListener {
             _userFirstNameResponse.tryEmit(ResponseHandler.Error(it))
         }
+    }
+
+    fun getUnit() = flow {
+        emit(App.context.readUnit(false))
     }
 }

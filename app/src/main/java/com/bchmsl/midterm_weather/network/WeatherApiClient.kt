@@ -1,8 +1,8 @@
 package com.bchmsl.midterm_weather.network
 
 import com.bchmsl.midterm_weather.BuildConfig
-import com.bchmsl.midterm_weather.model.ForecastResponse
-import com.bchmsl.midterm_weather.model.SearchResponse
+import com.bchmsl.midterm_weather.models.ForecastResponse
+import com.bchmsl.midterm_weather.models.SearchResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

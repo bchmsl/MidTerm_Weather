@@ -1,7 +1,6 @@
-package com.bchmsl.midterm_weather.model
+package com.bchmsl.midterm_weather.models
 
 import com.bchmsl.midterm_weather.R
-import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.extensions.isPercent
 import com.bchmsl.midterm_weather.extensions.plus
 
@@ -12,6 +11,7 @@ data class DetailsKeyValue(
     val value: Any? = null,
     val listValue: List<DetailsKeyValue>? = null,
     val isDouble: Boolean = false,
+    val isTemperature: Boolean = false,
     val image: Int? = null
 ) {
     object Data {
@@ -34,14 +34,15 @@ data class DetailsKeyValue(
                     listValue = listOf(
                         DetailsKeyValue(
                             "Max:",
-                            chosenDay?.day?.maxtempC?.asTemp()
+                            chosenDay?.day?.maxtempC
                         ),
                         DetailsKeyValue(
                             "Min",
-                            chosenDay?.day?.mintempC?.asTemp()
+                            chosenDay?.day?.mintempC
                         )
                     ),
                     isDouble = true,
+                    isTemperature = true,
                     image = D.ic_temperature
                 ),
                 DetailsKeyValue(

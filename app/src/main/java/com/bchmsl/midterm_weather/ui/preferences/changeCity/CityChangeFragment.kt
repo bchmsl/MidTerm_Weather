@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.preferences.changecity
+package com.bchmsl.midterm_weather.ui.preferences.changeCity
 
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -8,13 +8,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
-import com.bchmsl.midterm_weather.adapter.SearchAdapter
+import com.bchmsl.midterm_weather.adapters.SearchAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentCityChangeBinding
 import com.bchmsl.midterm_weather.extensions.hideKeyboard
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
-import com.bchmsl.midterm_weather.model.SearchResponse
-import com.bchmsl.midterm_weather.utils.ResponseHandler
+import com.bchmsl.midterm_weather.models.SearchResponse
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.launch
 
 class CityChangeFragment :

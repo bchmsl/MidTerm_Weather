@@ -1,8 +1,8 @@
-package com.bchmsl.midterm_weather.ui.signup.signupfirst
+package com.bchmsl.midterm_weather.ui.signup.signup
 
 import androidx.lifecycle.ViewModel
-import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.bchmsl.midterm_weather.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

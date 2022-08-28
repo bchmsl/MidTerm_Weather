@@ -1,7 +1,7 @@
 package com.bchmsl.midterm_weather.utils.firebase
 
 import android.net.Uri
-import com.bchmsl.midterm_weather.model.User
+import com.bchmsl.midterm_weather.models.User
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot

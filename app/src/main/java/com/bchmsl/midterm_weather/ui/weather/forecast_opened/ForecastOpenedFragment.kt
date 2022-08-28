@@ -4,16 +4,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bchmsl.midterm_weather.adapter.DetailsAdapter
+import com.bchmsl.midterm_weather.adapters.DetailsAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentForecastOpenedBinding
-import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.extensions.setImage
-import com.bchmsl.midterm_weather.extensions.toWeekday
-import com.bchmsl.midterm_weather.model.DetailsKeyValue
-import com.bchmsl.midterm_weather.model.ForecastResponse
-import com.bchmsl.midterm_weather.utils.ResponseHandler
+import com.bchmsl.midterm_weather.extensions.toSimplifiedDate
+import com.bchmsl.midterm_weather.extensions.toTemperature
+import com.bchmsl.midterm_weather.models.DetailsKeyValue
+import com.bchmsl.midterm_weather.models.ForecastResponse
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.launch
 
 
@@ -21,9 +21,9 @@ class ForecastOpenedFragment :
     BaseFragment<FragmentForecastOpenedBinding>(FragmentForecastOpenedBinding::inflate) {
     private val args: ForecastOpenedFragmentArgs by navArgs()
     private val viewModel: WeatherViewModel by activityViewModels()
-    private val detailsAdapter by lazy{ DetailsAdapter() }
+    private val detailsAdapter by lazy { DetailsAdapter() }
     override fun start() {
-        setData(args.index)
+        setData(args.index, args.isFahrenheit)
         listeners()
     }
 
@@ -33,14 +33,15 @@ class ForecastOpenedFragment :
         }
     }
 
-    private fun setData(index: Int) {
+    private fun setData(index: Int, isFahrenheit: Boolean) {
         lifecycleScope.launch {
             binding.apply {
                 viewModel.forecastResponse.collect { responseHandler ->
                     when (responseHandler) {
                         is ResponseHandler.Success<*> -> handleForecastSuccess(
                             responseHandler.data as ForecastResponse,
-                            index
+                            index,
+                            isFahrenheit
                         )
                         else -> {}
                     }
@@ -49,23 +50,28 @@ class ForecastOpenedFragment :
         }
     }
 
-    private fun handleForecastSuccess(data: ForecastResponse, index: Int) {
+    private fun handleForecastSuccess(data: ForecastResponse, index: Int, isFahrenheit: Boolean) {
         val chosenDay = data.forecast?.forecastday?.get(index)
         binding.apply {
             tvCityName.text = data.location?.name
-            tvAverageTemperature.text = chosenDay?.day?.avgtempC?.asTemp()
+            tvAverageTemperature.text = chosenDay?.day?.avgtempC?.toTemperature(isFahrenheit)
             tvCondition.text = chosenDay?.day?.condition?.text
-            tvDay.text = chosenDay?.date?.toWeekday()
+            tvDay.text = chosenDay?.date?.toSimplifiedDate()
             ivIcon.setImage(chosenDay?.day?.condition?.icon)
         }
-        setupRecycler(chosenDay)
-
+        setupRecycler(chosenDay, isFahrenheit)
     }
 
-    private fun setupRecycler(chosenDay: ForecastResponse.Forecast.ForecastDay?) {
+    private fun setupRecycler(
+        chosenDay: ForecastResponse.Forecast.ForecastDay?,
+        isFahrenheit: Boolean
+    ) {
         DetailsKeyValue.Data.addDetailsData(chosenDay)
         binding.rvDetailsTiles.adapter = detailsAdapter
-        detailsAdapter.submitList(DetailsKeyValue.Data.data)
+        detailsAdapter.apply {
+            submitList(DetailsKeyValue.Data.data)
+            setFahrenheit(isFahrenheit)
+        }
 
     }
 }

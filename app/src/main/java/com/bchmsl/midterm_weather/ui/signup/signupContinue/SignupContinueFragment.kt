@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.signup.signupsecond
+package com.bchmsl.midterm_weather.ui.signup.signupContinue
 
 import android.app.Activity
 import android.net.Uri
@@ -9,23 +9,23 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
+import com.bchmsl.midterm_weather.databinding.FragmentSignupContinueBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.model.User
-import com.bchmsl.midterm_weather.ui.ProcessingDialog
+import com.bchmsl.midterm_weather.models.User
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ProcessingDialog
 import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
 import kotlinx.coroutines.launch
 import java.util.*
 
-class SignUpContinueFragment :
-    BaseFragment<FragmentSignUpContinueBinding>(FragmentSignUpContinueBinding::inflate) {
+class SignupContinueFragment :
+    BaseFragment<FragmentSignupContinueBinding>(FragmentSignupContinueBinding::inflate) {
     // firebaseAuth
     private val processing = ProcessingDialog(this)
     private var imageUri: Uri? = null
-    private val viewModel: SignUpContinueViewModel by viewModels()
+    private val viewModel: SignupContinueViewModel by viewModels()
     override fun start() {
         listeners()
     }
@@ -50,7 +50,7 @@ class SignUpContinueFragment :
     }
 
     private fun choosePhoto() {
-        ImagePicker.Companion.with(this@SignUpContinueFragment)
+        ImagePicker.Companion.with(this@SignupContinueFragment)
             .crop(150f, 150f)
             .createIntent { intent ->
                 startForProfileImageResult.launch(intent)
@@ -130,7 +130,7 @@ class SignUpContinueFragment :
     }
 
     private fun goToMainFra() {
-        findNavController().navigate(SignUpContinueFragmentDirections.actionSignUpContinueFragmentToMainFragment())
+        findNavController().navigate(SignupContinueFragmentDirections.actionSignUpContinueFragmentToMainFragment())
     }
 
     private fun showProcessBar() {
@@ -158,7 +158,7 @@ class SignUpContinueFragment :
                     imageUri = data?.data!!
 
 
-                    Glide.with(this@SignUpContinueFragment)
+                    Glide.with(this@SignupContinueFragment)
                         .load(imageUri)
                         .into((binding.imageUser) as ImageView)
 

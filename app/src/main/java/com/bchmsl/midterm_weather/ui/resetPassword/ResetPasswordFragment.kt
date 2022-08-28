@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.reset_password
+package com.bchmsl.midterm_weather.ui.resetPassword
 
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -6,9 +6,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentResetPasswordBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.utils.ResponseHandler
-import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ProcessingDialog
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.launch
 
 class ResetPasswordFragment :

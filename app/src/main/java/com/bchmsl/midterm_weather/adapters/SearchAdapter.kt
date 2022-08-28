@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.adapter
+package com.bchmsl.midterm_weather.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bchmsl.midterm_weather.databinding.LayoutSearchResultsBinding
-import com.bchmsl.midterm_weather.model.SearchResponse
+import com.bchmsl.midterm_weather.models.SearchResponse
 
 class SearchAdapter : ListAdapter<SearchResponse, SearchAdapter.SearchViewHolder>(SearchItemCallBack()) {
     var itemClick: ((SearchResponse) -> Unit)? = null

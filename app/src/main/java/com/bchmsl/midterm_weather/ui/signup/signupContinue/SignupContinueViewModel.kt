@@ -1,14 +1,14 @@
-package com.bchmsl.midterm_weather.ui.signup.signupsecond
+package com.bchmsl.midterm_weather.ui.signup.signupContinue
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.bchmsl.midterm_weather.model.User
+import com.bchmsl.midterm_weather.models.User
 import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class SignUpContinueViewModel : ViewModel() {
+class SignupContinueViewModel : ViewModel() {
 
     private val _uploadProfilePicResponse =
         MutableStateFlow<ResponseHandler<Unit>>(ResponseHandler.Loading())

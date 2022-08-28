@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.preferences.changeinfo
+package com.bchmsl.midterm_weather.ui.preferences.changeUserInfo
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.File
 
-class ChangeUserInfoViewModel: ViewModel() {
+class UserInfoChangeViewModel : ViewModel() {
 
     private val _userInfoResponse =
         MutableStateFlow<ResponseHandler<DataSnapshot>>(ResponseHandler.Loading())

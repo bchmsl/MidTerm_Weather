@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui
+package com.bchmsl.midterm_weather.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

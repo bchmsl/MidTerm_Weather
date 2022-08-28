@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="90dp"
+    android:layout_width="80dp"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@drawable/hourly_basic"
     android:layout_margin="8dp"
+    android:background="@drawable/hourly_basic"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:paddingVertical="40dp">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvDay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:fontFamily="@font/opensans_regular"
+        android:fontFamily="@font/opensans_medium"
         android:gravity="center"
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:textSize="18sp"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="27.08" />
+        tools:text="Tomorrow" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivIcon"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/tvTemperature"
+        app:layout_constraintTop_toBottomOf="@+id/tvDay"
         tools:srcCompat="@drawable/ic_logo" />
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -37,7 +39,8 @@
         android:gravity="center"
         android:textColor="@color/white"
         android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:text="19°" />
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

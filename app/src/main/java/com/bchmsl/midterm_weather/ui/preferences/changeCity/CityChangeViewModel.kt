@@ -1,12 +1,12 @@
-package com.bchmsl.midterm_weather.ui.preferences.changecity
+package com.bchmsl.midterm_weather.ui.preferences.changeCity
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bchmsl.midterm_weather.app.App
-import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.writeData
-import com.bchmsl.midterm_weather.model.SearchResponse
+import com.bchmsl.midterm_weather.models.SearchResponse
 import com.bchmsl.midterm_weather.network.RetrofitProvider
 import com.bchmsl.midterm_weather.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.saveCity
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -42,7 +42,7 @@ class CityChangeViewModel: ViewModel() {
 
     suspend fun saveCity(query: SearchResponse){
         if (query.name != null) {
-            App.context.writeData(query.name)
+            App.context.saveCity(query.name)
         }
     }
 }

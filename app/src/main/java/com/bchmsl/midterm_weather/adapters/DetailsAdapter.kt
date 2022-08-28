@@ -1,11 +1,12 @@
-package com.bchmsl.midterm_weather.adapter
+package com.bchmsl.midterm_weather.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bchmsl.midterm_weather.databinding.LayoutDetailsTileDoubleBinding
 import com.bchmsl.midterm_weather.databinding.LayoutDetailsTileNormalBinding
-import com.bchmsl.midterm_weather.model.DetailsKeyValue
+import com.bchmsl.midterm_weather.extensions.toTemperature
+import com.bchmsl.midterm_weather.models.DetailsKeyValue
 
 class DetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -14,6 +15,11 @@ class DetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     private var adapterList = listOf<DetailsKeyValue>()
+    private var isFahrenheit = false
+
+    fun setFahrenheit(isFahrenheit: Boolean) {
+        this.isFahrenheit = isFahrenheit
+    }
 
     inner class NormalViewHolder(private val binding: LayoutDetailsTileNormalBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -32,9 +38,17 @@ class DetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.apply {
                 tvMainKey.text = currentItem.key
                 tvKey1.text = currentItem.listValue?.get(0)?.key ?: ""
-                tvValue1.text = (currentItem.listValue?.get(0)?.value ?: "") as CharSequence?
                 tvKey2.text = currentItem.listValue?.get(1)?.key ?: ""
-                tvValue2.text = (currentItem.listValue?.get(1)?.value ?: "") as CharSequence?
+
+                if (currentItem.isTemperature) {
+                    tvValue1.text =
+                        (currentItem.listValue?.get(0)?.value as Double).toTemperature(isFahrenheit)
+                    tvValue2.text =
+                        (currentItem.listValue[1].value as Double).toTemperature(isFahrenheit)
+                } else {
+                    tvValue1.text = (currentItem.listValue?.get(0)?.value ?: "") as CharSequence?
+                    tvValue2.text = (currentItem.listValue?.get(1)?.value ?: "") as CharSequence?
+                }
                 currentItem.image?.let { ivIcon.setImageResource(it) }
             }
         }

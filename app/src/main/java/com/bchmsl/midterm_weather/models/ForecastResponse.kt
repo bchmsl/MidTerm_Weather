@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.model
+package com.bchmsl.midterm_weather.models
 
 import com.squareup.moshi.Json
 import java.io.Serializable

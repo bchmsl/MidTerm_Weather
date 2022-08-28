@@ -8,9 +8,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.utils.ResponseHandler
-import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ProcessingDialog
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.launch
 

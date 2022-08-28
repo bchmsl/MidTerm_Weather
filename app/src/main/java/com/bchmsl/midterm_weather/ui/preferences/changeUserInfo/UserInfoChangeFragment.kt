@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.preferences.changeinfo
+package com.bchmsl.midterm_weather.ui.preferences.changeUserInfo
 
 import android.app.Activity
 import android.graphics.Bitmap
@@ -22,9 +22,9 @@ import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.launch
 import java.io.File
 
-class ChangeUserInfoFragment :
+class UserInfoChangeFragment :
     BaseFragment<FragmentChangeUserInfoBinding>(FragmentChangeUserInfoBinding::inflate) {
-    private val viewModel: ChangeUserInfoViewModel by viewModels()
+    private val viewModel: UserInfoChangeViewModel by viewModels()
     private var imageUri: Uri? = null
     override fun start() {
         getUserInfo()
@@ -132,7 +132,7 @@ class ChangeUserInfoFragment :
         }
         binding.btnCamera.setOnClickListener {
             it.hideKeyboard()
-            ImagePicker.Companion.with(this@ChangeUserInfoFragment)
+            ImagePicker.Companion.with(this@UserInfoChangeFragment)
                 .crop(150f, 150f)
                 .createIntent { intent ->
                     startForProfileImageResult.launch(intent)
@@ -158,15 +158,13 @@ class ChangeUserInfoFragment :
 
     private fun updateInfo() {
         binding.apply {
-                viewModel.updateUserInfo(
-                    tilFirstName.editText?.text.toString().capitalizeFirstChar(),
-                    tilLastName.editText?.text.toString().capitalizeFirstChar(),
-                    imageUri
-                )
-
+            viewModel.updateUserInfo(
+                tilFirstName.editText?.text.toString().capitalizeFirstChar(),
+                tilLastName.editText?.text.toString().capitalizeFirstChar(),
+                imageUri
+            )
             root.makeSuccessSnackbar("Success")
             goToMainFra()
-
         }
     }
 
@@ -176,11 +174,11 @@ class ChangeUserInfoFragment :
     }
 
     private fun goToMainFra() {
-        findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToMainFragment())
+        findNavController().navigate(UserInfoChangeFragmentDirections.actionChangeUserInfoFragmentToMainFragment())
     }
 
     private fun goToLoginFra() {
-        findNavController().navigate(ChangeUserInfoFragmentDirections.actionChangeUserInfoFragmentToLogInFragment())
+        findNavController().navigate(UserInfoChangeFragmentDirections.actionChangeUserInfoFragmentToLogInFragment())
     }
 
     private val startForProfileImageResult =
@@ -195,7 +193,7 @@ class ChangeUserInfoFragment :
                     imageUri = data?.data!!
 
 
-                    Glide.with(this@ChangeUserInfoFragment)
+                    Glide.with(this@UserInfoChangeFragment)
                         .load(imageUri)
                         .into((binding.imageUser) as ImageView)
 

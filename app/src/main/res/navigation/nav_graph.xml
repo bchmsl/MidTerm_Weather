@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/startFragment">
+    app:startDestination="@id/initFragment">
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.bchmsl.midterm_weather.ui.weather.main.MainFragment"
@@ -32,11 +32,15 @@
         <argument
             android:name="index"
             app:argType="integer" />
+        <argument
+            android:name="isFahrenheit"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
-        android:id="@+id/startFragment"
+        android:id="@+id/initFragment"
         android:name="com.bchmsl.midterm_weather.ui.start.InitFragment"
-        android:label="fragment_start"
+        android:label="fragment_init"
         tools:layout="@layout/fragment_init">
         <action
             android:id="@+id/action_startFragment_to_logInFragment"
@@ -57,16 +61,17 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.bchmsl.midterm_weather.ui.signup.signupfirst.SignUpFragment"
+        android:name="com.bchmsl.midterm_weather.ui.signup.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/action_signUpFragment_to_signUpContinueFragment"
-            app:destination="@id/signUpContinueFragment"
+            app:destination="@id/signupContinueFragment"
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/nav_graph" />
     </fragment>
 
     <fragment
@@ -81,7 +86,7 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"
-            app:popUpTo="@id/startFragment" />
+            app:popUpTo="@id/initFragment" />
         <action
             android:id="@+id/action_logInFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -101,10 +106,10 @@
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
-        android:id="@+id/signUpContinueFragment"
-        android:name="com.bchmsl.midterm_weather.ui.signup.signupsecond.SignUpContinueFragment"
+        android:id="@+id/signupContinueFragment"
+        android:name="com.bchmsl.midterm_weather.ui.signup.signupContinue.SignupContinueFragment"
         android:label="fragment_sign_up_continue"
-        tools:layout="@layout/fragment_sign_up_continue">
+        tools:layout="@layout/fragment_signup_continue">
         <action
             android:id="@+id/action_signUpContinueFragment_to_mainFragment"
             app:destination="@id/mainFragment"
@@ -116,12 +121,12 @@
     </fragment>
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.bchmsl.midterm_weather.ui.reset_password.ResetPasswordFragment"
+        android:name="com.bchmsl.midterm_weather.ui.resetPassword.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password"/>
     <fragment
         android:id="@+id/preferencesFragment"
-        android:name="com.bchmsl.midterm_weather.ui.preferences.PreferencesFragment"
+        android:name="com.bchmsl.midterm_weather.ui.preferences.mainPreferences.PreferencesFragment"
         android:label="fragment_preferences"
         tools:layout="@layout/fragment_preferences">
         <action
@@ -149,12 +154,12 @@
     </fragment>
     <fragment
         android:id="@+id/cityChangeFragment"
-        android:name="com.bchmsl.midterm_weather.ui.preferences.changecity.CityChangeFragment"
+        android:name="com.bchmsl.midterm_weather.ui.preferences.changeCity.CityChangeFragment"
         android:label="fragment_city_change"
         tools:layout="@layout/fragment_city_change" />
     <fragment
         android:id="@+id/changeUserInfoFragment"
-        android:name="com.bchmsl.midterm_weather.ui.preferences.changeinfo.ChangeUserInfoFragment"
+        android:name="com.bchmsl.midterm_weather.ui.preferences.changeUserInfo.UserInfoChangeFragment"
         android:label="ChangeUserInfoFragment"
         tools:layout="@layout/fragment_change_user_info">
         <action

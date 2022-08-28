@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.model
+package com.bchmsl.midterm_weather.models
 
 data class SearchResponse(
     val name: String?,

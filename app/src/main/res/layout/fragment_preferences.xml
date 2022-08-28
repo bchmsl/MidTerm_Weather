@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/dark_blue"
-    tools:context=".ui.preferences.PreferencesFragment">
+    tools:context=".ui.preferences.mainPreferences.PreferencesFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
@@ -29,155 +29,129 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleApplicationPrefs"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="10dp"
-        app:layout_constraintTop_toBottomOf="@id/tvPreferencesTitle"
-        tools:layout_editor_absoluteX="89dp">
+        android:layout_marginHorizontal="20sp"
+        android:fontFamily="@font/opensans_light"
+        android:text="@string/application_preferences"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvPreferencesTitle" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:fontFamily="@font/opensans_light"
-            android:text="@string/application_preferences"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnChangeCity"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/preferences_item"
+        android:drawableStart="@drawable/ic_map"
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:drawablePadding="30sp"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="20dp"
+        android:text="@string/change_current_city"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleApplicationPrefs" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llChangeCity"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/preferences_item"
-            android:gravity="center"
-            android:paddingHorizontal="10dp">
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/swChangeUnits"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/preferences_item"
+        android:buttonTint="@color/white"
+        android:drawableStart="@drawable/ic_flag"
+        android:drawablePadding="30sp"
+        android:fontFamily="@font/opensans_regular"
+        android:paddingHorizontal="20dp"
+        android:text="@string/units"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textOff="@string/celsius"
+        android:textOn="@string/fahrenheit"
+        android:textSize="18sp"
+        app:cornerRadius="30dp"
+        app:layout_constraintTop_toBottomOf="@id/btnChangeCity"
+        app:showText="true"
+        app:thumbTint="@color/blue"
+        app:trackTint="@color/dark_blue" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:scaleType="centerCrop"
-                android:tint="@color/black"
-                app:srcCompat="@drawable/ic_map" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAboutApp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/preferences_item"
+        android:drawableStart="@drawable/ic_info"
+        android:drawablePadding="30sp"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="20dp"
+        android:text="@string/about_app"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/swChangeUnits" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="5dp"
-                android:fontFamily="@font/opensans_regular"
-                android:gravity="center_vertical"
-                android:text="@string/change_current_city"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleProfilePreferences"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20sp"
+        android:fontFamily="@font/opensans_light"
+        android:text="@string/profile_preferences"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnAboutApp" />
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEditProfile"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/preferences_item"
+        android:drawableStart="@drawable/ic_person"
+        android:drawableEnd="@drawable/ic_arrow_forward"
+        android:drawablePadding="30sp"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="20dp"
+        android:text="@string/edit_profile"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/tvTitleProfilePreferences" />
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llAboutApp"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/preferences_item"
-            android:gravity="center">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:scaleType="centerCrop"
-                android:tint="@color/black"
-                app:srcCompat="@drawable/ic_info" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="5dp"
-                android:fontFamily="@font/opensans_regular"
-                android:gravity="center_vertical"
-                android:text="@string/about_app"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20sp"
-            android:fontFamily="@font/opensans_light"
-            android:text="@string/profile_preferences"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llChangeUserDetails"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/preferences_item"
-            android:gravity="center">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:scaleType="centerCrop"
-                android:tint="@color/black"
-                app:srcCompat="@drawable/ic_person" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="5dp"
-                android:fontFamily="@font/opensans_regular"
-                android:gravity="center_vertical"
-                android:text="@string/edit_profile"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:rotationY="180"
-                android:scaleType="centerCrop"
-                app:srcCompat="@drawable/ic_arrow_back" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/llLogOut"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginVertical="5dp"
-            android:background="@drawable/preferences_item"
-            android:gravity="center">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:padding="10dp"
-                android:scaleType="centerCrop"
-                android:tint="@android:color/holo_red_light"
-                app:srcCompat="@drawable/ic_logout" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginHorizontal="5dp"
-                android:fontFamily="@font/opensans_regular"
-                android:gravity="center_vertical"
-                android:text="@string/log_out"
-                android:textColor="@android:color/holo_red_light"
-                android:textSize="20sp" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnLogOut"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/preferences_item"
+        android:drawableStart="@drawable/ic_logout"
+        android:drawablePadding="30sp"
+        android:drawableTint="@color/regular_red"
+        android:fontFamily="@font/opensans_regular"
+        android:gravity="start|center_vertical"
+        android:paddingHorizontal="20dp"
+        android:text="@string/log_out"
+        android:textAllCaps="false"
+        android:textColor="@color/regular_red"
+        android:textSize="18sp"
+        app:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/btnEditProfile"
+        tools:targetApi="m" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

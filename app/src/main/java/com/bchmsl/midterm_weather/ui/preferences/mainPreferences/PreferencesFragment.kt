@@ -1,10 +1,15 @@
-package com.bchmsl.midterm_weather.ui.preferences
+package com.bchmsl.midterm_weather.ui.preferences.mainPreferences
 
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentPreferencesBinding
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 
 
 class PreferencesFragment :
@@ -12,24 +17,38 @@ class PreferencesFragment :
     private val viewModel: PreferencesViewModel by viewModels()
     override fun start() {
         listeners()
+        setSwitch()
+    }
+
+    private fun setSwitch() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getCurrentUnit().firstOrNull()?.let {
+                    binding.swChangeUnits.isChecked = it
+                }
+            }
+        }
     }
 
     private fun listeners() {
-        binding.llChangeCity.setOnClickListener {
+        binding.btnChangeCity.setOnClickListener {
             findNavController().navigate(PreferencesFragmentDirections.actionPreferencesFragmentToCityChangeFragment())
         }
         binding.tvPreferencesTitle.setOnClickListener {
             findNavController().popBackStack()
         }
-        binding.llChangeUserDetails.setOnClickListener {
+        binding.btnEditProfile.setOnClickListener {
             findNavController().navigate(PreferencesFragmentDirections.actionPreferencesFragmentToChangeUserInfoFragment())
         }
-        binding.llLogOut.setOnClickListener {
+        binding.btnLogOut.setOnClickListener {
             //init firebaseAuth
             signOut()
         }
-        binding.llAboutApp.setOnClickListener {
+        binding.btnAboutApp.setOnClickListener {
             makeDialog()
+        }
+        binding.swChangeUnits.setOnCheckedChangeListener { _, isEnabled ->
+            viewModel.setUnit(isEnabled)
         }
     }
 

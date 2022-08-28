@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.ui.signup.signupfirst
+package com.bchmsl.midterm_weather.ui.signup.signup
 
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -8,8 +8,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
+import com.bchmsl.midterm_weather.utils.ProcessingDialog
 import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.launch
 
@@ -79,6 +79,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
 
     private fun handleSuccess() {
         hideProcessBar()
+        binding.root.makeSuccessSnackbar("Account created successfully!")
         goToSingUpContinueFra()
     }
 
