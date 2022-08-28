@@ -73,4 +73,5 @@ This is a weather app. It shows forecast of upcoming 7 days including todays'. I
 ## Preferences Pages
 ![Preferences](https://user-images.githubusercontent.com/85778941/187092700-559d783b-545d-4d10-a51e-c2c41ae594d3.jpg)
 ![PreferencesUserInfoCange](h![City Chooser](https://user-images.githubusercontent.com/85778941/187092720-b6f80131-a973-4db1-a5a0-7cdc0c6b7d49.jpg)
-ttps://user-images.githubusercontent.com/85778941/187092711-7106a992-be7c-4671-88de-b8842ec3cc66.jpg)
+![City Chooser](https://user-images.githubusercontent.com/85778941/187092781-6b877c12-7d30-4ae1-805f-266d19c3b4a5.jpg)
+
