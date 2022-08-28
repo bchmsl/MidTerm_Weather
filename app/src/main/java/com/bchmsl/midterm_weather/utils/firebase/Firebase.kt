@@ -36,13 +36,13 @@ object Firebase {
         return storageReference.getFile(file)
     }
 
-    fun updateUserInfo(firstName: String, lastName: String, imageUri: Uri) {
+    fun updateUserInfo(firstName: String, lastName: String, imageUri: Uri?) {
         val uid = firebaseAuth.currentUser?.uid
         val currentUserInfo = uid?.let { databaseReference.child(it) }
         currentUserInfo?.child("firstName")?.setValue(firstName)
         currentUserInfo?.child("lastName")?.setValue(lastName)
         val storageReference = FirebaseStorage.getInstance().getReference("Users/$uid")
-        storageReference.putFile(imageUri)
+        if(imageUri!=null) storageReference.putFile(imageUri)
     }
 
     fun resetPassword(email: String) = firebaseAuth.sendPasswordResetEmail(email)

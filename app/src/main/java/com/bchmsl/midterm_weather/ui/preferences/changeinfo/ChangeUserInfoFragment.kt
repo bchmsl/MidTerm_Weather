@@ -158,13 +158,12 @@ class ChangeUserInfoFragment :
 
     private fun updateInfo() {
         binding.apply {
-            if (imageUri != null) {
                 viewModel.updateUserInfo(
                     tilFirstName.editText?.text.toString().capitalizeFirstChar(),
                     tilLastName.editText?.text.toString().capitalizeFirstChar(),
-                    imageUri!!
+                    imageUri
                 )
-            }
+
             root.makeSuccessSnackbar("Success")
             goToMainFra()
 

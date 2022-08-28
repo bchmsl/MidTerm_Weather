@@ -39,7 +39,7 @@ class ChangeUserInfoViewModel: ViewModel() {
         }
     }
 
-    fun updateUserInfo(firstName: String, lastName: String, imageUri: Uri) {
+    fun updateUserInfo(firstName: String, lastName: String, imageUri: Uri?) {
         Firebase.updateUserInfo(firstName, lastName, imageUri)
     }
 
