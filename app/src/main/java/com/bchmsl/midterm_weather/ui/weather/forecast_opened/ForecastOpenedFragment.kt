@@ -11,7 +11,7 @@ import com.bchmsl.midterm_weather.extensions.setImage
 import com.bchmsl.midterm_weather.extensions.toWeekday
 import com.bchmsl.midterm_weather.model.DetailsKeyValue
 import com.bchmsl.midterm_weather.model.ForecastResponse
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
 import kotlinx.coroutines.launch

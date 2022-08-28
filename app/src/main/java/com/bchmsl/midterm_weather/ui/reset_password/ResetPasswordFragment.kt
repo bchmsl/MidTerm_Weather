@@ -1,11 +1,12 @@
 package com.bchmsl.midterm_weather.ui.reset_password
 
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentResetPasswordBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import kotlinx.coroutines.launch
@@ -35,6 +36,9 @@ class ResetPasswordFragment :
             ibtnBack.setOnClickListener {
                 it.hideKeyboard()
                 findNavController().popBackStack()
+            }
+            tilEmail.editText?.addTextChangedListener {
+                tilEmail.isValidEmail()
             }
         }
     }

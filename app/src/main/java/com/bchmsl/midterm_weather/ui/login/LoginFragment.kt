@@ -1,5 +1,6 @@
 package com.bchmsl.midterm_weather.ui.login
 
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -7,7 +8,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentLoginBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.google.firebase.auth.FirebaseUser
@@ -24,23 +25,28 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
     }
 
     private fun listeners() {
-        binding.ibtnNext.setOnClickListener {
-            //get data
-            it.hideKeyboard()
-            val email = binding.tilEmail.editText?.text.toString()
-            val password = binding.tilPassword.editText?.text.toString()
-            //validate data
-            if (checkFields()) {
-                firebaseLogin(email, password)
+        binding.apply {
+            ibtnNext.setOnClickListener {
+                //get data
+                it.hideKeyboard()
+                val email = tilEmail.editText?.text.toString()
+                val password = tilPassword.editText?.text.toString()
+                //validate data
+                if (checkFields()) {
+                    firebaseLogin(email, password)
+                }
             }
-        }
-        binding.tvSignUp.setOnClickListener {
-            it.hideKeyboard()
-            goToSignUpFra()
-        }
-        binding.tvForgotPassword.setOnClickListener {
-            it.hideKeyboard()
-            goToResetPassFra()
+            tvSignUp.setOnClickListener {
+                it.hideKeyboard()
+                goToSignUpFra()
+            }
+            tvForgotPassword.setOnClickListener {
+                it.hideKeyboard()
+                goToResetPassFra()
+            }
+            tilEmail.editText?.addTextChangedListener {
+                tilEmail.isValidEmail()
+            }
         }
     }
 

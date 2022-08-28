@@ -1,8 +1,8 @@
 package com.bchmsl.midterm_weather.ui.reset_password
 
 import androidx.lifecycle.ViewModel
-import com.bchmsl.midterm_weather.firebase.Firebase
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

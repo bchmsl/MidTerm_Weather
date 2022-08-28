@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.firebase
+package com.bchmsl.midterm_weather.utils.firebase
 
 import android.net.Uri
 import com.bchmsl.midterm_weather.model.User

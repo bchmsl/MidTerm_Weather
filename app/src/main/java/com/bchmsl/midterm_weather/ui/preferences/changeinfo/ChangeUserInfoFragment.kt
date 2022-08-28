@@ -14,8 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentChangeUserInfoBinding
 import com.bchmsl.midterm_weather.extensions.*
-import com.bchmsl.midterm_weather.firebase.Firebase
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker

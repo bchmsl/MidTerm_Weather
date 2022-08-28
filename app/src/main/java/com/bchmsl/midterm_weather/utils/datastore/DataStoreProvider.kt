@@ -1,4 +1,4 @@
-package com.bchmsl.midterm_weather.datastore
+package com.bchmsl.midterm_weather.utils.datastore
 
 import android.content.Context
 import androidx.datastore.preferences.core.edit

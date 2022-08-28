@@ -5,17 +5,15 @@ import android.net.Uri
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.databinding.FragmentSignUpContinueBinding
-import com.bchmsl.midterm_weather.extensions.hideKeyboard
-import com.bchmsl.midterm_weather.extensions.isFieldEmpty
-import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
-import com.bchmsl.midterm_weather.extensions.makeSuccessSnackbar
-import com.bchmsl.midterm_weather.firebase.Firebase
+import com.bchmsl.midterm_weather.extensions.*
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.bchmsl.midterm_weather.model.User
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.ProcessingDialog
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bumptech.glide.Glide
@@ -43,9 +41,13 @@ class SignUpContinueFragment :
             }
             ibtnNext.setOnClickListener {
                 it.hideKeyboard()
+                showProcessBar()
                 if (checkFields()) {
                     uploadToDatabase()
                 }
+            }
+            tilFirstName.editText?.addTextChangedListener {
+                tilFirstName.isValidName()
             }
         }
     }
@@ -60,7 +62,6 @@ class SignUpContinueFragment :
 
     private fun uploadToDatabase() {
         binding.apply {
-            showProcessBar()
             val firstName = tilFirstName.editText?.text.toString()
             val lastName = tilLastName.editText?.text.toString()
             val user = User(capitalize(firstName), capitalize(lastName))
@@ -118,7 +119,14 @@ class SignUpContinueFragment :
     private fun checkFields(): Boolean {
         binding.apply {
             return when {
-                tilFirstName.isFieldEmpty() || tilLastName.isFieldEmpty() -> false
+                tilFirstName.isFieldEmpty() || tilLastName.isFieldEmpty() -> {
+                    hideProcessBar()
+                    false
+                }
+                !tilFirstName.isValidName()  ->  {
+                    hideProcessBar()
+                    false
+                }
                 imageUri == null -> {
                     handleError(Throwable("Please upload an image"))
                     false

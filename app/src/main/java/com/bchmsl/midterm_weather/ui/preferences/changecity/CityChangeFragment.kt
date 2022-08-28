@@ -13,7 +13,7 @@ import com.bchmsl.midterm_weather.databinding.FragmentCityChangeBinding
 import com.bchmsl.midterm_weather.extensions.hideKeyboard
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.model.SearchResponse
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import kotlinx.coroutines.launch
 

@@ -4,10 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bchmsl.midterm_weather.app.App
-import com.bchmsl.midterm_weather.datastore.DataStoreProvider.readDatastoreData
+import com.bchmsl.midterm_weather.utils.datastore.DataStoreProvider.readDatastoreData
 import com.bchmsl.midterm_weather.model.ForecastResponse
 import com.bchmsl.midterm_weather.network.RetrofitProvider
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

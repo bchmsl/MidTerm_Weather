@@ -2,9 +2,9 @@ package com.bchmsl.midterm_weather.ui.signup.signupsecond
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.bchmsl.midterm_weather.firebase.Firebase
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.bchmsl.midterm_weather.model.User
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 

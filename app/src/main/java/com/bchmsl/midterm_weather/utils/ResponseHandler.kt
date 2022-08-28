@@ -1,6 +1,4 @@
-package com.bchmsl.midterm_weather.network.utils
-
-import com.google.firebase.auth.FirebaseUser
+package com.bchmsl.midterm_weather.utils
 
 sealed class ResponseHandler<T>(val isLoading: Boolean = false) {
     class Success<T>(val data: T?) : ResponseHandler<T>()

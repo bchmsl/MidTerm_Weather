@@ -12,7 +12,7 @@ import com.bchmsl.midterm_weather.extensions.asTemp
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.extensions.setImage
 import com.bchmsl.midterm_weather.model.ForecastResponse
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.ui.base.BaseFragment
 import com.bchmsl.midterm_weather.ui.weather.WeatherViewModel
 import com.google.firebase.auth.FirebaseAuth

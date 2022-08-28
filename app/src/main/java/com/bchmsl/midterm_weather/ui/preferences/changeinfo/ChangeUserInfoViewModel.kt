@@ -2,8 +2,8 @@ package com.bchmsl.midterm_weather.ui.preferences.changeinfo
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import com.bchmsl.midterm_weather.firebase.Firebase
-import com.bchmsl.midterm_weather.network.utils.ResponseHandler
+import com.bchmsl.midterm_weather.utils.firebase.Firebase
+import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.google.firebase.database.DataSnapshot
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

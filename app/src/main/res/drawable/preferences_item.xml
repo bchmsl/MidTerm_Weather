@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <corners android:radius="30dp" />
+    <item android:state_pressed="true" android:drawable="@drawable/preferences_item_pressed"/>
 
-    <solid android:color="@color/white"/>
+    <item android:state_enabled="true" android:drawable="@drawable/preferences_item_default"/>
 
-</shape>
+</selector>
