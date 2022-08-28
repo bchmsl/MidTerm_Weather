@@ -35,7 +35,4 @@ abstract class BaseFragment<VB : ViewBinding>(private val inflate: inflate<VB>) 
     }
 
     abstract fun start()
-
-    //
-
 }
