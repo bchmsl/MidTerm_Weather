@@ -23,6 +23,13 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_mainFragment_to_changeUserInfoFragment"
+            app:destination="@id/changeUserInfoFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
     </fragment>
     <fragment
         android:id="@+id/forecastOpenedFragment"
@@ -177,5 +184,9 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/nav_graph" />
+        <argument
+            android:name="isChanging"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 </navigation>

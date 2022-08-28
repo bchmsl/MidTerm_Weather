@@ -38,7 +38,11 @@ class PreferencesFragment :
             findNavController().popBackStack()
         }
         binding.btnEditProfile.setOnClickListener {
-            findNavController().navigate(PreferencesFragmentDirections.actionPreferencesFragmentToChangeUserInfoFragment())
+            findNavController().navigate(
+                PreferencesFragmentDirections.actionPreferencesFragmentToChangeUserInfoFragment(
+                    isChanging = true
+                )
+            )
         }
         binding.btnLogOut.setOnClickListener {
             //init firebaseAuth

@@ -8,9 +8,11 @@ import android.view.View
 import android.widget.ImageView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.databinding.FragmentChangeUserInfoBinding
 import com.bchmsl.midterm_weather.extensions.*
@@ -24,12 +26,30 @@ import java.io.File
 
 class UserInfoChangeFragment :
     BaseFragment<FragmentChangeUserInfoBinding>(FragmentChangeUserInfoBinding::inflate) {
+    private val args by navArgs<UserInfoChangeFragmentArgs>()
     private val viewModel: UserInfoChangeViewModel by viewModels()
     private var imageUri: Uri? = null
     override fun start() {
         getUserInfo()
         checkEmailVerification()
+        checkIfEditing()
         listeners()
+    }
+
+    private fun checkIfEditing() {
+        val isChanging = args.isChanging
+        binding.apply {
+            tilFirstName.editText?.isEnabled = isChanging
+            tilLastName.editText?.isEnabled = isChanging
+            tvFinishedEditing.isVisible = isChanging
+            btnSave.isVisible = isChanging
+            btnCamera.isVisible = isChanging
+            btnVerify.isVisible = isChanging
+        }
+        if (!isChanging) {
+            binding.tvProfileInfoTitle.text = getString(R.string.profile_info)
+        }
+
     }
 
     private fun checkEmailVerification() {

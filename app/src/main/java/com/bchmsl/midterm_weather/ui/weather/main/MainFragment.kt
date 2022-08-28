@@ -119,5 +119,12 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
         binding.ibtnPreferences.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToPreferencesFragment())
         }
+        binding.tvGreeting.setOnClickListener {
+            findNavController().navigate(
+                MainFragmentDirections.actionMainFragmentToChangeUserInfoFragment(
+                    false
+                )
+            )
+        }
     }
 }
