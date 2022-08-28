@@ -1,5 +1,5 @@
 
-Weather app
+Weather App
 
 This is a weather app. It shows forecast of upcoming 7 days including todays'. It also has user authentification system.
 
@@ -13,7 +13,7 @@ This is a weather app. It shows forecast of upcoming 7 days including todays'. I
 - Networking with Retrofit, Moshi
 - Firebase Authentification, Realtime Database, Storage
 - Splash Screen
-## Used dependencies
+## Used Dependencies
 
     // Retrofit
     def retrofitVersion = '2.9.0'
@@ -58,7 +58,19 @@ This is a weather app. It shows forecast of upcoming 7 days including todays'. I
     // Splash Screen
     implementation 'androidx.core:core-splashscreen:1.0.0'
 ## Login Page
+![SignIn](https://user-images.githubusercontent.com/85778941/187092626-7189c7a5-a4f7-4b89-adfa-c992a77c6d56.jpg)
+
 ## Signup Pages
+![SingUp](https://user-images.githubusercontent.com/85778941/187092637-9851ab6a-3dca-46e4-87d3-4e0b030f330f.jpg)
+![SignUpContinue](https://user-images.githubusercontent.com/85778941/187092643-733874e0-f06b-46c5-8bdd-b776008ca158.jpg)
+
 ## Main Page
+![Man Page](https://user-images.githubusercontent.com/85778941/187092654-c747edb6-353e-4f72-86c4-2c3206ff1cff.jpg)
+
 ## Detailed Forecast Page
+![Detailed Forecast](https://user-images.githubusercontent.com/85778941/187092749-42e74d95-b642-4bbb-b992-50de71a61e55.jpg)
+
 ## Preferences Pages
+![Preferences](https://user-images.githubusercontent.com/85778941/187092700-559d783b-545d-4d10-a51e-c2c41ae594d3.jpg)
+![PreferencesUserInfoCange](h![City Chooser](https://user-images.githubusercontent.com/85778941/187092720-b6f80131-a973-4db1-a5a0-7cdc0c6b7d49.jpg)
+ttps://user-images.githubusercontent.com/85778941/187092711-7106a992-be7c-4671-88de-b8842ec3cc66.jpg)
