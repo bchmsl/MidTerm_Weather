@@ -51,15 +51,15 @@ class WeatherViewModel : ViewModel() {
     }
 
 
-    private val _userFirstNameResponse =
+    private val _userFullNameResponse =
         MutableStateFlow<ResponseHandler<DataSnapshot>>(ResponseHandler.Loading())
-    val userFirstNameResponse get() = _userFirstNameResponse.asStateFlow()
+    val userFullNameResponse get() = _userFullNameResponse.asStateFlow()
 
-    fun getUserFirstName() {
-        Firebase.getUserFirstName()?.addOnSuccessListener {
-            _userFirstNameResponse.tryEmit(ResponseHandler.Success(it))
+    fun getUserFullName() {
+        Firebase.getUserFullName()?.addOnSuccessListener {
+            _userFullNameResponse.tryEmit(ResponseHandler.Success(it))
         }?.addOnFailureListener {
-            _userFirstNameResponse.tryEmit(ResponseHandler.Error(it))
+            _userFullNameResponse.tryEmit(ResponseHandler.Error(it))
         }
     }
 

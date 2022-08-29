@@ -67,7 +67,9 @@ class SignupContinueFragment :
                 viewModel.addToDatabaseResponse.collect {
                     when (it) {
                         is ResponseHandler.Success<*> -> {
+                            if(imageUri != null)
                             uploadProfilePic()
+                            else handleAdditionalInfoSuccess()
                         }
                         is ResponseHandler.Error -> {
                             handleError(Throwable("failed to add additional sign up data  ${it.error.message}"))
@@ -87,7 +89,7 @@ class SignupContinueFragment :
             viewModel.uploadProfilePicResponse.collect {
                 when (it) {
                     is ResponseHandler.Success<*> -> {
-                        handleUploadProfilePicSuccess()
+                        handleAdditionalInfoSuccess()
                     }
                     is ResponseHandler.Error -> {
                         handleError(Throwable("Failed to upload this image: ${it.error.message}"))
@@ -98,9 +100,9 @@ class SignupContinueFragment :
         }
     }
 
-    private fun handleUploadProfilePicSuccess() {
+    private fun handleAdditionalInfoSuccess() {
         hideProcessBar()
-        binding.root.makeSuccessSnackbar("Registration was successful")
+        binding.root.makeSuccessSnackbar("Additional info was added successfully")
         goToMainFra()
     }
 
@@ -118,10 +120,6 @@ class SignupContinueFragment :
                 }
                 !tilFirstName.isValidName() -> {
                     hideProcessBar()
-                    false
-                }
-                imageUri == null -> {
-                    handleError(Throwable("Please upload an image"))
                     false
                 }
                 else -> true

@@ -2,6 +2,7 @@ package com.bchmsl.midterm_weather.ui.preferences.changeUserInfo
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
+import com.bchmsl.midterm_weather.models.User
 import com.bchmsl.midterm_weather.utils.ResponseHandler
 import com.bchmsl.midterm_weather.utils.firebase.Firebase
 import com.google.firebase.database.DataSnapshot
@@ -52,4 +53,8 @@ class UserInfoChangeViewModel : ViewModel() {
     }
 
     fun signOut() = Firebase.signOut()
+
+    fun addEmptyPlaceHoldersToDatabase() {
+        Firebase.addToDatabase(User("", ""))
+    }
 }

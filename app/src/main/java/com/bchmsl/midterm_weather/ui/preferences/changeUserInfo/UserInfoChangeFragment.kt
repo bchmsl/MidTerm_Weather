@@ -76,7 +76,7 @@ class UserInfoChangeFragment :
                         handleUserInfoSuccess(it.data as DataSnapshot)
                     }
                     is ResponseHandler.Error -> {
-                        handleError(it.error)
+                        viewModel.addEmptyPlaceHoldersToDatabase()
                     }
                     else -> {}
                 }
@@ -96,10 +96,12 @@ class UserInfoChangeFragment :
                 viewModel.userImageResponse.collect {
                     when (it) {
                         is ResponseHandler.Success<*> -> {
-                            handleUserImageSuccess(localFile, firstName, lastName)
+                            handleUserImagePart(localFile, firstName, lastName)
                         }
                         is ResponseHandler.Error -> {
-                            handleError(Throwable("image: ${it.error.message!!}"))
+//                            handleError(Throwable("you have no profile picture uploaded"))
+                            handleUserImagePart(null ,firstName, lastName)
+                            hideLoading()
                         }
                         else -> {}
                     }
@@ -110,13 +112,15 @@ class UserInfoChangeFragment :
         }
     }
 
-    private fun handleUserImageSuccess(localFile: File, firstName: String, lastName: String) {
+    private fun handleUserImagePart(localFile: File?, firstName: String, lastName: String) {
         binding.apply {
             tilFirstName.editText?.setText(firstName)
             tilLastName.editText?.setText(lastName)
-            val bitmap: Bitmap =
-                BitmapFactory.decodeFile(localFile.absolutePath)
-            imageUser.setImageBitmap(bitmap)
+            if(localFile!=null) {
+                val bitmap: Bitmap =
+                    BitmapFactory.decodeFile(localFile.absolutePath)
+                imageUser.setImageBitmap(bitmap)
+            }
         }
         hideLoading()
         //enable save button after loading finished

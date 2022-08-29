@@ -1,7 +1,9 @@
 package com.bchmsl.midterm_weather.ui.weather.main
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -11,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.bchmsl.midterm_weather.R
 import com.bchmsl.midterm_weather.adapters.DailyForecastAdapter
 import com.bchmsl.midterm_weather.databinding.FragmentMainBinding
-import com.bchmsl.midterm_weather.extensions.makeErrorSnackbar
 import com.bchmsl.midterm_weather.extensions.makeSnackbar
 import com.bchmsl.midterm_weather.extensions.setImage
 import com.bchmsl.midterm_weather.extensions.toTemperature
@@ -33,19 +34,24 @@ class MainFragment : BaseFragment<FragmentMainBinding>(FragmentMainBinding::infl
     }
 
 
+    @SuppressLint("SetTextI18n")
     private fun setWelcomeMessage() {
-        viewModel.getUserFirstName()
+        viewModel.getUserFullName()
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.userFirstNameResponse.collect {
+                viewModel.userFullNameResponse.collectLatest {
                     when (it) {
                         is ResponseHandler.Success -> {
-                            val firstname = (it.data?.value as HashMap<*, *>?)?.get("firstName")
-                            if (it.data?.value == null) {
-                                binding.root.makeErrorSnackbar("Please provide your name in Profile Preferences")
-                            } else {
-                                binding.tvGreeting.text =
-                                    getString(R.string.welcome_message, firstname)
+                            val firstname = (it.data?.value as HashMap<*, *>?)?.get("firstName").toString()
+                            val lastname = (it.data?.value as HashMap<*, *>?)?.get("lastName").toString()
+                            val greeting = binding.tvGreeting
+                            if (firstname.trim()=="" || lastname.trim()=="" || it.data?.value == null) {
+                                greeting.text = "Provide full name\nin Profile Preferences"
+                                greeting.setTextColor(ResourcesCompat.getColor(resources,R.color.regular_red,null))
+                            }
+                            else {
+                                greeting.text = getString(R.string.welcome_message, firstname)
+                                greeting.setTextColor(ResourcesCompat.getColor(resources,R.color.white,null))
                             }
                         }
                         is ResponseHandler.Error -> {

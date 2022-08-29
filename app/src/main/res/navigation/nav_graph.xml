@@ -149,7 +149,8 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_preferencesFragment_to_logInFragment"
             app:destination="@id/logInFragment"

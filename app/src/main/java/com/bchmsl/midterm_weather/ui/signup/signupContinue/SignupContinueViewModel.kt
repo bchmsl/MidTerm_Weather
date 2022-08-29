@@ -33,4 +33,5 @@ class SignupContinueViewModel : ViewModel() {
             _addToDatabaseResponse.tryEmit(ResponseHandler.Error(it))
         }
     }
+
 }

@@ -53,7 +53,7 @@ object Firebase {
 
     fun signOut() = firebaseAuth.signOut()
 
-    fun getUserFirstName(): Task<DataSnapshot>? {
+    fun getUserFullName(): Task<DataSnapshot>? {
         val uid = firebaseAuth.currentUser?.uid
         val databaseReference = FirebaseDatabase.getInstance().getReference("Users")
         return uid?.let { databaseReference.child(it).get() }
